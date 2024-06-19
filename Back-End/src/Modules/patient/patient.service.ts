@@ -1,26 +1,41 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Patient } from './entities/patient.entity';
+import { PatientDocument } from './Schemas/patient.schema';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class PatientService {
-  create(createPatientDto: CreatePatientDto) {
-    return 'This action adds a new patient';
+  constructor(
+    @InjectModel(Patient.name) private patientModel: Model<PatientDocument>,
+  ) {}
+
+  async create(createPatientDto: CreatePatientDto): Promise<Patient> {
+    const createdPatient = new this.patientModel(createPatientDto);
+    await createdPatient.save();
+    return await createdPatient.save();
   }
 
-  findAll() {
-    return `This action returns all patient`;
+  async findAll(): Promise<Patient[]> {
+    return await this.patientModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} patient`;
+  async findOne(id: string): Promise<Patient | null> {
+    return await this.patientModel.findById(id).exec();
   }
 
-  update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
+  async update(
+    id: string,
+    updatePatientDto: UpdatePatientDto,
+  ): Promise<Patient | null> {
+    return await this.patientModel
+      .findByIdAndUpdate(id, updatePatientDto, { new: true })
+      .exec();
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} patient`;
+  async remove(id: string): Promise<Patient | null> {
+    return await this.patientModel.findByIdAndDelete(id).exec();
   }
 }

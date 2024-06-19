@@ -6,37 +6,44 @@ import {
   Patch,
   Param,
   Delete,
+  ValidationPipe,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
 import { UpdatePatientDto } from './dto/update-patient.dto';
+import { Patient } from './entities/patient.entity';
 
 @Controller('patient')
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Post()
-  create(@Body() createPatientDto: CreatePatientDto) {
-    return this.patientService.create(createPatientDto);
+  async create(
+    @Body(ValidationPipe) createPatientDto: CreatePatientDto,
+  ): Promise<Patient> {
+    return await this.patientService.create(createPatientDto);
   }
 
   @Get()
-  findAll() {
-    return this.patientService.findAll();
+  async findAll(): Promise<Patient[]> {
+    return await this.patientService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.patientService.findOne(+id);
+  async findOne(@Param('id') id: string): Promise<Patient | null> {
+    return await this.patientService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePatientDto: UpdatePatientDto) {
-    return this.patientService.update(+id, updatePatientDto);
+  async update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updatePatientDto: UpdatePatientDto,
+  ): Promise<Patient | null> {
+    return await this.patientService.update(id, updatePatientDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.patientService.remove(+id);
+  async remove(@Param('id') id: string): Promise<Patient | null> {
+    return await this.patientService.remove(id);
   }
 }
