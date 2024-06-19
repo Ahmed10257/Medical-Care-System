@@ -27,7 +27,7 @@ export class ConsultationController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.consultationService.findOne(+id);
+    return this.consultationService.findOne(id);
   }
 
   @Patch(':id')
@@ -35,11 +35,11 @@ export class ConsultationController {
     @Param('id') id: string,
     @Body() updateConsultationDto: UpdateConsultationDto,
   ) {
-    return this.consultationService.update(+id, updateConsultationDto);
+    return this.consultationService.update(id, updateConsultationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.consultationService.remove(+id);
+    return this.consultationService.remove(id);
   }
 }

@@ -1,26 +1,46 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Doctor } from 'src/Common/Schemas/doctor.schema';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 @Injectable()
 export class DoctorService {
-  create(createDoctorDto: CreateDoctorDto) {
-    return 'This action adds a new doctor';
+  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) {}
+
+  create(CreateDoctorDto: CreateDoctorDto) {
+    const createPatient = new this.doctorModel(CreateDoctorDto);
+    return createPatient.save();
   }
 
   findAll() {
-    return `This action returns all doctor`;
+    return this.doctorModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} doctor`;
+  findOne(id: string) {
+    return this.doctorModel.findById(id).exec();
   }
 
-  update(id: number, updateDoctorDto: UpdateDoctorDto) {
-    return `This action updates a #${id} doctor`;
+  update(id: string, UpdateDoctorDto: UpdateDoctorDto) {
+    const updatePatient = this.doctorModel
+      .findByIdAndUpdate(id, UpdateDoctorDto, { new: true })
+      .exec();
+
+    if (!updatePatient) {
+      throw new Error(`Doctor with ID ${id} not found`);
+    }
+
+    return updatePatient;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} doctor`;
+  remove(id: string) {
+    const deletedPatient = this.doctorModel.findByIdAndDelete(id).exec();
+
+    if (!deletedPatient) {
+      throw new Error(`Doctor with ID ${id} not found`);
+    }
+
+    return deletedPatient;
   }
 }

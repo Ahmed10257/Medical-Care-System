@@ -1,26 +1,51 @@
 import { Injectable } from '@nestjs/common';
-import { CreateConsultationDto } from './dto/create-consultation.dto';
 import { UpdateConsultationDto } from './dto/update-consultation.dto';
-
+import { Consultation } from 'src/Common/Schemas/consultation.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { CreateConsultationDto } from './dto/create-consultation.dto';
 @Injectable()
 export class ConsultationService {
+  constructor(
+    @InjectModel(Consultation.name)
+    private consultationModel: Model<Consultation>,
+  ) {}
+
   create(createConsultationDto: CreateConsultationDto) {
-    return 'This action adds a new consultation';
+    const createConsultation = new this.consultationModel(
+      createConsultationDto,
+    );
+    return createConsultation.save();
   }
 
   findAll() {
-    return `This action returns all consultation`;
+    return this.consultationModel.find().exec();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} consultation`;
+  findOne(id: string) {
+    return this.consultationModel.findById(id).exec();
   }
 
-  update(id: number, updateConsultationDto: UpdateConsultationDto) {
-    return `This action updates a #${id} consultation`;
+  update(id: string, updateConsultationDto: UpdateConsultationDto) {
+    const updateConsultation = this.consultationModel.findByIdAndUpdate(
+      id,
+      updateConsultationDto,
+      { new: true },
+    );
+    if (!updateConsultation) {
+      throw new Error(`Consultation with ID ${id} not found`);
+    }
+    return updateConsultation;
   }
+  remove(id: string) {
+    const deleteConsultation = this.consultationModel
+      .findByIdAndDelete(id)
+      .exec();
 
-  remove(id: number) {
-    return `This action removes a #${id} consultation`;
+    if (!deleteConsultation) {
+      throw new Error(`Consultation with ID ${id} not found`);
+    }
+
+    return deleteConsultation;
   }
 }
