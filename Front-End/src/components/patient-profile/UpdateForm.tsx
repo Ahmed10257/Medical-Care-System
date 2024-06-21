@@ -1,26 +1,13 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Phone, CalendarFold, MapPin, Mail, User } from "lucide-react";
+import { Phone, CalendarFold, MapPin, Mail, User, Baby } from "lucide-react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Select from "react-select";
+import "react-datepicker/dist/react-datepicker.css";
 
-// List of Egyptian cities
 import { egyptianCities } from "../../data/patient-profile";
-
-interface Address {
-  country: string;
-  city: string;
-  street: string;
-}
-
-interface FormData {
-  name: string;
-  email: string;
-  age: string;
-  phone: number;
-  addresses: Address[];
-  birthDate: string;
-}
+import { FormData } from "../../interfaces/patient-profile";
+import { validate } from "../../utils/patient-profile-func";
 
 const UpdateForm = () => {
   const [formData, setFormData] = useState<FormData>({
@@ -37,6 +24,8 @@ const UpdateForm = () => {
     ],
     birthDate: "",
   });
+
+  const [errors, setErrors] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<null | string>(null);
 
@@ -86,11 +75,17 @@ const UpdateForm = () => {
         ...prevFormData,
         [name]: name === "birthDate" ? new Date(value).toISOString() : value,
       }));
+      setErrors((prevErrors: any) => ({ ...prevErrors, [name]: "" }));
     }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const newErrors = validate(formData);
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
     axios
       .patch("http://localhost:3000/patient/6673fb26688bcd7f251520e5", formData)
       .then((response) => {
@@ -111,9 +106,8 @@ const UpdateForm = () => {
       });
   };
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading data: {error}</p>;
-
+  if (isLoading) console.log(isLoading);
+  if (error) console.log(error);
   return (
     <div className="container mx-auto p-4 w-5/12">
       <div className=" mx-auto bg-white shadow-md rounded-md border border-gray-300 p-6">
@@ -127,10 +121,12 @@ const UpdateForm = () => {
               htmlFor="name"
             >
               <User className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Name:
+              Name
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.name ? "border-red-500" : ""
+              }`}
               id="name"
               type="text"
               name="name"
@@ -138,6 +134,9 @@ const UpdateForm = () => {
               onChange={handleChange}
               placeholder="Enter your name"
             />
+            {errors.name && (
+              <p className="text-red-500 text-xs italic">{errors.name}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -145,17 +144,22 @@ const UpdateForm = () => {
               htmlFor="email"
             >
               <Mail className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Email:
+              Email
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.email ? "border-red-500" : ""
+              }`}
               id="email"
-              type="email"
+              type="text"
               name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
             />
+            {errors.email && (
+              <p className="text-red-500 text-xs italic">{errors.email}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -188,16 +192,22 @@ const UpdateForm = () => {
                 }
               }}
             />
+            {errors.city && (
+              <p className="text-red-500 text-xs italic">{errors.city}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
               className="block text-gray-700 text-sm font-bold mb-2"
               htmlFor="age"
             >
-              Age:
+              <Baby className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
+              Age
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.age ? "border-red-500" : ""
+              }`}
               id="age"
               type="number"
               name="age"
@@ -205,6 +215,9 @@ const UpdateForm = () => {
               onChange={handleChange}
               placeholder="Enter your age"
             />
+            {errors.age && (
+              <p className="text-red-500 text-xs italic">{errors.age}</p>
+            )}
           </div>
           <div className="mb-4">
             <div>
@@ -213,11 +226,13 @@ const UpdateForm = () => {
                 htmlFor="phone"
               >
                 <Phone className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-                Phone:
+                Phone
               </label>
             </div>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.phone ? "border-red-500" : ""
+              }`}
               id="phone"
               type="number"
               name="phone"
@@ -225,6 +240,9 @@ const UpdateForm = () => {
               onChange={handleChange}
               placeholder="Enter your phone number"
             />
+            {errors.phone && (
+              <p className="text-red-500 text-xs italic">{errors.phone}</p>
+            )}
           </div>
           <div className="mb-4">
             <label
@@ -232,21 +250,26 @@ const UpdateForm = () => {
               htmlFor="birthDate"
             >
               <CalendarFold className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Birth Date:
+              Birth Date
             </label>
             <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                errors.birthDate ? "border-red-500" : ""
+              }`}
               id="birthDate"
               type="datetime-local"
               name="birthDate"
               value={
                 formData.birthDate
-                  ? new Date(formData.birthDate).toISOString().slice(0, 19)
+                  ? new Date(formData.birthDate).toISOString().slice(0, 16)
                   : ""
               }
               onChange={handleChange}
               placeholder="Enter your birthDate"
             />
+            {errors.birthDate && (
+              <p className="text-red-500 text-xs italic">{errors.birthDate}</p>
+            )}
           </div>
           <div className="space-x-5">
             <div className="inline items-center justify-between">
