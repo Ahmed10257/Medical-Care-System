@@ -10,6 +10,7 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorHandler from "../errors/ErrorHandler";
+import PatientProfile from "../pages/PatientProfile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,6 +37,11 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
         <Route
+          path="/pationt-profile"
+          element={<PatientProfile />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
           path="/contact"
           element={<ContactUs />}
           errorElement={<ErrorHandler />}
@@ -51,7 +57,10 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
 
-        <Route path="*" element={<ErrorHandler statusCode={404} message="Page not found" />} />
+        <Route
+          path="*"
+          element={<ErrorHandler statusCode={404} message="Page not found" />}
+        />
       </Route>
     </>
   )
