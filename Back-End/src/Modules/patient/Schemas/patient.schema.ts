@@ -8,7 +8,7 @@ export type PatientDocument = HydratedDocument<Patient>;
 
 enum gender {
   Male = 'male',
-  Female = 'femail',
+  Female = 'female',
 }
 
 
