@@ -10,6 +10,9 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorHandler from "../errors/ErrorHandler";
+import Search from "../pages/Search";
+import Book from "../pages/Booking";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -48,6 +51,16 @@ const router = createBrowserRouter(
         <Route
           path="/signup"
           element={<Register />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/search"
+          element={<Search />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/book/:id"
+          element={<Book />}
           errorElement={<ErrorHandler />}
         />
 
