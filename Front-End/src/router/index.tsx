@@ -50,7 +50,7 @@ const router = createBrowserRouter(
           element={<Register />}
           errorElement={<ErrorHandler />}
         />
-
+        
         <Route path="*" element={<ErrorHandler statusCode={404} message="Page not found" />} />
       </Route>
     </>
