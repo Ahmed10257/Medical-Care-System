@@ -3,6 +3,7 @@ import { FormData } from "../interfaces/patient-profile";
 export const validate = (formData: FormData) => {
   const newErrors: any = {};
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9]*$/;
 
   if (!formData.name) {
     newErrors.name = "Name is required.";
@@ -25,13 +26,14 @@ export const validate = (formData: FormData) => {
   } else if (parseInt(formData.age) < 18) {
     newErrors.age = "Age must be greater than 18.";
   }
-  if (formData.phone === 0) {
+  if (formData.phone.toString().length === 0) {
     newErrors.phone = "Phone number is required.";
-  } else if (
-    formData.phone.toString().length < 11 ||
-    formData.phone.toString().length > 11
-  ) {
+  } else if (formData.phone.toString().length > 11) {
     newErrors.phone = "Phone number must be 11 digits.";
+  } else if (formData.phone.toString().length < 7) {
+    newErrors.phone = "Phone number must be 11 digits.";
+  } else if (!phoneRegex.test(formData.phone.toString())) {
+    newErrors.phone = "Phone number must contain only numbers.";
   }
 
   if (!formData.addresses[0].city) newErrors.city = "City is required.";

@@ -7,7 +7,7 @@ export interface Address {
 export interface FormData {
   name: string;
   email: string;
-  age: number;
+  age: string;
   phone: number;
   addresses: Address[];
   birthDate: string;

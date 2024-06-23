@@ -108,189 +108,219 @@ const UpdateForm = () => {
 
   if (isLoading) console.log(isLoading);
   if (error) console.log(error);
+
   return (
-    <div className="container mx-auto p-4 w-5/12">
-      <div className=" mx-auto bg-white shadow-md rounded-md border border-gray-300 p-6">
-        <div>
-          <h1 className="text-2xl font-bold text-center">Update Profile</h1>
-        </div>
-        <form onSubmit={handleSubmit}>
+    <div className="container">
+      <div className="bg-white shadow-md rounded-lg text-left pt-0">
+        <h1
+          className="text-xl font-bold text-center w-full rounded-t-lg border p-1"
+          style={{
+            background: "#0487D9",
+            color: "white",
+          }}
+        >
+          Profile management
+        </h1>
+        <form onSubmit={handleSubmit} className="mt-5 p-4">
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="name"
-            >
-              <User className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Name
-            </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.name ? "border-red-500" : ""
-              }`}
-              id="name"
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Enter your name"
-            />
-            {errors.name && (
-              <p className="text-red-500 text-xs italic">{errors.name}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              <Mail className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Email
-            </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.email ? "border-red-500" : ""
-              }`}
-              id="email"
-              type="text"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Enter your email"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-xs italic">{errors.email}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="city"
-            >
-              <MapPin className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Region
-            </label>
-            <Select
-              options={egyptianCities.map((city) => ({
-                value: city,
-                label: city,
-              }))}
-              value={{
-                value: formData.addresses[0].city,
-                label: formData.addresses[0].city,
-              }}
-              onChange={(selectedOption) => {
-                if (selectedOption) {
-                  setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    addresses: [
-                      {
-                        ...prevFormData.addresses[0],
-                        city: selectedOption.value,
-                      },
-                    ],
-                  }));
-                }
-              }}
-            />
-            {errors.city && (
-              <p className="text-red-500 text-xs italic">{errors.city}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="age"
-            >
-              <Baby className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Age
-            </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.age ? "border-red-500" : ""
-              }`}
-              id="age"
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              placeholder="Enter your age"
-            />
-            {errors.age && (
-              <p className="text-red-500 text-xs italic">{errors.age}</p>
-            )}
-          </div>
-          <div className="mb-4">
-            <div>
+            <div className="flex flex-col md:flex-row ">
               <label
-                className="block text-gray-700 text-sm font-bold mb-2"
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0"
+                htmlFor="name"
+              >
+                <User className="inline mx-1 w-4 h-5" />
+                Name
+              </label>
+              <input
+                className={`shadow appearance-none  rounded w-full md:w-8/12 focus:border-blue-400 border-solid border-2 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.name ? "border-red-500" : ""
+                }`}
+                id="name"
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Enter your name"
+              />
+            </div>
+            {errors.name && (
+              <p className="text-red-500 text-xs lg:ml-32 font-bold italic mt-1">
+                {errors.name}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <label
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0"
+                htmlFor="email"
+              >
+                <Mail className="inline mx-1 w-4 h-5" />
+                Email
+              </label>
+              <input
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.email ? "border-red-500" : ""
+                }`}
+                id="email"
+                type="text"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+              />
+            </div>
+            {errors.email && (
+              <p className="text-red-500 text-xs lg:ml-32 font-bold italic mt-1">
+                {errors.email}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0">
+                <MapPin className="inline mx-1 w-4 h-5" />
+                Region
+              </label>
+              <Select
+                className="w-full md:w-8/12 md:ml-4 md:mt-0 mt-2"
+                options={egyptianCities.map((city) => ({
+                  value: city,
+                  label: city,
+                }))}
+                value={{
+                  value: formData.addresses[0].city,
+                  label: formData.addresses[0].city,
+                }}
+                onChange={(selectedOption) => {
+                  if (selectedOption) {
+                    setFormData((prevFormData) => ({
+                      ...prevFormData,
+                      addresses: [
+                        {
+                          ...prevFormData.addresses[0],
+                          city: selectedOption.value,
+                        },
+                      ],
+                    }));
+                  }
+                }}
+              />
+            </div>
+            {errors.city && (
+              <p className="text-red-500 lg:ml-32 font-bold text-xs italic mt-1">
+                {errors.city}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <label
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0"
+                htmlFor="age"
+              >
+                <Baby className="inline mx-1 w-4 h-5" />
+                Age
+              </label>
+              <input
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.age ? "border-red-500" : ""
+                }`}
+                id="age"
+                type="number"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                placeholder="Enter your age"
+              />
+            </div>
+            {errors.age && (
+              <p className="text-red-500 lg:ml-32 font-bold text-xs italic mt-1">
+                {errors.age}
+              </p>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <div className="flex flex-col md:flex-row items-center">
+              <label
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0"
                 htmlFor="phone"
               >
-                <Phone className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
+                <Phone className="inline mx-1 w-4 h-5" />
                 Phone
               </label>
+              <input
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.phone ? "border-red-500" : ""
+                }`}
+                id="phone"
+                type="text"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                placeholder="Enter your phone number"
+              />
             </div>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.phone ? "border-red-500" : ""
-              }`}
-              id="phone"
-              type="number"
-              name="phone"
-              value={formData.phone}
-              onChange={handleChange}
-              placeholder="Enter your phone number"
-            />
             {errors.phone && (
-              <p className="text-red-500 text-xs italic">{errors.phone}</p>
+              <p className="text-red-500 lg:ml-32 font-bold text-xs italic mt-1">
+                {errors.phone}
+              </p>
             )}
           </div>
+
           <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="birthDate"
-            >
-              <CalendarFold className="inline justify-center align-middle mx-1 w-4 h-5 m-auto" />
-              Birth Date
-            </label>
-            <input
-              className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
-                errors.birthDate ? "border-red-500" : ""
-              }`}
-              id="birthDate"
-              type="datetime-local"
-              name="birthDate"
-              value={
-                formData.birthDate
-                  ? new Date(formData.birthDate).toISOString().slice(0, 16)
-                  : ""
-              }
-              onChange={handleChange}
-              placeholder="Enter your birthDate"
-            />
+            <div className="flex flex-col md:flex-row items-center">
+              <label
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0"
+                htmlFor="birthDate"
+              >
+                <CalendarFold className="inline mx-1 w-4 h-5" />
+                Birth
+              </label>
+              <input
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                  errors.birthDate ? "border-red-500" : ""
+                }`}
+                id="birthDate"
+                type="datetime-local"
+                name="birthDate"
+                value={
+                  formData.birthDate
+                    ? new Date(formData.birthDate).toISOString().slice(0, 16)
+                    : ""
+                }
+                onChange={handleChange}
+                placeholder="Enter your birthDate"
+              />
+            </div>
             {errors.birthDate && (
-              <p className="text-red-500 text-xs italic">{errors.birthDate}</p>
+              <p className="text-red-500 lg:ml-32 font-bold text-xs italic mt-1 text-center">
+                {errors.birthDate}
+              </p>
             )}
           </div>
-          <div className="space-x-5">
-            <div className="inline items-center justify-between">
-              <button
-                className="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="submit"
-              >
-                Update
-              </button>
-            </div>
-            <div className=" inline items-center justify-between">
-              <button
-                onClick={() => {
-                  window.location.href = "/";
-                }}
-                className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                type="button"
-              >
-                Cancel
-              </button>
-            </div>
+
+          <div className="flex justify-center flex-col md:flex-row  gap-4 md:gap-8 mt-4">
+            <button
+              className="text-white w-full md:w-28 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+              style={{ backgroundColor: "#F21313" }}
+              type="submit"
+            >
+              Update
+            </button>
+            <button
+              onClick={() => {
+                window.location.href = "/";
+              }}
+              className="bg-gray-500 w-full md:w-28 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+              type="button"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </div>
