@@ -92,6 +92,7 @@ export class AvailableAppointmentService {
             doctor: { $first: '$doctor' },
             appointments: {
               $push: {
+                id: '$_id',
                 date: '$date',
               },
             },

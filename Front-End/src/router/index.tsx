@@ -59,7 +59,7 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
         <Route
-          path="/book/:id"
+          path="/book/:doctor_id/:appointment_id"
           element={<Book />}
           errorElement={<ErrorHandler />}
         />

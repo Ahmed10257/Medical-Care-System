@@ -1,4 +1,3 @@
-// interfaces.ts
 export interface Address {
     country: string;
     city: string;
@@ -31,6 +30,7 @@ export interface Doctor {
 }
 
 export interface Appointment {
+    id: string;
     date: string;
 }
 
@@ -38,4 +38,26 @@ export interface DoctorWithAppointments {
     _id: string;
     doctor: Doctor;
     appointments: Appointment[];
+}
+
+interface PatientAddress {
+    _id: string;
+    city: string;
+    street: string;
+    country: string;
+}
+
+export interface Patient {
+    _id: string;
+    name: string;
+    age: number;
+    phone: string;
+    email: string;
+    password: string;
+    addresses: PatientAddress[];
+    image: string;
+    gender: 'male' | 'female'; 
+    birthDate: string; 
+    isPatient: boolean;
+    medicalRecord: string[];
 }

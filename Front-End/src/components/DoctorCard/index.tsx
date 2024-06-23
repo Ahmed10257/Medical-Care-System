@@ -76,8 +76,8 @@ const Card = (props: IProps) => {
     }
   };
 
-  const handleBook = () => {
-    navigate(`/book/${id}`);
+  const handleBook = (appointmentId: string) => {
+    navigate(`/book/${id}/${appointmentId}`);
   };
 
   return (
@@ -118,10 +118,15 @@ const Card = (props: IProps) => {
       <div className="w-1/2 pl-2 p-4 flex flex-col items-center">
         <div className="flex flex-col items-center">
           <div className="appointment-container flex justify-between w-full">
-            {appointments.slice(currentIndex, currentIndex + 3).map((appointment, index) => (
-              <AppointmentCard key={index} appointment={appointment} handleBook={handleBook} />
+            {appointments.slice(currentIndex, currentIndex + 3).map((appointment) => (
+              <AppointmentCard
+                key={appointment.id}
+                appointment={appointment}
+                handleBook={() => handleBook(appointment.id)}
+              />
             ))}
           </div>
+
           <div className="flex mt-4">
             <button onClick={handlePrev} className={`bg-gray-200 p-2 rounded-full focus:outline-none ${currentIndex === 0 ? 'invisible' : ''}`}>
               <FontAwesomeIcon icon={faChevronLeft} />
