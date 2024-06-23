@@ -12,31 +12,31 @@ import { CreateAvailableAppointmentDto } from './dto/create-available-appointmen
 import { UpdateAvailableAppointmentDto } from './dto/update-available-appointment.dto';
 import { Doctor } from '../../Common/Schemas/doctor.schema';
 
-@Controller('available-appointments')
+@Controller()
 export class AvailableAppointmentController {
   logger: any;
   constructor(
     private readonly availableAppointmentsService: AvailableAppointmentService,
   ) {}
 
-  @Post()
+  @Post('available-appointments')
   create(@Body() createAvailableAppointmentDto: CreateAvailableAppointmentDto) {
     return this.availableAppointmentsService.create(
       createAvailableAppointmentDto,
     );
   }
 
-  @Get()
+  @Get('available-appointments')
   findAll() {
     return this.availableAppointmentsService.findAll();
   }
 
-  @Get(':id')
+  @Get('available-appointments/:id')
   findOne(@Param('id') id: string) {
     return this.availableAppointmentsService.findById(id);
   }
 
-  @Patch(':id')
+  @Patch('available-appointments/:id')
   update(
     @Param('id') id: string,
     @Body() updateAvailableAppointmentDto: UpdateAvailableAppointmentDto,
@@ -47,12 +47,12 @@ export class AvailableAppointmentController {
     );
   }
 
-  @Delete(':id')
+  @Delete('available-appointments/:id')
   remove(@Param('id') id: string) {
     return this.availableAppointmentsService.deleteById(id);
   }
 
-  @Get('doctors-with-appointments')
+  @Get('available-appointment/doctors-with-appointments')
   async findAllDoctorsWithAppointments(): Promise<Doctor[]> {
     try {
       const doctors =

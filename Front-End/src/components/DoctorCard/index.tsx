@@ -11,6 +11,8 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import { Appointment } from '../../interfaces';
+import AppointmentCard from '../AppointmentCard';
 
 interface IProps {
   imageUrl: string;
@@ -23,7 +25,7 @@ interface IProps {
   fees: number;
   waitingTime: string;
   phoneNumber: string;
-  appointments: Array<{ date: string; time: string }>;
+  appointments: Appointment[];
   id: string;
 }
 
@@ -79,14 +81,14 @@ const Card = (props: IProps) => {
   };
 
   return (
-    <div className="max-w-6xl rounded overflow-hidden shadow-lg border p-4 bg-white flex">
+    <div className="max-w-4xl rounded-lg overflow-hidden shadow-lg border p-4 bg-white flex hover:bg-gray-50 transition-colors duration-300">
       {/* First Column: Image */}
       <div className="w-1/6 flex justify-center items-center">
         <img className="w-20 h-20 rounded-full" src={imageUrl} alt="Profile" />
       </div>
 
       {/* Second Column: Information */}
-      <div className="w-4/6 p-4 text-left">
+      <div className="w-3/6 pr-2 text-left">
         <h2 className="font-bold text-xl mb-2">{name}</h2>
         <p className="text-gray-600 mb-2">{title}</p>
         <div className="flex items-center mb-2">
@@ -113,19 +115,11 @@ const Card = (props: IProps) => {
       </div>
 
       {/* Third Column: Appointments and Booking */}
-      <div className="w-5/12 p-4 flex flex-col items-center">
-        <h3 className="font-bold text-lg mb-2">Appointments</h3>
+      <div className="w-1/2 pl-2 p-4 flex flex-col items-center">
         <div className="flex flex-col items-center">
           <div className="appointment-container flex justify-between w-full">
             {appointments.slice(currentIndex, currentIndex + 3).map((appointment, index) => (
-              <div key={index} className="appointment-card flex flex-col items-center m-2 p-4 border rounded w-32">
-                <div className="bg-blue-500 text-white py-1 px-2 rounded-t w-full text-center">{appointment.date}</div>
-                <div className="bg-white text-center py-2 px-2 w-full">
-                  <p className="text-gray-700">From {appointment.time.split(" ")[0]}</p>
-                  <p className="text-blue-500">To {appointment.time.split(" ")[1]}</p>
-                </div>
-                <button className="mt-2 bg-red-500 text-white py-1 px-4 rounded w-full" onClick={handleBook}>BOOK</button>
-              </div>
+              <AppointmentCard key={index} appointment={appointment} handleBook={handleBook} />
             ))}
           </div>
           <div className="flex mt-4">
@@ -138,6 +132,7 @@ const Card = (props: IProps) => {
           </div>
         </div>
       </div>
+
     </div>
   );
 };

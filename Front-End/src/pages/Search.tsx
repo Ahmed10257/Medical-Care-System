@@ -1,19 +1,15 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from '../components/DoctorCard';
-import { Doctor } from '../interfaces';
-const dummyAppointments = [
-    { date: '2024-06-25', time: '10:00 AM' },
-    { date: '2024-06-25', time: '02:00 PM' },
-    { date: '2024-06-26', time: '11:00 AM' },
-];
+import { DoctorWithAppointments } from '../interfaces';
+
 const Search = () => {
-    const [doctors, setDoctors] = useState<Doctor[]>([]);
+    const [doctorsWithAppointments, setDoctorsWithAppointments] = useState<DoctorWithAppointments[]>([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/doctor')
+        axios.get('http://localhost:3000/available-appointment/doctors-with-appointments')
             .then(response => {
-                setDoctors(response.data);
+                setDoctorsWithAppointments(response.data);
             })
             .catch(error => {
                 console.error('There was an error fetching the doctors!', error);
@@ -21,8 +17,8 @@ const Search = () => {
     }, []);
 
     return (
-        <div className="App">
-            {doctors.map(doctor => (
+        <div className="App grid gap-4">
+            {doctorsWithAppointments.map(({ doctor, appointments }) => (
                 <Card
                     key={doctor._id}
                     id={doctor._id}
@@ -36,7 +32,7 @@ const Search = () => {
                     fees={doctor.fees}
                     waitingTime={`${doctor.waitingTime} Minutes`}
                     phoneNumber={doctor.contactInfo}
-                    appointments={dummyAppointments}
+                    appointments={appointments}
                 />
             ))}
         </div>
