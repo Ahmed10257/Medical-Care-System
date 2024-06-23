@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Patient } from './entities/patient.entity';
 import { PatientDocument } from './Schemas/patient.schema';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class PatientService {
@@ -37,5 +38,25 @@ export class PatientService {
 
   async remove(id: string): Promise<Patient | null> {
     return await this.patientModel.findByIdAndDelete(id).exec();
+  }
+
+  async verifyPatientPassword(
+    patient: Patient,
+    plainPassword: string,
+    newPassword: string,
+  ): Promise<boolean> {
+    const isPasswordCorrect = await bcrypt.compare(
+      plainPassword,
+      patient['password'],
+    );
+    if (!isPasswordCorrect) {
+      return false;
+    } else {
+      const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+      await this.patientModel.findByIdAndUpdate(patient['_id'], {
+        password: hashedNewPassword,
+      });
+      return true;
+    }
   }
 }

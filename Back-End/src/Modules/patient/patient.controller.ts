@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  NotFoundException,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { CreatePatientDto } from './dto/create-patient.dto';
@@ -45,5 +46,22 @@ export class PatientController {
   @Delete(':id')
   async remove(@Param('id') id: string): Promise<Patient | null> {
     return await this.patientService.remove(id);
+  }
+
+  @Post(':id/verify-password')
+  async verifyPatientPassword(
+    @Param('id') id: string,
+    @Body('password') password: string,
+    @Body('newPassword') newPassword: string,
+  ): Promise<boolean> {
+    const patient = await this.patientService.findOne(id);
+    if (!patient) {
+      throw new NotFoundException('Patient not found');
+    }
+    return this.patientService.verifyPatientPassword(
+      patient,
+      password,
+      newPassword,
+    );
   }
 }

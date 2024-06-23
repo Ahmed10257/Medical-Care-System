@@ -3,8 +3,6 @@ import { Phone, CalendarFold, MapPin, Mail, User, Baby } from "lucide-react";
 import Swal from "sweetalert2";
 import axios from "axios";
 import Select from "react-select";
-import "react-datepicker/dist/react-datepicker.css";
-
 import { egyptianCities } from "../../data/patient-profile";
 import { FormData } from "../../interfaces/patient-profile";
 import { validate } from "../../utils/patient-profile-func";
@@ -34,7 +32,7 @@ const UpdateForm = () => {
       baseURL: "http://localhost:3000",
     });
     api
-      .get("/patient/6673fb26688bcd7f251520e5")
+      .get("/patient/6678a12a4dbf01704044de71")
       .then((response) => {
         console.log(response.data);
         setFormData({
@@ -87,7 +85,7 @@ const UpdateForm = () => {
       return;
     }
     axios
-      .patch("http://localhost:3000/patient/6673fb26688bcd7f251520e5", formData)
+      .patch("http://localhost:3000/patient/6678a12a4dbf01704044de71", formData)
       .then((response) => {
         Swal.fire({
           title: "Success",
