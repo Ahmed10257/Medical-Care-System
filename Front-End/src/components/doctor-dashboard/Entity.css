@@ -1,0 +1,72 @@
+.h1 {
+  font-size:xx-large;
+  margin-top: 5px;
+  font-weight: bolder;
+}
+
+.entity-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background-color:white;
+  }
+
+  .doctor-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background-color: white;
+  }
+  
+  .entity-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    width: 150px;
+    margin: 20px;
+  }
+  
+  .entity-card .entity-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin: 20px;
+  }
+
+  .doctor-card .card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin: 20px;
+  }
+  
+  .entity-card .entity-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    margin: 20px;
+  }
+
+  .doctor-card .card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    margin: 20px;
+  }
+  
+  .update-button {
+    background-color:#0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 20px;
+  }
+
+  p{
+    font-weight:600;
+  }
+  

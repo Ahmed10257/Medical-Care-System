@@ -1,0 +1,146 @@
+.h1 {
+  font-size: xx-large;
+  margin-top: 5px;
+  font-weight: bolder;
+}
+
+.schedule-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  height: 100vh;
+  box-sizing: border-box;
+  /* background-color: #f0f2f5; Light background color for contrast */
+}
+
+.calendar-container {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  height: 60%;
+  margin-right: 10px;
+}
+
+.react-calendar {
+  width: 100%;
+  max-width: 450px;
+  background-color: rgb(228, 238, 248);
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-style:oblique;
+}
+
+.react-calendar__tile {
+  text-align: center;
+  padding: 10px 6.6667px;
+  background: none;
+  border-radius: 4px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+  background-color:#0056b3;
+  color: #000;
+}
+
+
+.react-calendar__tile--active:hover,
+.react-calendar__tile--active:focus {
+  background-color: #0056b3;
+}
+
+.add-appointment-container {
+  flex: 3;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  margin-left: 10px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.add-appointment-container .appointment-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 25%;
+  width: 50%;
+  color: grey;
+
+}
+
+/* .appointment-list .appointment-img {
+  height: 200px;
+} */
+
+
+.add-appointment-button {
+  position: relative;
+  height: 40px;
+  padding: 10px 20px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-appointment-button:hover {
+  background-color: #0c67c7;
+}
+
+.add-appointment-container h2 {
+  font-size: large;
+  margin-top: 5px;
+}
+
+.plus-icon {
+  margin-right: 8px;
+}
+
+
+
+
+@media (max-width: 768px) {
+  .h1 {
+    font-size: large;
+  }
+
+  .schedule-container {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .calendar-container,
+  .add-appointment-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .react-calendar {
+    width: 90%;
+    max-width: none;
+  }
+
+  .appointment-img {
+    width: 60%;
+    margin-top: 20px;
+  }
+
+  .add-appointment-container .no-appointment {
+    margin-top: 10px;
+  }
+}
