@@ -59,7 +59,7 @@ const Patients: React.FC = () => {
       } catch (error) {
         console.error('Error fetching patients:', error);
       } finally {
-        setLoading(false); // Set loading state to false after fetching
+        setLoading(false); 
       }
     };
 
@@ -67,13 +67,13 @@ const Patients: React.FC = () => {
   }, [doctorId]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value.toLowerCase()); // Search in lowercase
+    setSearchTerm(event.target.value.toLowerCase()); 
   };
 
   // Function to format date to display only date part
   const formatDate = (isoDateString: string) => {
     const date = new Date(isoDateString);
-    return date.toLocaleDateString('en-US', { timeZone: 'UTC' }); // Adjust timeZone as per your requirement
+    return date.toLocaleDateString('en-US', { timeZone: 'UTC' }); 
   };
 
   // Function to display only first 7 characters of _id
@@ -103,6 +103,7 @@ const Patients: React.FC = () => {
 
   return (
     <>
+    <div className='all-container'>
       <h1 className='h1'>Patients</h1>
       <div className='container'>
         <div className="patients-table">
@@ -166,6 +167,7 @@ const Patients: React.FC = () => {
           )}
         </div>
       </div>
+    </div>
     </>
   );
 };

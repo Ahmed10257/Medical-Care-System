@@ -1,12 +1,15 @@
-body{
-    /* background-color:rgb(228, 238, 248); */
+.all-container{
     background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
-}
+    height: 100vh;
+    width: 100%;
+    background-size:contain;
+  }
+
 .h1 {
   font-size:xx-large;
   margin-top: 5px;
   font-weight: bolder;
-  margin-bottom: 20px;
+  margin: 25px;
 }
 
 .container{

@@ -66,6 +66,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
   };
 
   return (
+    <div className='all-container'>
     <div className="update-form-container">
       <form className="update-form" onSubmit={handleSubmit}>
         <input
@@ -134,6 +135,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
           <button type="button" onClick={onClose} className="cancel-button">Cancel</button>
         </div>
       </form>
+    </div>
     </div>
   );
 };
