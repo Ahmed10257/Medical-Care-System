@@ -12,3 +12,9 @@ export interface FormData {
   addresses: Address[];
   birthDate: string;
 }
+
+export interface FormPasswordData {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
