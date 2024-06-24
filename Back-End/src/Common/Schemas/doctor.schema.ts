@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, HydratedDocument } from 'mongoose';
+import { Document } from 'mongoose';
 import {
   IsString,
   IsNumber,
@@ -10,8 +9,7 @@ import {
   ValidateNested,
   IsDate,
 } from 'class-validator';
-import {Type } from 'class-transformer';
-export type DoctorDocument = HydratedDocument<Doctor>;
+import { Type } from 'class-transformer';
 
 export enum Gender {
   MALE = 'Male',
@@ -77,8 +75,26 @@ export class Doctor extends Document {
 
   @Prop({ required: true })
   @IsString()
-  specialization: string;
+  genaralSpecialization: string;
 
+  @Prop({ required: true })
+  specializes: string[];
+
+  @Prop({ default: 0 })
+  @IsNumber()
+  views: number;
+
+  @Prop({ default: 0 })
+  @IsNumber()
+  fees: number;
+
+  @Prop({ default: 0 })
+  @IsNumber()
+  waitingTime: number;
+
+  @Prop({ required: true })
+  @IsString()
+  about: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

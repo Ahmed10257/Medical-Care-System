@@ -37,7 +37,7 @@ const NormalNav = () => {
           </li>
 
           <li>
-            <div className="hidden ">
+            <div className="flex ">
               <DropDown />
               <span className="sperateline"></span>
             </div>

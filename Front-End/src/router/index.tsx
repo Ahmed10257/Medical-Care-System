@@ -10,6 +10,7 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorHandler from "../errors/ErrorHandler";
+import DoctorProfile from "../pages/DoctorProfile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -50,7 +51,12 @@ const router = createBrowserRouter(
           element={<Register />}
           errorElement={<ErrorHandler />}
         />
-        
+       <Route
+          path="/doctor/:id"  
+          element={<DoctorProfile />}
+          errorElement={<ErrorHandler />}
+        />
+
         <Route path="*" element={<ErrorHandler statusCode={404} message="Page not found" />} />
       </Route>
     </>
