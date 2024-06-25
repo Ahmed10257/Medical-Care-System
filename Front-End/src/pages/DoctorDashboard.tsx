@@ -13,7 +13,7 @@ const DoctorDashboard: React.FC = () => {
   useEffect(() => {
     const fetchDoctorData = async () => {
       try {
-        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667505aa0cf8fa0abdff5162');
+        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667980ed403c655bd6da3b61');
         const doctor = response.data; 
         setDoctorData(doctor); 
       } catch (error) {
@@ -49,7 +49,7 @@ const DoctorDashboard: React.FC = () => {
         <div className="sidebar">
           <div className="sidebar-logo">
             <img
-              src="https://www.finsmes.com/wp-content/uploads/2020/02/vezeeta.jpg"
+              src="https://newtechclub.com/wp-content/uploads/2017/09/Vezeeta-logo.png"
               alt="Logo"
               className="logo-image"
             />
@@ -59,7 +59,7 @@ const DoctorDashboard: React.FC = () => {
               <li>
                 <Link to="/dashboard/schedule">
                   <img
-                    src="https://static.vecteezy.com/system/resources/previews/003/738/373/original/time-schedule-icon-free-vector.jpg"
+                    src="https://icon-library.com/images/schedule-icon-transparent/schedule-icon-transparent-1.jpg"
                     alt="Schedule Icon"
                     className="icon-image"
                   />

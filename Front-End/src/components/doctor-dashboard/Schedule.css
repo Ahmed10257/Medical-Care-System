@@ -1,146 +1,197 @@
-.h1 {
-  font-size: xx-large;
-  margin-top: 5px;
-  font-weight: bolder;
-}
-
-.schedule-container {
+.appointments-header {
   display: flex;
   justify-content: space-between;
-  padding: 20px;
-  height: 100vh;
+  align-items: center;
+  width: 100%;
   box-sizing: border-box;
-  /* background-color: #f0f2f5; Light background color for contrast */
+  border-bottom: 1px solid #ddd;
+  padding: 10px 20px;
 }
 
-.calendar-container {
-  width: 30%;
+.date-controls {
   display: flex;
-  flex-direction: column;
-  background-color: #fff;
-  padding: 20px;
+  align-items: center;
+  flex-wrap: wrap; 
+}
+
+.date-controls button {
+  background: white;
+  border: 1px solid #ccc;
+  color: black;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-right: 5px;
   border-radius: 5px;
-  border: 1px solid #ddd;
-  height: 60%;
+}
+
+
+
+.date-controls span {
+  font-size: 16px;
   margin-right: 10px;
 }
 
-.react-calendar {
-  width: 100%;
-  max-width: 450px;
-  background-color: rgb(228, 238, 248);
-  border: none;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  font-style:oblique;
-}
-
-.react-calendar__tile {
-  text-align: center;
-  padding: 10px 6.6667px;
-  background: none;
-  border-radius: 4px;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.react-calendar__tile:enabled:hover,
-.react-calendar__tile:enabled:focus {
-  background-color:#0056b3;
-  color: #000;
-}
-
-
-.react-calendar__tile--active:hover,
-.react-calendar__tile--active:focus {
-  background-color: #0056b3;
-}
-
-.add-appointment-container {
-  flex: 3;
-  justify-content: space-between;
-  padding: 20px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin-left: 10px;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.add-appointment-container .appointment-list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin: 25%;
-  width: 50%;
-  color: grey;
-
-}
-
-/* .appointment-list .appointment-img {
-  height: 200px;
-} */
-
-
-.add-appointment-button {
-  position: relative;
-  height: 40px;
-  padding: 10px 20px;
+.date-input {
+  padding: 8px;
   font-size: 16px;
-  color: #fff;
-  background-color: #0056b3;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+  max-width: 200px; 
+}
+
+.date-input:focus {
+  outline: none;
+  border-color: cadetblue;
+}
+
+
+.add-appointment .add-appointment-button {
+  background: rgb(67, 81, 240);
   border: none;
-  border-radius: 4px;
+  color: white;
+  padding: 8px 16px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  border-radius: 5px;
 }
 
-.add-appointment-button:hover {
-  background-color: #0c67c7;
+.add-appointment .add-appointment-button:hover {
+  background:rgb(61, 61, 239);
 }
 
-.add-appointment-container h2 {
-  font-size: large;
-  margin-top: 5px;
+.add-appointment .refresh-button {
+  background: white;
+  border: none;
+  color: rgb(107, 102, 102);
+  padding: 8px 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-left: 10px;
+}
+.appointments-by-day{
+  background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+  height: 100vh;
+  padding: 20px;
+
+}
+.appointment-item {
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  margin: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 4px rgba(74, 72, 72, 0.1);
+  background-color: #f8f2f2;
+  transition: transform 0.2s;
+  max-width: 300px;
 }
 
-.plus-icon {
-  margin-right: 8px;
+.appointment-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
 
 
+.no-appointments {
+  margin-top: 120px;
+  font-size: 16px;
+  color: #888;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.no-appointments img {
+  width: 200px;
+  height: auto;
+  margin-bottom: 0px;
+}
 
-@media (max-width: 768px) {
-  .h1 {
-    font-size: large;
-  }
 
-  .schedule-container {
+.custom-calendar{
+  font-family: Arial, sans-serif;
+  border-radius: 5px;
+  width: 200px;
+  margin-left: 20px;
+}
+
+
+.p-datepicker {
+  background-color: white;
+  font-size: small;
+  color: gray;
+  border-radius: 5px;
+  box-shadow: 0 2px 2px rgba(103, 100, 100, 0.2);
+  padding: 10px;
+  
+}
+
+.p-datepicker-header {
+  color:rgb(78, 73, 73);
+  border-bottom: #eee7e7 1px solid;
+  font-size: medium;
+  padding: 10px;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.p-datepicker-prev, .p-datepicker-next {
+  color: black;
+  cursor: pointer;
+}
+
+.p-datepicker table {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+.p-datepicker td {
+  padding: 8px;
+  text-align: center;
+}
+
+.p-datepicker .p-highlight {
+  background-color: #007bff;
+  border: #888 1px solid;
+  border-radius: 10px;
+  width: 30px;
+  height: 30px;
+  color: #fff;
+}
+
+
+.p-datepicker-trigger {
+  font-size: 200px; 
+  color: #9aa6b2; 
+  cursor: pointer;
+  border: none;
+  width: 50px;
+}
+
+/* Media queries for responsiveness */
+@media only screen and (max-width: 768px) {
+  .appointments-header {
     flex-direction: column;
-    align-items: center;
-    height: auto;
+    align-items: flex-start;
   }
 
-  .calendar-container,
-  .add-appointment-container {
-    width: 100%;
-    margin-bottom: 20px;
+  .date-controls {
+    margin-bottom: 10px; 
   }
 
-  .react-calendar {
-    width: 90%;
-    max-width: none;
+  .date-controls span {
+    margin-bottom: 5px; 
   }
 
-  .appointment-img {
-    width: 60%;
-    margin-top: 20px;
-  }
-
-  .add-appointment-container .no-appointment {
-    margin-top: 10px;
+  .add-appointment-button {
+    margin-top: 10px; 
   }
 }
+
+

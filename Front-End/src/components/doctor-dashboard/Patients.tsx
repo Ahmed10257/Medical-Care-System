@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import '@fortawesome/fontawesome-free/css/all.min.css'; // Import FontAwesome CSS
-import './Patients.css'; // Import your custom CSS file
+import '@fortawesome/fontawesome-free/css/all.min.css'; 
+import './Patients.css'; 
 
 interface Patient {
   _id: string;
   name: string;
   phone: number;
-  birthDate: string; // Assuming birthDate is in ISO string format
+  birthDate: string; 
 }
 
 interface Appointment {
@@ -21,14 +21,14 @@ interface Appointment {
 const Patients: React.FC = () => {
   const [patientsData, setPatientsData] = useState<Patient[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
-  const [loading, setLoading] = useState(false); // State to manage loading state
-  const [currentPage, setCurrentPage] = useState(1); // Current page of pagination
-  const [patientsPerPage] = useState(10); // Number of patients per page
-  const doctorId = '667505aa0cf8fa0abdff5162'; // Replace with the actual doctor ID
+  const [loading, setLoading] = useState(false); 
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [patientsPerPage] = useState(10); 
+  const doctorId = '667980ed403c655bd6da3b61'; 
 
   useEffect(() => {
     const fetchAppointmentsAndPatients = async () => {
-      setLoading(true); // Set loading state to true while fetching
+      setLoading(true); 
 
       try {
         // Fetch all appointments
@@ -40,7 +40,7 @@ const Patients: React.FC = () => {
         
         // Filter appointments to get completed appointments for the specific doctor
         const completedAppointments = allAppointments.filter(
-          appointment => appointment.doctor_id === doctorId && appointment.status === 'completed'
+          appointment => appointment.doctor_id === doctorId && (appointment.status === 'completed' || appointment.status === 'confirmed') 
         );
 
         // Extract patient IDs from completed appointments
@@ -103,8 +103,16 @@ const Patients: React.FC = () => {
 
   return (
     <>
-    <div className='all-container'>
-      <h1 className='h1'>Patients</h1>
+    <div className='patient-container'>
+      <h1
+      className="text-xl font-bold text-center w-full rounded-t-lg border p-1"
+      style={{
+      background: "#0487D9",
+      color: "white",
+      }}
+      >
+        Patients
+      </h1>
       <div className='container'>
         <div className="patients-table">
           <div className="search-container mb-3">

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Consultation.css'; // Import your custom CSS file
+import './Consultation.css'; 
 
 interface Question {
   id: number;
@@ -12,7 +12,6 @@ const Consultation: React.FC = () => {
   const [questions, setQuestions] = useState<Question[]>([
     { id: 1, patientName: 'John Doe', question: 'What are the side effects of this medication?' },
     { id: 2, patientName: 'Jane Smith', question: 'How often should I take my medication?' },
-    // Add more questions here if needed
   ]);
 
   const [currentReply, setCurrentReply] = useState<{ [key: number]: string }>({});

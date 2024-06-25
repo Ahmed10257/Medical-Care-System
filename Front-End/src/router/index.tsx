@@ -1,5 +1,6 @@
 import {
   Route,
+  Navigate,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
@@ -15,6 +16,7 @@ import Entity from "../components/doctor-dashboard/Entity"
 import Patients from "../components/doctor-dashboard/Patients"
 import ErrorHandler from "../errors/ErrorHandler";
 import Consultation from "../components/doctor-dashboard/Consultation";
+import Confirmation from "../components/doctor-dashboard/Confirmation";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -57,37 +59,38 @@ const router = createBrowserRouter(
         element={<DoctorDashboard />}
         errorElement={<ErrorHandler message="Page not found" />}
       >
-          <Route
+        {/* Redirect from /dashboard to /dashboard/schedule */}
+        <Route
+          index
+          element={<Navigate to="/dashboard/schedule" />}
+        />
+
+        <Route
           path="consultations" 
-          element={<Consultation/>}
+          element={<Consultation />}
           errorElement={<ErrorHandler />}
         /> 
-         <Route
+        <Route
           path="patients" 
           element={<Patients />}
           errorElement={<ErrorHandler />}
         /> 
-          <Route
+        <Route
           path="entity" 
           element={<Entity />}
           errorElement={<ErrorHandler />}
-        /> 
-        
+        />
         <Route
           path="schedule" 
           element={<Schedule />}
           errorElement={<ErrorHandler />}
         />
-
         <Route
-          index
-          element={<Schedule />}
+          path="confirmation"
+          element={<Confirmation />}
           errorElement={<ErrorHandler />}
         />
-        
-
       </Route>
-
       <Route path="*" element={<ErrorHandler statusCode={404} message="Page not found" />} />
     </>
   )

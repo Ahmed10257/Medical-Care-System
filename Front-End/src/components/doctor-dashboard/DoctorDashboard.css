@@ -1,11 +1,4 @@
-/* General Styles */
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  }
-  
-  /* Container Styles */
-  .container-fluid {
+.container-fluid {
     display: flex;
     flex-direction: column;
     height: 100vh;
@@ -21,6 +14,8 @@ body {
     padding: 10px 20px;
     background-color: white;
     border-bottom: 1px solid #ddd;
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
   }
   
   .navbar-left h4 {
@@ -50,7 +45,6 @@ body {
     border-radius: 50%;
   }
   
-  /* Main Content Styles */
   .main-content {
     display: flex;
     flex: 1;
@@ -64,6 +58,8 @@ body {
     flex-direction: column;
     align-items: center;
     border-right: 2px solid #ddd;
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
   }
   
   .sidebar-logo .logo-image {
@@ -91,9 +87,9 @@ body {
     transition: color 0.3s ease;
   }
   
-  /* .sidebar-nav li a:hover {
+  .sidebar-nav li a:hover {
     color: blue;
-  } */
+  }
 
   .sidebar-nav li a:focus {
     color: blue;

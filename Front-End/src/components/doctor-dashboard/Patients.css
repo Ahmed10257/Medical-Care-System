@@ -1,39 +1,38 @@
-.all-container{
+.patient-container{
     background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
     height: 100vh;
     width: 100%;
-    background-size:contain;
   }
 
 .h1 {
   font-size:xx-large;
-  margin-top: 5px;
+  padding-top: 30px;
+  margin-left: 25px;
   font-weight: bolder;
-  margin: 25px;
 }
 
-.container{
-    background-color: white;
-    border-radius: 5px;
-    width: 100%;
-    box-shadow: 15px 15px 15px rgba(0, 0, 0, 0.1);
+.container .patient-table{
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
 }
 .search-container {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     width: 100%; 
     margin-bottom: 1rem;
   }
   
   .search-input {
-    margin: 10px;
+    margin: 20px;
     padding-left: 3rem;
     width: 100%; 
     height: 2.5rem; 
     border: 1px solid #ccc;
     border-radius: 4px; 
-    background-color: rgb(214, 219, 222);
+    background-color: rgb(182, 208, 224);
   }
   
   .search-input::placeholder {
@@ -53,7 +52,7 @@
   
  
   .table {
-    width: 100%;
+    width: 90%;
     border-collapse: collapse;
     
   }
@@ -132,14 +131,14 @@
 /* Media Query for Responsive Design */
 @media (max-width: 768px) {
   .no-patients-img {
-    width: 80px; /* Decrease image size on smaller screens */
+    width: 80px;
   }
 }
 
   
   
   @media (max-width: 768px) {
-    .container{
+    .container .patient-table{
         background-color: white;
         border-radius: 5px;
         width: 100%;
@@ -150,12 +149,12 @@
     }
   
     .search-icon {
-      left: 1rem; 
+      left: 2rem; 
     }
   }
   
   @media (max-width: 576px) {
-    .container{
+    .container .patient-table{
         background-color: white;
         border-radius: 5px;
         width: 100%;
@@ -166,7 +165,7 @@
     }
   
     .search-icon {
-      left: 1rem;
+      left: 1.5rem;
     }
   }
   
