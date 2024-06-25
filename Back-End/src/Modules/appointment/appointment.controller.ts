@@ -11,26 +11,26 @@ import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 
-@Controller('appointments')
+@Controller()
 export class AppointmentsController {
   constructor(private readonly appointmentService: AppointmentService) {}
 
-  @Post()
+  @Post('appointments')
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentService.create(createAppointmentDto);
   }
 
-  @Get()
+  @Get('appointments')
   findAll() {
     return this.appointmentService.findAll();
   }
 
-  @Get(':id')
+  @Get('appointments/:id')
   findOne(@Param('id') id: string) {
     return this.appointmentService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('appointments/:id')
   update(
     @Param('id') id: string,
     @Body() UpdateAppointment: UpdateAppointmentDto,
@@ -38,8 +38,12 @@ export class AppointmentsController {
     return this.appointmentService.update(id, UpdateAppointment);
   }
 
-  @Delete(':id')
+  @Delete('appointments/:id')
   remove(@Param('id') id: string) {
     return this.appointmentService.remove(id);
+  }
+  @Post('appointment/book')
+  async bookAppointment(@Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.appointmentService.bookAppointment(createAppointmentDto);
   }
 }
