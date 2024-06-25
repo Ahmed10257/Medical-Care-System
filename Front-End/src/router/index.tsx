@@ -12,6 +12,7 @@ import Register from "../pages/Register";
 import ErrorHandler from "../errors/ErrorHandler";
 import Search from "../pages/Search";
 import Book from "../pages/Booking";
+import BookingConfirmation from "../pages/BookingConfirmation";
 
 
 const router = createBrowserRouter(
@@ -61,6 +62,11 @@ const router = createBrowserRouter(
         <Route
           path="/book/:doctor_id/:appointment_id"
           element={<Book />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/confirmation/:id/:doctor_id"
+          element={<BookingConfirmation />}
           errorElement={<ErrorHandler />}
         />
 

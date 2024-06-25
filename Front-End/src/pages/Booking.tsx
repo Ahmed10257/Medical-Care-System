@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import DoctorCard from '../components/BookedDoctorCard';
 import BookingForm from '../components/BookingForm';
@@ -13,6 +13,7 @@ interface RouteParams {
 
 const Book: React.FC = () => {
   const { doctor_id, appointment_id } = useParams<RouteParams>();
+  const navigate = useNavigate();
   const [doctor, setDoctor] = useState<Doctor | null>(null);
   const [appointment, setAppointment] = useState<Appointment | null>(null);
   const [patient, setPatient] = useState<Patient | null>(null);
@@ -28,7 +29,7 @@ const Book: React.FC = () => {
         const appointmentResponse = await axios.get<Appointment>(`http://localhost:3000/available-appointments/${appointment_id}`);
         setAppointment(appointmentResponse.data);
 
-        const patientId = "6675bf9a2be1ad7bb7b1b2f9";
+        const patientId = "6675bf9a2be1ad7bb7b1b2f8";
         const patientResponse = await axios.get<Patient>(`http://localhost:3000/patient/${patientId}`);
         setPatient(patientResponse.data);
       } catch (err) {
@@ -42,9 +43,20 @@ const Book: React.FC = () => {
     fetchData();
   }, [doctor_id, appointment_id]);
 
-  const handleFormSubmit = (formData: any) => {
-    console.log('Form submitted:', formData);
-    // i will implemenete it later insh'allah ''))
+  const handleFormSubmit = async (formData: { name: string; phone: string; email: string; onBehalf: boolean }) => {
+    try {
+      const response = await axios.post('http://localhost:3000/appointment/book', {
+        available_appointment_id: appointment_id,
+        patient_id: patient?._id,
+        ...formData
+      });
+
+      const appointmentId = response.data._id;
+      navigate(`/confirmation/${appointmentId}/${doctor_id}`);
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      setError('Error booking appointment');
+    }
   };
 
   if (loading) {

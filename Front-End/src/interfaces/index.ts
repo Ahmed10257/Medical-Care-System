@@ -56,8 +56,23 @@ export interface Patient {
     password: string;
     addresses: PatientAddress[];
     image: string;
-    gender: 'male' | 'female'; 
-    birthDate: string; 
+    gender: 'male' | 'female';
+    birthDate: string;
     isPatient: boolean;
     medicalRecord: string[];
+}
+export interface BookingConfirmationProps {
+    patientName: string;
+    bookingDate: string;
+    doctorName: string;
+    waitingTime: string;
+    examinationFees: string;
+    vezeetaPoints: number;
+}
+export interface AppointmentDetails {
+    _id: string;
+    doctor_id: string;
+    patient_id: string;
+    date: string;
+    status: string;
 }

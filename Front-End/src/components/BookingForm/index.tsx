@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css';
+import { useNavigate } from 'react-router-dom';
 
 interface BookingFormProps {
   onSubmit: (formData: { name: string; phone: string; email: string; onBehalf: boolean }) => void;
@@ -54,6 +55,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, initialPatientData 
     e.preventDefault();
     onSubmit(formData);
   };
+  const navigate = useNavigate();
 
   return (
     <form
@@ -157,7 +159,9 @@ const BookingForm: React.FC<BookingFormProps> = ({ onSubmit, initialPatientData 
         <button
           type="button"
           className="w-full py-2 px-4 bg-gray-300 text-gray-700 font-semibold rounded-md hover:bg-gray-400"
-          onClick={() => setFormData({ name: '', phone: '', email: '', onBehalf: false })}
+          onClick={() => {
+            navigate('/search');
+          }}
         >
           Cancel
         </button>
