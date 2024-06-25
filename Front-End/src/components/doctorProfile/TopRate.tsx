@@ -3,9 +3,12 @@ import { RollerCoaster } from 'lucide-react';
 import RatingStar from "./RatingStar";
 
 interface IProps{
-
+    rating:number
+    reviewComment:string
+    nameReviwer:string
+    date:string
 }
-const TopRate:FC<IProps>= () => {
+const TopRate:FC<IProps>= ({rating,nameReviwer,reviewComment,date}) => {
   return (
         <>
         <div className="bg-slate-300 w-full rounded-bl-3xl rounded-tr-3xl flex flex-col">
@@ -15,24 +18,24 @@ const TopRate:FC<IProps>= () => {
 
                 </div>
                 <div className="me-16 text-gray-600">
-                    <p>
-                    الدكتور كويس
+                    <p className="">
+                    {reviewComment}
                     </p>
                 </div>
             </div>
 
             <div className=" w-full flex justify-around pt-5 pb-5 ">
                 <div > 
-                <RatingStar rating={2.3}/>
+                <RatingStar rating={rating}/>
 
 
                 </div>
                 <div className="me-16 text-gray-600 flex gap-2 text-xs">
                     <p>
-                        .مازن ع
+                        {nameReviwer}
                     </p>
                     <p>
-                    Tuesday, 17 November 2015
+                    {date}
                     </p>
                 </div>
             </div>

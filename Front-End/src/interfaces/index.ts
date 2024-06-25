@@ -1,4 +1,4 @@
-interface Address {
+export interface Address {
     city: string;
     country: string;
     region: number;
@@ -19,6 +19,7 @@ interface Address {
     isDoctor: boolean;
     specializes: string[];
     views: number;
+    waitingTime:number
   }
   
 

@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { Star } from 'lucide-react';
 import RatingStar from "./RatingStar";
+import MyModal from "./AddReview";
 
 interface IProps{
     overallRating:number
@@ -8,12 +9,12 @@ interface IProps{
 }
 const OverallRating:FC<IProps>= ({overallRating}) => {
   return (
-    <div className="bg-white flex gap-4 p-8 rounded-t-lg  border-b-slate-100 border-b-8   ">
+    <div id="patients-reviews" className="bg-white flex gap-4 p-8 rounded-t-lg  border-b-slate-100 border-b-8   ">
             <div className="">
                <Star color="blue"/>
             </div>
 
-            <div className=" w-full flex flex-col items-start">
+            <div className=" w-full flex flex-col items-center">
                 <div className="text-gray-600 font-bold pb-5 text-base">
                 Patients’ Reviews :
                 </div>
@@ -40,6 +41,7 @@ const OverallRating:FC<IProps>= ({overallRating}) => {
                         <p className="mt-4">Doctor Rating</p>
                     </div>
                 </div>
+                <MyModal/>
                 
             </div>
         </div>

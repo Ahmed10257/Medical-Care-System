@@ -34,13 +34,6 @@ export class ReviewController {
   async findByDoctorId(@Param('doctorId') doctorId: string) {
     return this.reviewService.findByDoctorId(doctorId);
   }
-
-  @Get('doctor/:doctorId/overall-rating')
-  async getOverallRating(@Param('doctorId') doctorId: string) {
-    const overallRating =
-      await this.reviewService.calculateOverallRating(doctorId);
-    return { doctorId, overallRating };
-  }
   @Put(':id')
   update(@Param('id') id: string, @Body() updateReviewDto: UpdateReviewDto) {
     return this.reviewService.update(id, updateReviewDto);

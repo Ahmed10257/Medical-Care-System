@@ -32,13 +32,6 @@ export class ReviewService {
       .exec();
   }
 
-  async calculateOverallRating(doctorId: string): Promise<number> {
-    const reviews = await this.reviewModel.find({ doctor: doctorId }).exec();
-    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    const overallRating = reviews.length ? totalRating / reviews.length : 0;
-    return overallRating;
-  }
-
   async update(id: string, updateReviewDto: UpdateReviewDto) {
     const updateReview = this.reviewModel
       .findByIdAndUpdate(id, updateReviewDto, { new: true })

@@ -1,0 +1,18 @@
+.col1 {
+    height: 100%;
+    overflow-y: auto;
+    padding-right: 1rem; /* Optional, for spacing */
+  }
+  
+  .col2 {
+    position: fixed;
+   
+    width: 20rem; /* Adjust the width as needed */
+    height: calc(100% - 4rem); /* Adjust the height to fit within the viewport minus header height */
+  }
+  
+  .parent-container {
+    height: 100vh;
+    overflow: hidden;
+  }
+  

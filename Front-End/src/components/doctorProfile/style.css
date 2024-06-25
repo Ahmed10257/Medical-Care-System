@@ -27,11 +27,11 @@
       2% 35%, 
       39% 35%
     );
-    margin-right: 4px; /* Space between stars */
+    margin-right: 4px; 
     position: relative;
   }
   
   .star.full {
-    background-color: #FFB624; /* Color for filled star */
+    background-color: #FFB624; 
   }
   
