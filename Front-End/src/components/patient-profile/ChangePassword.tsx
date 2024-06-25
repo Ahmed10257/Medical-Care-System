@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { validatePassword } from "../../utils/patient-profile-func";
+import { LockKeyhole, KeyRound, ShieldCheck } from "lucide-react";
 
 interface FormPasswordData {
   oldPassword: string;
@@ -90,13 +91,14 @@ const ChangePassword = () => {
           <div className="mb-4">
             <div className="flex flex-col md:flex-row">
               <label
-                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-56"
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-44"
                 htmlFor="oldPassword"
               >
-                Old Password
+                <LockKeyhole className="inline mx-1 w-4 h-5" />
+                Current Password
               </label>
               <input
-                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 lg:w-7/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                   errors.oldPassword ? "border-red-500" : ""
                 }`}
                 id="oldPassword"
@@ -108,7 +110,7 @@ const ChangePassword = () => {
               />
             </div>
             {errors.oldPassword && (
-              <p className="text-red-500 text-xs lg:ml-64 font-bold italic mt-1">
+              <p className="text-red-500 text-xs lg:ml-52 font-bold italic mt-1">
                 {errors.oldPassword}
               </p>
             )}
@@ -117,13 +119,14 @@ const ChangePassword = () => {
           <div className="mb-4">
             <div className="flex flex-col md:flex-row">
               <label
-                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-56"
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-44"
                 htmlFor="newPassword"
               >
+                <KeyRound className="inline mx-1 w-4 h-5" />
                 New Password
               </label>
               <input
-                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 lg:w-7/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                   errors.newPassword ? "border-red-500" : ""
                 }`}
                 id="newPassword"
@@ -135,7 +138,7 @@ const ChangePassword = () => {
               />
             </div>
             {errors.newPassword && (
-              <p className="text-red-500 text-xs lg:ml-64 font-bold italic mt-1">
+              <p className="text-red-500 text-xs lg:ml-52 font-bold italic mt-1">
                 {errors.newPassword}
               </p>
             )}
@@ -143,13 +146,14 @@ const ChangePassword = () => {
           <div className="mb-4">
             <div className="flex flex-col md:flex-row">
               <label
-                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-56"
+                className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 lg:w-44"
                 htmlFor="confirmPassword"
               >
+                <ShieldCheck className="inline mx-1 w-4 h-5" />
                 Confirm Password
               </label>
               <input
-                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
+                className={`shadow appearance-none border-solid border-2 rounded w-full md:w-8/12 lg:w-7/12 focus:border-blue-400 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
                   errors.confirmPassword ? "border-red-500" : ""
                 }`}
                 id="confirmPassword"
@@ -163,22 +167,23 @@ const ChangePassword = () => {
               />
             </div>
             {errors.confirmPassword && (
-              <p className="text-red-500 text-xs lg:ml-64 font-bold italic mt-1">
+              <p className="text-red-500 text-xs lg:ml-52 font-bold italic mt-1">
                 {errors.confirmPassword}
               </p>
             )}
           </div>
 
           {errors.general && (
-            <p className="text-red-500 text-center font-bold italic mt-1">
+            <p className="text-red-500 text-xs lg:ml-64 font-bold italic mt-1">
               {errors.general}
             </p>
           )}
-          <div className="flex justify-center flex-col md:flex-row gap-4 md:gap-8 mt-4">
+
+          <div className="flex justify-center flex-col md:flex-row  gap-4 md:gap-8 mt-4">
             <button
               className="text-white w-full md:w-28 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-              style={{ backgroundColor: "#F21313" }}
               type="submit"
+              style={{ backgroundColor: "#F21313" }}
             >
               Update
             </button>

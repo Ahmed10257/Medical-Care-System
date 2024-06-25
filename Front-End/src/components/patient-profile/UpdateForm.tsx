@@ -32,12 +32,26 @@ const UpdateForm = () => {
       baseURL: "http://localhost:3000",
     });
     api
-      .get("/patient/6678a12a4dbf01704044de71")
+      .get("/patient/667adb89b07122c83e59fdf1")
       .then((response) => {
         console.log(response.data);
+        const { name, email, age, phone, addresses, birthDate } = response.data;
         setFormData({
-          ...response.data,
-          birthDate: response.data.birthDate || "",
+          name: name || "",
+          email: email || "",
+          age: age || "",
+          phone: phone || 0,
+          addresses:
+            addresses && addresses.length > 0
+              ? addresses
+              : [
+                  {
+                    country: "",
+                    city: "",
+                    street: "",
+                  },
+                ],
+          birthDate: birthDate || "",
         });
         setIsLoading(false);
       })
@@ -85,7 +99,7 @@ const UpdateForm = () => {
       return;
     }
     axios
-      .patch("http://localhost:3000/patient/6678a12a4dbf01704044de71", formData)
+      .patch("http://localhost:3000/patient/667adb89b07122c83e59fdf1", formData)
       .then((response) => {
         Swal.fire({
           title: "Success",
@@ -189,8 +203,8 @@ const UpdateForm = () => {
                   label: city,
                 }))}
                 value={{
-                  value: formData.addresses[0].city,
-                  label: formData.addresses[0].city,
+                  value: formData.addresses[0]?.city || "",
+                  label: formData.addresses[0]?.city || "",
                 }}
                 onChange={(selectedOption) => {
                   if (selectedOption) {
