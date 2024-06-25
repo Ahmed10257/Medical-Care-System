@@ -18,3 +18,18 @@ export interface FormPasswordData {
   newPassword: string;
   confirmPassword: string;
 }
+
+export interface PatientAppointment {
+  doctorAddress: string;
+  _id: string;
+  doctor_id?: string;
+  patient_id?: string;
+  date: string;
+  status: "pending" | "confirmed" | "cancelled" | "completed";
+  doctorName?: string;
+  address?: {
+    country: string;
+    city: string;
+    region: number;
+  };
+}
