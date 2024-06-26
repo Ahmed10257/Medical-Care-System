@@ -18,6 +18,10 @@ import ErrorHandler from "../errors/ErrorHandler";
 import Consultation from "../components/doctor-dashboard/Consultation";
 import Confirmation from "../components/doctor-dashboard/Confirmation";
 import PatientProfile from "../pages/PatientProfile";
+import Search from "../pages/Search";
+import Book from "../pages/Booking";
+import BookingConfirmation from "../pages/BookingConfirmation";
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -59,7 +63,23 @@ const router = createBrowserRouter(
           element={<Register />}
           errorElement={<ErrorHandler />}
         />
+        <Route
+          path="/search"
+          element={<Search />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/book/:doctor_id/:appointment_id"
+          element={<Book />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/confirmation/:id/:doctor_id"
+          element={<BookingConfirmation />}
+          errorElement={<ErrorHandler />}
+        />
       </Route>
+
 
       {/* Doctor routes using the DoctorLayout */}
       <Route

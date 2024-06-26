@@ -2,7 +2,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
-import { ArrayMinSize, IsDate, IsEnum, IsNumber, IsString, ValidateNested } from 'class-validator';
+import {
+  ArrayMinSize,
+  IsDate,
+  IsEnum,
+  IsNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 export type PatientDocument = HydratedDocument<Patient>;
 
@@ -10,7 +17,6 @@ enum gender {
   Male = 'male',
   Female = 'female',
 }
-
 
 @Schema()
 export class Address {

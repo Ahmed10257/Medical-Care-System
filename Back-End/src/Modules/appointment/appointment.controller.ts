@@ -12,26 +12,26 @@ import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { Appointment } from './entities/appointment.entity';
 
-@Controller('appointments')
+@Controller()
 export class AppointmentsController {
-  constructor(private readonly appointmentService: AppointmentService) {}
+  constructor(private readonly appointmentService: AppointmentService) { }
 
-  @Post()
+  @Post('appointments')
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentService.create(createAppointmentDto);
   }
 
-  @Get()
+  @Get('appointments')
   findAll() {
     return this.appointmentService.findAll();
   }
 
-  @Get(':id')
+  @Get('appointments/:id')
   findOne(@Param('id') id: string) {
     return this.appointmentService.findOne(id);
   }
 
-  @Patch(':id')
+  @Patch('appointments/:id')
   update(
     @Param('id') id: string,
     @Body() UpdateAppointment: UpdateAppointmentDto,
@@ -39,7 +39,7 @@ export class AppointmentsController {
     return this.appointmentService.update(id, UpdateAppointment);
   }
 
-  @Delete(':id')
+  @Delete('appointments/:id')
   remove(@Param('id') id: string) {
     return this.appointmentService.remove(id);
   }
@@ -49,5 +49,9 @@ export class AppointmentsController {
     @Param('patientId') patientId: string,
   ): Promise<Appointment> {
     return this.appointmentService.findAllByPatientId(patientId);
+  }
+  @Post('appointment/book')
+  async bookAppointment(@Body() createAppointmentDto: CreateAppointmentDto) {
+    return this.appointmentService.bookAppointment(createAppointmentDto);
   }
 }

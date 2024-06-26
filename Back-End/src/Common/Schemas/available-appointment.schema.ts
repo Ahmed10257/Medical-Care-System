@@ -15,7 +15,8 @@ export class AvailableAppointment {
   doctor_id: mongoose.Schema.Types.ObjectId;
 
   @Prop({ type: Date, required: true })
-  // @IsDate()
+  @IsDate()
+  @MinDate(new Date())
   date: Date;
 }
 
