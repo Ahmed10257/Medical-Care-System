@@ -48,4 +48,7 @@ export class AppointmentService {
 
     return deletedAPpointment;
   }
+  async findAllByPatientId(patientId: string): Promise<Appointment[]> {
+    return this.appointmentModel.find({ patient_id: patientId }).exec();
+  }
 }

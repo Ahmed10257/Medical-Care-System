@@ -10,6 +10,7 @@ import {
 import { AppointmentService } from './appointment.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 import { UpdateAppointmentDto } from './dto/update-appointment.dto';
+import { Appointment } from './entities/appointment.entity';
 
 @Controller('appointments')
 export class AppointmentsController {
@@ -41,5 +42,12 @@ export class AppointmentsController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.appointmentService.remove(id);
+  }
+
+  @Get('patient/:patientId')
+  async findAllByPatientId(
+    @Param('patientId') patientId: string,
+  ): Promise<Appointment> {
+    return this.appointmentService.findAllByPatientId(patientId);
   }
 }

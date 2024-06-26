@@ -11,12 +11,13 @@ import ContactUs from "../pages/ContactUs";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import DoctorDashboard from "../pages/DoctorDashboard";
-import Schedule from "../components/doctor-dashboard/Schedule"
-import Entity from "../components/doctor-dashboard/Entity"
-import Patients from "../components/doctor-dashboard/Patients"
+import Schedule from "../components/doctor-dashboard/Schedule";
+import Entity from "../components/doctor-dashboard/Entity";
+import Patients from "../components/doctor-dashboard/Patients";
 import ErrorHandler from "../errors/ErrorHandler";
 import Consultation from "../components/doctor-dashboard/Consultation";
 import Confirmation from "../components/doctor-dashboard/Confirmation";
+import PatientProfile from "../pages/PatientProfile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,11 +30,18 @@ const router = createBrowserRouter(
         <Route
           index
           element={<Home />}
-          errorElement={<ErrorHandler statusCode={504} message="Server Error" />}
+          errorElement={
+            <ErrorHandler statusCode={504} message="Server Error" />
+          }
         />
         <Route
           path="/about"
           element={<AboutUs />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="/patient-profile"
+          element={<PatientProfile />}
           errorElement={<ErrorHandler />}
         />
         <Route
@@ -60,28 +68,25 @@ const router = createBrowserRouter(
         errorElement={<ErrorHandler message="Page not found" />}
       >
         {/* Redirect from /dashboard to /dashboard/schedule */}
-        <Route
-          index
-          element={<Navigate to="/dashboard/schedule" />}
-        />
+        <Route index element={<Navigate to="/dashboard/schedule" />} />
 
         <Route
-          path="consultations" 
+          path="consultations"
           element={<Consultation />}
           errorElement={<ErrorHandler />}
-        /> 
+        />
         <Route
-          path="patients" 
+          path="patients"
           element={<Patients />}
           errorElement={<ErrorHandler />}
-        /> 
+        />
         <Route
-          path="entity" 
+          path="entity"
           element={<Entity />}
           errorElement={<ErrorHandler />}
         />
         <Route
-          path="schedule" 
+          path="schedule"
           element={<Schedule />}
           errorElement={<ErrorHandler />}
         />
@@ -91,7 +96,10 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
       </Route>
-      <Route path="*" element={<ErrorHandler statusCode={404} message="Page not found" />} />
+      <Route
+        path="*"
+        element={<ErrorHandler statusCode={404} message="Page not found" />}
+      />
     </>
   )
 );
