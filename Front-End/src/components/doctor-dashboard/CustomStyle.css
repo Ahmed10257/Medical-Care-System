@@ -1,0 +1,57 @@
+.navbar1 {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .navbar1 ul {
+    list-style: none;
+    display: flex;
+    gap: 1rem; 
+    margin: 0; 
+    padding: 0; 
+  }
+  
+  .navbar1 li {
+    margin: 0; 
+  }
+  
+  .navbar1 li a {
+    display: flex;
+    align-items: center;
+    color: rgb(83, 78, 78);
+    font-size:medium;
+    font-weight: bolder;
+    text-decoration: none;
+    padding: 10px; 
+  }
+  
+  .navbar1 li a:hover {
+    color: blue;
+  }
+  
+  /* Media queries for responsiveness */
+  @media only screen and (max-width: 768px) {
+    .navbar1 {
+      flex-direction: column;
+      padding: 10px; 
+    }
+  
+    .navbar1 ul {
+      flex-direction: column; 
+      gap: 1rem; 
+    }
+  
+    .navbar1 li {
+      margin: 5px 0; 
+    }
+  
+    .navbar1 li a {
+      padding: 8px; 
+    }
+  }
+  

@@ -1,0 +1,163 @@
+.container-fluid {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: white;
+    border-bottom: 1px solid #ddd;
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
+  }
+  
+  .navbar-left h4 {
+    margin: 0;
+    font-weight:700;
+    font-size: large;
+  }
+  
+  .navbar-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .user-menu {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .user-menu span {
+    margin-right: 10px;
+  }
+  
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
+  
+  .main-content {
+    display: flex;
+    flex: 1;
+  }
+  
+  .sidebar {
+    width: 170px;
+    background-color: white;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-right: 2px solid #ddd;
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
+  }
+  
+  .sidebar-logo .logo-image {
+    width: 50px;
+    height: 50px;
+    margin: 20px 0;
+  }
+  
+  .sidebar-nav ul {
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+  }
+  
+  .sidebar-nav li {
+    width: 100%;
+  }
+  
+  .sidebar-nav li a {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    color:grey;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .sidebar-nav li a:hover {
+    color: blue;
+  }
+
+  .sidebar-nav li a:focus {
+    color: blue;
+  }
+
+  
+  .icon-image {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+  
+  main {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  h4, span{
+    font-weight:600;
+  }
+
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .main-content {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      width: 100%;
+      order: 2;
+      border-right: none;
+      border-top: 2px solid #ddd;
+    }
+  
+    .sidebar-nav ul {
+      display: flex;
+      justify-content: space-around;
+    }
+  
+    .sidebar-nav li {
+      width: auto;
+    }
+  
+    main {
+      order: 1;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .navbar {
+      flex-direction: column;
+    }
+  
+    .navbar-left, .navbar-right {
+      margin: 5px 0;
+    }
+  
+    .user-menu span {
+      display: none;
+    }
+  
+    .sidebar-nav ul {
+      flex-direction: column;
+    }
+  
+    .sidebar-nav li {
+      text-align: center;
+    }
+  }
+  

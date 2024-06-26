@@ -1,0 +1,155 @@
+.h1 {
+  font-size:xx-large;
+  margin-top: 5px;
+  font-weight: bolder;
+}
+
+.entity-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+
+}
+
+.entity-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background-color:#ffffff;
+    width: 1000px;
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
+
+
+  }
+  .entity-info{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+  }
+
+  .entity-info .doctor-card {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+    background-color: white;
+    width: 100%; 
+    max-width: 1000px; 
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+
+   
+  }
+  .entity-img-container{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .entity-card img {
+    max-width: 100%;
+    border-radius: 5px;
+    width: 150px;
+    margin: 20px;
+  }
+  
+  .entity-card .entity-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin: 20px;
+  }
+
+  .doctor-card .card-title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    margin: 20px;
+  }
+  
+  .entity-card .entity-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    margin: 20px;
+  }
+
+  .doctor-card .card-text {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+    margin: 20px;
+  }
+  
+  .update-button {
+    background-color:#0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 20px;
+  }
+
+  p{
+    font-weight:600;
+  }
+ 
+  
+  
+  .entity-info .update-button {
+    background-color: #0056b3;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin: 20px;
+  }
+  
+  @media (max-width: 768px) {
+    /* Media query for smaller screens */
+     .entity-info.doctor-card {
+      margin: 20px; 
+    }
+  
+    .entity-info .doctor-card .card-title {
+      font-size: 1.1rem; 
+    }
+  
+    .doctor-card .card-text {
+      font-size: 0.9rem; 
+      margin: 10px; 
+    }
+  }
+  
+  @media (max-width: 480px) {
+    /* Media query for very small screens */
+    .doctor-card {
+      margin: 5px; 
+    }
+  
+    .doctor-card .card-title {
+      font-size: 1rem; 
+      margin: 10px; 
+    }
+  
+    .doctor-card .card-text {
+      font-size: 0.8rem;
+      margin: 5px; 
+    }
+  
+    .update-button {
+      padding: 8px 16px; 
+      font-size: 14px; 
+      margin: 10px;
+    }
+  }
+  

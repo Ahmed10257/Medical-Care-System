@@ -1,0 +1,104 @@
+.confirmation-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    border-radius: 5px;
+    margin: 10px;
+}
+  
+.confirmation-header {
+    width: 100%;
+    font-size: larger;
+    color: rgb(106, 103, 103);
+}
+  
+p {
+    padding-bottom: 10px;
+}
+  
+
+
+.appointment-list {
+    width: 100%;
+    padding: 20px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-image: url('https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png');
+}
+  
+.appointment-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+  
+.appointment-table th,
+.appointment-table td {
+    padding: 12px 15px;
+    text-align: center;
+}
+  
+.appointment-table th {
+    color: #464242;
+}
+  
+.appointment-table td .btn {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+}
+  
+.btn.complete {
+    background-color: rgb(51, 108, 143);
+    color: #fff;
+}
+.completed-icon {
+    color: green;
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+  }
+  
+  .cancelled-icon {
+    color: red;
+    font-size: 1.5rem;
+    margin-left: 0.5rem;
+  }
+  
+
+/* Media Queries for Responsive Design */
+@media (max-width: 768px) {
+    .appointment-table th,
+    .appointment-table td {
+        padding: 8px 10px;
+    }
+
+    .appointment-table td .btn {
+        padding: 3px 5px;
+        margin: 0 2px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    .appointment-table th,
+    .appointment-table td {
+        font-size: 14px;
+        padding: 6px 8px;
+    }
+
+    .appointment-table td .btn {
+        padding: 2px 4px;
+        margin: 0 1px;
+        font-size: 10px;
+    }
+
+    .appointment-table th {
+        font-size: 14px;
+    }
+
+    .appointment-table td {
+        font-size: 12px;
+    }
+}

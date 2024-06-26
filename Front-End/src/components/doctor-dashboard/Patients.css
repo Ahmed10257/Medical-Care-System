@@ -1,0 +1,171 @@
+.patient-container{
+    background-image: url("https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/background.png");
+    height: 100vh;
+    width: 100%;
+  }
+
+.h1 {
+  font-size:xx-large;
+  padding-top: 30px;
+  margin-left: 25px;
+  font-weight: bolder;
+}
+
+.container .patient-table{
+    width: 80%;
+    padding: 10px;
+    margin: 10px;
+}
+.search-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; 
+    margin-bottom: 1rem;
+  }
+  
+  .search-input {
+    margin: 20px;
+    padding-left: 3rem;
+    width: 100%; 
+    height: 2.5rem; 
+    border: 1px solid #ccc;
+    border-radius: 4px; 
+    background-color: rgb(182, 208, 224);
+  }
+  
+  .search-input::placeholder {
+    color: rgb(38, 37, 37); 
+  }
+  .search-input:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 2rem;
+    color: #6c757d;
+    pointer-events: none;
+  }
+  
+ 
+  .table {
+    width: 90%;
+    border-collapse: collapse;
+    
+  }
+  
+  .table th, .table td {
+    padding: 8px;
+    text-align: center; 
+    margin-bottom: 15px;
+  }
+  
+  .table th {
+    font-weight: bold; 
+  }
+
+
+.no-patients-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 20px; 
+  margin-bottom: 20px;
+  font-size: larger;
+  color: #b1afaf;
+}
+.no-patients-found span {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.no-patients-img {
+  width: 200px; 
+  height: auto;
+  margin-bottom: 0px; 
+}
+
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px; 
+}
+
+.loading-spinner {
+  font-size: 24px;
+  color: #007bff; 
+}
+.pagination {
+  display: flex;
+  justify-content: end;
+  list-style-type: none;
+  padding: 0;
+}
+
+.page-item {
+  margin: 0 4px;
+}
+
+.page-link {
+  color: rgb(157, 161, 163);
+  cursor: pointer;
+  text-decoration: none;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgb(147, 144, 144);
+  margin: 10px;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s ease;
+}
+
+.page-link:hover {
+  background-color: rgb(214, 219, 222);
+}
+
+
+/* Media Query for Responsive Design */
+@media (max-width: 768px) {
+  .no-patients-img {
+    width: 80px;
+  }
+}
+
+  
+  
+  @media (max-width: 768px) {
+    .container .patient-table{
+        background-color: white;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .search-input {
+      padding-left: 2rem; 
+    }
+  
+    .search-icon {
+      left: 2rem; 
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .container .patient-table{
+        background-color: white;
+        border-radius: 5px;
+        width: 100%;
+    }
+
+    .search-input {
+      padding-left: 1.5rem; 
+    }
+  
+    .search-icon {
+      left: 1.5rem;
+    }
+  }
+  
