@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
-import { Button } from "primereact/button";
 import { Carousel, CarouselResponsiveOption } from "primereact/carousel";
-import { Tag } from "primereact/tag";
-import { Products } from "../../data";
+import { Products } from "../../data/offersV2";
 
 interface Product {
   id: string;
@@ -69,7 +67,7 @@ export default function Offers() {
 
   const productTemplate = (product: Product) => {
     return (
-      <div className="border rounded-lg m-4 flex flex-col items-center bg-white">
+      <div className="border rounded-lg m-4 flex flex-col  bg-white">
         <div className="mb-4 w-full h-64">
           <img
             src={`${product.image}`}
@@ -77,23 +75,12 @@ export default function Offers() {
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="text-center">
+        <div className="text-start px-3">
           <h4 className="text-lg font-semibold mb-2">{product.name}</h4>
-          {/* <h6 className="text-xl text-gray-700 font-bold mb-3">
+          <h6 className="text-xl text-gray-700 font-bold mb-3">
             ${product.price}
-          </h6> */}
-          {/* <Tag
-            value={product.inventoryStatus}
-            severity={getSeverity(product)}
-            className="mb-3"
-          ></Tag> */}
-          {/* <div className="mt-5 flex space-x-4">
-            <Button icon="pi pi-search" className="p-button p-button-rounded" />
-            <Button
-              icon="pi pi-star-fill"
-              className="p-button-success p-button-rounded"
-            />
-          </div> */}
+          </h6>
+          <p>{product.quantity} Offers</p>
         </div>
       </div>
     );

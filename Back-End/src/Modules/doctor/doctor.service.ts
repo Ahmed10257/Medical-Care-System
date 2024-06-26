@@ -7,7 +7,7 @@ import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 @Injectable()
 export class DoctorService {
-  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) {}
+  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) { }
 
   create(CreateDoctorDto: CreateDoctorDto) {
     const createPatient = new this.doctorModel(CreateDoctorDto);
@@ -42,5 +42,21 @@ export class DoctorService {
     }
 
     return deletedPatient;
+  }
+
+  async searchDoctor({ speciality, city, doctorOrHospital }: { speciality?: string; city?: string; doctorOrHospital?: string }): Promise<Doctor[]> {
+    let query = {};
+
+    if (speciality) {
+      query['speciality'] = speciality;
+    }
+    if (city) {
+      query['city'] = city;
+    }
+    if (doctorOrHospital) {
+      query['type'] = doctorOrHospital;
+    }
+
+    return this.doctorModel.find(query);
   }
 }

@@ -1,34 +1,54 @@
-import { Fragment } from "react";
+import classNames from "classnames";
 
 interface IProps {
   imageURL?: string;
   title: string;
   description: string;
   button?: string;
+  backgroundColor: string;
+  buttonColor?: string;
 }
 
-const LongCard = ({ imageURL, title, description, button }: IProps) => {
+const LongCard = ({
+  imageURL,
+  title,
+  description,
+  button,
+  backgroundColor,
+  buttonColor,
+}: IProps) => {
   return (
-    <Fragment>
-      <div className="border rounded-lg overflow-hidden max-w-3xl mx-auto shadow-md flex-1 my-6 h-36 p-2 flex-row-reverse">
-        {imageURL && (
-          <img
-            src={imageURL}
-            alt="Card Image"
-            className="rounded-full w-32 h-32 object-cover object-center my-auto"
-          />
-        )}
-        <div className="p-4 flex flex-col justify-start ">
-          <h2 className="text-xl font-semibold mb-2">{title}</h2>
-          <p className="mb-4">{description}</p>
-          {button && (
-            <button className="mt-auto py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-700">
-              {button}
-            </button>
-          )}
-        </div>
+    <div
+      className={classNames(
+        "container border rounded-lg mx-auto my-6 px-6 flex flex-col md:flex-row items-center md:space-x-4 h-auto md:h-40",
+        `${backgroundColor}`
+      )}
+    >
+      {imageURL && (
+        <img
+          src={imageURL}
+          alt="Card Image"
+          className="rounded-full w-28 h-28 object-cover object-center mx-auto my-3 md:mx-0"
+        />
+      )}
+      <div className="p-4 flex flex-col items-start flex-1">
+        <h2 className={`text-3xl font-bold mb-2 text-${buttonColor} `}>
+          {title}
+        </h2>
+        <p
+          className={`mb-4 text-start w-full md:text-md text-lg whitespace-pre-line text-${buttonColor}`}
+        >
+          {description}
+        </p>
       </div>
-    </Fragment>
+      {button && (
+        <button
+          className={`mt-auto mb-6 py-4 px-4 bg-${buttonColor} text-${backgroundColor} rounded-lg w-full md:w-1/4`}
+        >
+          {button}
+        </button>
+      )}
+    </div>
   );
 };
 

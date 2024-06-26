@@ -7,16 +7,9 @@ interface IProps {
   description: string;
 }
 
-const LittleCard = ({
-  type,
-  header,
-  title,
-  icon,
-  message,
-  description,
-}: IProps) => {
+const LittleCard = ({ header, title, icon, message, description }: IProps) => {
   return (
-    <div className={type}>
+    <div className="flex-col flex lg:flex-col  m-6">
       <div className={header}>
         <div className={title}>
           <span>{icon}</span>
@@ -25,7 +18,7 @@ const LittleCard = ({
           </h4>
         </div>
       </div>
-      <p className="text-left font-medium text-gray-500 text-2md my-3">
+      <p className="text-left font-medium text-gray-500 text-md my-3">
         {description}
       </p>
     </div>

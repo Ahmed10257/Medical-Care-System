@@ -10,7 +10,7 @@ import { ConsultationModule } from './Modules/consultation/consultation.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [DoctorModule, PatientModule, AppointmentModule, ConsultationModule, MongooseModule.forRoot('mongodb://localhost:27017/medical-app')],
+  imports: [DoctorModule, PatientModule, AppointmentModule, ConsultationModule, MongooseModule.forRoot('mongodb+srv://nadarabea81:VWQZ3aPi7vFDtyLm@cluster0.wbtglms.mongodb.net/')],
   controllers: [AppController],
   providers: [AppService],
 })
