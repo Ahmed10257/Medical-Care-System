@@ -11,51 +11,31 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ErrorHandler from "../errors/ErrorHandler";
 import TestFilter from "../pages/TestFilter";
+import ForgetPassword from "../pages/ForgetPassword";
+import PrivateRoute from "./PrivateRoute";
+import ResetPassword from "../pages/ResetPassword";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route
         path="/"
-        element={
-          <div>
-            <Layout />
-          </div>
-        }
+        element={<Layout />}
         errorElement={<ErrorHandler message="Page not found" />}
       >
-        <Route
-          index
-          element={<Home />}
-          errorElement={
-            <ErrorHandler statusCode={504} message={"Server Error"} />
-          }
-        />
-        <Route
-          path="/about"
-          element={<AboutUs />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="/contact"
-          element={<ContactUs />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="/signin"
-          element={<Login />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="/signup"
-          element={<Register />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="/filter"
-          element={<TestFilter />}
-          errorElement={<ErrorHandler />}
-        />
+        <Route element={<PrivateRoute />}>
+          <Route index element={<Home />} />
+        </Route>
+        <Route path="/about" element={<AboutUs />} />
+        <Route path="/contact" element={<ContactUs />} />
+        <Route path="/signin" element={<Login />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/forget-password" element={<ForgetPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+
+        <Route element={<PrivateRoute />}>
+          <Route path="/filter" element={<TestFilter />} />
+        </Route>
 
         <Route
           path="*"

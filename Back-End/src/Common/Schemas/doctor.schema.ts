@@ -10,7 +10,7 @@ import {
   ValidateNested,
   IsDate,
 } from 'class-validator';
-import {Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 export type DoctorDocument = HydratedDocument<Doctor>;
 
 export enum Gender {
@@ -30,6 +30,16 @@ export class Address {
   @Prop({ required: true })
   @IsNumber()
   region: number;
+}
+
+export class Clinic {
+  @Prop({ required: true })
+  @IsString()
+  street: string;
+
+  @Prop({ required: true })
+  @IsString()
+  building: string;
 }
 
 @Schema()
@@ -79,6 +89,30 @@ export class Doctor extends Document {
   @IsString()
   specialization: string;
 
+  @Prop({ required: true })
+  @IsNumber()
+  rating: number;
+
+  @Prop({ required: true })
+  @IsNumber()
+  numberOfVisitors: number;
+
+  @Prop({ required: true })
+  @ValidateNested()
+  @Type(() => Clinic)
+  clinic: Clinic;
+
+  @Prop({ required: true })
+  @IsNumber()
+  fees: number;
+
+  @Prop({ required: true })
+  @IsNumber()
+  waitingTime: number;
+
+  @Prop({ required: true })
+  @IsString()
+  contactInfo: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

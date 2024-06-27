@@ -2,38 +2,41 @@ import { useEffect, useState } from "react";
 import Filter from "../components/filter-doctors/filter-box/Filter";
 import axios from "axios";
 
-// interface IData {
-//     _id: string;
-//     name: string;
-//     age: number;
-//     gender: string;
-//     address: {
-//         city: string;
-//         street: string;
-//         country: string;
-//     };
-// }
 const TestFilter = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState([
+    {
+      _id: "",
+      name: "",
+      age: 0,
+      gender: "",
+      address: {
+        city: "",
+        street: "",
+        country: "",
+      },
+      fees: 0,
+    },
+  ]);
   const [filteredData, setFilteredData] = useState([
     {
-        _id: "",
-        name: "",
-        age: 0,
-        gender: "",
-        address: {
-            city: "",
-            street: "",
-            country: "",
-        },
-    }
+      _id: "",
+      name: "",
+      age: 0,
+      gender: "",
+      address: {
+        city: "",
+        street: "",
+        country: "",
+      },
+      fees: 0,
+    },
   ]);
   const [error, setError] = useState<null | string>(null);
   const [selectedFilters, setSelectedFilters] = useState({
     title: [],
     gender: [],
     availability: [],
-    entity: [],
+    examinationFee: [],
   });
 
   useEffect(() => {
@@ -43,6 +46,7 @@ const TestFilter = () => {
     api
       .get("/doctor")
       .then((response) => {
+        console.log(response.data);
         setData(response.data);
         setFilteredData(response.data);
       })
@@ -80,9 +84,29 @@ const TestFilter = () => {
         selectedFilters.availability.includes(item.availability)
       );
     }
-    if (selectedFilters.entity.length > 0) {
+    if (selectedFilters.examinationFee.length > 0) {
       filtered = filtered.filter((item) =>
-        selectedFilters.entity.includes(item.entity)
+        selectedFilters.examinationFee.some((feeRange: string) => {
+          if (feeRange === "any") return true;
+          if (feeRange.startsWith("Less than")) {
+            const max = Number(feeRange.split(" ")[2]);
+            return item.fees < max;
+          } else if (feeRange.startsWith("Greater than")) {
+            const min = Number(feeRange.split(" ")[2]);
+            return item.fees > min;
+          } else {
+            const range = feeRange.match(/(\d+)\s+to\s+(\d+)/);
+            if (range) {
+              const min = Number(range[1]);
+              const max = Number(range[2]);
+              console.log(`Filtering with range: min=${min}, max=${max}`);
+              return item.fees >= min && item.fees <= max;
+            } else {
+              console.error(`Invalid fee range format: ${feeRange}`);
+              return false;
+            }
+          }
+        })
       );
     }
 
@@ -102,6 +126,7 @@ const TestFilter = () => {
               <th className="py-2 px-4 border-b">Age</th>
               <th className="py-2 px-4 border-b">Gender</th>
               <th className="py-2 px-4 border-b">Address</th>
+              <th className="py-2 px-4 border-b">Fees</th>
             </tr>
           </thead>
           <tbody>
@@ -113,11 +138,12 @@ const TestFilter = () => {
                   <td className="py-2 px-4 border-b">{item.age}</td>
                   <td className="py-2 px-4 border-b">{item.gender}</td>
                   <td className="py-2 px-4 border-b">{item.address.country}</td>
+                  <td className="py-2 px-4 border-b">{item.fees}</td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={5} className="text-center py-4">
+                <td colSpan={6} className="text-center py-4">
                   No data available
                 </td>
               </tr>
