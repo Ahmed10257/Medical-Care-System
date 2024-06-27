@@ -11,10 +11,10 @@ import {
   UnauthorizedException,
   UseGuards,
 } from '@nestjs/common';
-import { AuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { Request as Users } from 'express';
+import { PatientGuard } from 'src/Modules/patient/patient_role.guaed';
 
 interface User extends Users {
   email: string;
@@ -83,9 +83,10 @@ export class AuthController {
   }
 
   // For only testing guards
-  @UseGuards(AuthGuard)
+  @UseGuards(PatientGuard)
   @Get('profile')
   getProfile(@Request() req) {
+    console.log('done');
     return req.user;
   }
 }

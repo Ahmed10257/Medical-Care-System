@@ -74,6 +74,9 @@ export class Patient {
   @Prop({ default: true })
   isPatient: boolean;
 
+  @Prop({ default: 'patient'})
+  role: string;
+
   @Prop({ type: [String], default: [] })
   medicalRecord: string[];
 }

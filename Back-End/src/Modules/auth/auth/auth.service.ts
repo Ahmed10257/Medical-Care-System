@@ -1,21 +1,32 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { PatientService } from '../../patient/patient.service';
+/* eslint-disable prettier/prettier */
+import {
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+  BadRequestException,
+  Logger,
+} from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
-import { SignUpDto } from './dto/sign-up.dto';
-import { Patient } from '../../patient/entities/patient.entity';
-import { BadRequestException, Logger } from '@nestjs/common';
 import { MailerService } from '@nestjs-modules/mailer';
+import { PatientService } from '../../patient/patient.service';
+// import { DoctorService } from '../../doctor/doctor.service';
+import { SignUpDto } from './dto/sign-up.dto';
+// import { SignUpDoctorDto } from './dto/sign-up-doctor-dto';
+import { Patient } from '../../patient/entities/patient.entity';
+// import { Doctor } from '../../doctor/entities/doctor.entity';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   constructor(
     private patientService: PatientService,
+    // private doctorService: DoctorService,
     private jwtService: JwtService,
     private mailerService: MailerService,
   ) {}
 
+  /******************************************* Patient Registration *******************************************/
   async signIn(email: string, pass: string): Promise<any> {
     const user = await this.patientService.findOneByEmail(email);
     if (!user) {
@@ -27,7 +38,7 @@ export class AuthService {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user.toObject();
-    const payload = { email: user.email, sub: user._id };
+    const payload = { email: user.email, sub: user._id, isPatient: true };
     const token = this.jwtService.sign(payload);
     return {
       access_token: token,
@@ -108,6 +119,73 @@ export class AuthService {
       });
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired token');
+    }
+  }
+
+  /******************************************* Doctor Registration *******************************************/
+  // async signInDoctor(email: string, pass: string): Promise<any> {
+  //   const user = await this.doctorService.findOneByEmail(email);
+  //   if (!user) {
+  //     throw new UnauthorizedException('Invalid credentials: User not found');
+  //   }
+  //   const passwordMatch = await bcrypt.compare(pass, user.password);
+  //   if (!passwordMatch) {
+  //     throw new UnauthorizedException('Invalid credentials: Password mismatch');
+  //   }
+  //   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //   const { password, ...result } = user.toObject();
+  //   const payload = { email: user.email, sub: user._id, isPatient: false };
+  //   const token = this.jwtService.sign(payload);
+  //   return {
+  //     access_token: token,
+  //   };
+  // }
+
+  // async getDoctorIdFromToken(token: string): Promise<string> {
+  //   const cleanToken = token.split(' ')[0];
+  //   try {
+  //     const payload = await this.jwtService.verifyAsync(cleanToken, {
+  //       secret: process.env.JWT_SECRET,
+  //     });
+  //     return payload.sub;
+  //   } catch (error) {
+  //     throw new UnauthorizedException('Invalid token');
+  //   }
+  // }
+
+  // async signUpDoctor(signUpDoctorDto: SignUpDoctorDto): Promise<Doctor> {
+  //   const { email, password, ...rest } = signUpDoctorDto;
+  //   const existingUser = await this.doctorService.findOneByEmail(email);
+  //   if (existingUser) {
+  //     throw new BadRequestException('Email already exists');
+  //   }
+  //   const hashedPassword = await bcrypt.hash(password, 10);
+  //   const newUser = await this.doctorService.create({
+  //     email,
+  //     password: hashedPassword,
+  //     ...rest,
+  //   });
+  //   return newUser;
+  // }
+
+  // Authorization jwt token
+  async jwtTokenAnalysis(context: ExecutionContext): Promise<any> {
+    const request = context.switchToHttp().getRequest();
+    const authHeader = request.headers.authorization;
+
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('Invalid token');
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    try {
+      const payload = await this.jwtService.verifyAsync(token, {
+        secret: process.env.JWT_SECRET,
+      });
+      return payload;
+    } catch (err) {
+      throw new UnauthorizedException('Unauthorized');
     }
   }
 }

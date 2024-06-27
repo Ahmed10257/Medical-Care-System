@@ -3,10 +3,12 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AuthService } from '../auth/auth.service';
 import { PatientModule } from 'src/Modules/patient/patient.module';
+import { DoctorModule } from 'src/Modules/doctor/doctor.module';
 
 @Module({
   imports: [
     PatientModule,
+    DoctorModule,
     ConfigModule.forRoot(),
     MailerModule.forRootAsync({
       imports: [ConfigModule],

@@ -7,13 +7,16 @@ import {
   Param,
   Delete,
   ValidationPipe,
+  UseGuards,
 } from '@nestjs/common';
 import { PatientService } from './patient.service';
 import { UpdatePatientDto } from './dto/update-patient.dto';
 import { Patient } from './entities/patient.entity';
 import { SignUpDto } from '../auth/auth/dto/sign-up.dto';
+import { PatientGuard } from './patient_role.guaed';
 
 @Controller('patient')
+@UseGuards(PatientGuard)
 export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 

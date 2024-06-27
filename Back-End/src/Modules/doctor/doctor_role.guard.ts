@@ -5,16 +5,16 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth/auth/auth.service';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class DoctorGuard implements CanActivate {
   constructor(private authService: AuthService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const payload = await this.authService.jwtTokenAnalysis(context);
-    console.log(payload);
-    if (payload) {
+    console.log(payload.isPatient);
+    if (payload && !payload.isPatient) {
       return true;
     } else {
       throw new UnauthorizedException();
