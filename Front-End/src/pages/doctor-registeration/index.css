@@ -1,0 +1,18 @@
+
+.page-background {
+    background-image: url('../../assets/images/veseeta.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+}
+.button-container button {
+    margin: 0 8px;
+}

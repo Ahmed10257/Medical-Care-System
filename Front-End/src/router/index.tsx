@@ -14,6 +14,9 @@ import TestFilter from "../pages/TestFilter";
 import ForgetPassword from "../pages/ForgetPassword";
 import PrivateRoute from "./PrivateRoute";
 import ResetPassword from "../pages/ResetPassword";
+import DoctorLayout from "../pages/doctor-registeration/DoctorLayout";
+import DoctorLogin from "../pages/doctor-registeration/DoctorLogin";
+import DoctorRegister from "../pages/doctor-registeration/DoctorRegister";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -41,6 +44,11 @@ const router = createBrowserRouter(
           path="*"
           element={<ErrorHandler statusCode={404} message="Page not found" />}
         />
+      </Route>
+      <Route path="/doctor" element={<DoctorLayout />}>
+        <Route element={<DoctorLogin />} index />
+        <Route element={<DoctorLogin />} path="login" />
+        <Route element={<DoctorRegister />} path="register" />
       </Route>
     </>
   )
