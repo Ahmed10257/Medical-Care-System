@@ -1,5 +1,13 @@
-import { FormData, FormPasswordData } from "../interfaces/patient-profile";
+import {
+  FormData,
+  FormPasswordData,
+  ContactFrom,
+} from "../interfaces/patient-profile";
+import axios from "axios";
+import { PatientAppointment } from "../interfaces/patient-profile";
 
+// UpdateForm Component
+// -----------------------------------------------------------------------
 export const validate = (formData: FormData) => {
   const newErrors: any = {};
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -41,7 +49,7 @@ export const validate = (formData: FormData) => {
 
   return newErrors;
 };
-
+// -----------------------------------------------------------------------
 export const validatePassword = (formData: FormPasswordData) => {
   const newErrors: any = {};
 
@@ -59,6 +67,147 @@ export const validatePassword = (formData: FormPasswordData) => {
     newErrors.confirmPassword = "Confirm Password is required.";
   } else if (formData.confirmPassword !== formData.newPassword) {
     newErrors.confirmPassword = "Passwords do not match.";
+  }
+
+  return newErrors;
+};
+
+// Appointment Component
+// -----------------------------------------------------------------------
+export const fetchAppointments = async (
+  setAppointments: React.Dispatch<React.SetStateAction<PatientAppointment[]>>
+) => {
+  try {
+    const response = await fetch(
+      "http://localhost:3000/appointments/patient/667b250f09e1016668590d19" // patient ID From Token
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch appointments");
+    }
+    const data = await response.json();
+
+    const appointmentsWithDoctorDetails = await Promise.all(
+      data.map(async (appointment: PatientAppointment) => {
+        const doctorDetails = appointment.doctor_id
+          ? await getDoctorDetails(appointment.doctor_id)
+          : {
+              name: "Unknown Doctor",
+              address: { country: "Unknown", city: "Unknown", region: 0 },
+            };
+        return {
+          ...appointment,
+          doctorName: doctorDetails.name,
+          doctorAddress: `${doctorDetails.address.country} - ${doctorDetails.address.city} - ${doctorDetails.address.region}`,
+        };
+      })
+    );
+
+    setAppointments(appointmentsWithDoctorDetails);
+  } catch (error) {
+    console.error("Error fetching appointments:", error);
+  }
+};
+// -----------------------------------------------------------------------
+export const getDoctorDetails = async (doctorId: string) => {
+  try {
+    const response = await fetch(`http://localhost:3000/doctor/${doctorId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch doctor");
+    }
+    const data = await response.json();
+    return {
+      name: data.name,
+      address: {
+        country: data.address.country,
+        city: data.address.city,
+        region: data.address.region,
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching doctor:", error);
+    return {
+      name: "Unknown Doctor",
+      address: { country: "Unknown", city: "Unknown", region: 0 },
+    };
+  }
+};
+//-------------------------------------------------------------------------
+export const handleCancel = async (
+  appointmentToCancel: string | null,
+  appointments: PatientAppointment[],
+  setAppointments: React.Dispatch<React.SetStateAction<PatientAppointment[]>>,
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  setAppointmentToCancel: React.Dispatch<React.SetStateAction<string | null>>
+) => {
+  if (!appointmentToCancel) return;
+
+  try {
+    const response = await axios.patch(
+      `http://localhost:3000/appointments/${appointmentToCancel}`,
+      {
+        status: "cancelled",
+      }
+    );
+
+    const updatedAppointment = response.data;
+
+    const doctorDetails = await getDoctorDetails(updatedAppointment.doctor_id);
+    const updatedAppointmentWithDoctorDetails = {
+      ...updatedAppointment,
+      doctorName: doctorDetails.name,
+      doctorAddress: `${doctorDetails.address.country} - ${doctorDetails.address.city} - ${doctorDetails.address.region}`,
+    };
+
+    const updatedAppointments = appointments.map((appointment) =>
+      appointment._id === appointmentToCancel
+        ? updatedAppointmentWithDoctorDetails
+        : appointment
+    );
+
+    setAppointments(updatedAppointments);
+    setIsModalOpen(false);
+    setAppointmentToCancel(null);
+  } catch (error) {
+    console.error("Error cancelling appointment:", error);
+  }
+};
+// -----------------------------------------------------------------------------------
+export const validateContact = (formData: ContactFrom) => {
+  const newErrors: any = {};
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phoneRegex = /^[0-9]*$/;
+
+  if (!formData.name) {
+    newErrors.name = "Name is required.";
+  } else if (formData.name.length < 3) {
+    newErrors.name = "Name must be at least 3 characters.";
+  } else if (formData.name.length > 50) {
+    newErrors.name = "Name must be at most 50 characters.";
+  } else if (!/^[a-zA-Z\s]*$/.test(formData.name)) {
+    newErrors.name = "Name must contain only letters and spaces.";
+  }
+  if (!formData.email) {
+    newErrors.email = "Email is required.";
+  } else if (!emailRegex.test(formData.email)) {
+    newErrors.email = "Invalid email format.";
+  }
+  if (formData.mobile.toString().length === 0) {
+    newErrors.mobile = "Phone number is required.";
+  } else if (formData.mobile.toString().length > 11) {
+    newErrors.mobile = "Phone number must be 11 digits.";
+  } else if (formData.mobile.toString().length < 7) {
+    newErrors.mobile = "Phone number must be 11 digits.";
+  } else if (!phoneRegex.test(formData.mobile.toString())) {
+    newErrors.mobile = "Phone number must contain only numbers.";
+  }
+  if (!formData.comments) {
+    newErrors.comments = "Comment is required.";
+  } else if (formData.comments.length < 10) {
+    newErrors.comments = "Comment must be at least 3 characters.";
+  } else if (formData.comments.length > 300) {
+    newErrors.comments = "Comment must be at most 300 characters.";
+  } else if (!/^[a-zA-Z\s]*$/.test(formData.comments)) {
+    newErrors.comments = "Comment must contain only letters and spaces.";
   }
 
   return newErrors;

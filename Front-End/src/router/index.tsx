@@ -18,6 +18,9 @@ import ErrorHandler from "../errors/ErrorHandler";
 import Consultation from "../components/doctor-dashboard/Consultation";
 import Confirmation from "../components/doctor-dashboard/Confirmation";
 import PatientProfile from "../pages/PatientProfile";
+import UpdateForm from "../components/patient-profile/UpdateForm";
+import ChangePassword from "../components/patient-profile/ChangePassword";
+import Appointments from "../components/patient-profile/Appointments";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -40,11 +43,6 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
         <Route
-          path="/patient-profile"
-          element={<PatientProfile />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
           path="/contact"
           element={<ContactUs />}
           errorElement={<ErrorHandler />}
@@ -59,17 +57,39 @@ const router = createBrowserRouter(
           element={<Register />}
           errorElement={<ErrorHandler />}
         />
+
+        <Route
+          path="/patient-profile"
+          element={<PatientProfile />}
+          errorElement={<ErrorHandler />}
+        >
+          <Route index element={<Navigate to="myprofile" />} />
+          <Route
+            path="myprofile"
+            element={<UpdateForm />}
+            errorElement={<ErrorHandler />}
+          />
+          <Route
+            path="changePassword"
+            element={<ChangePassword />}
+            errorElement={<ErrorHandler />}
+          />
+          <Route
+            path="appointments"
+            element={<Appointments />}
+            errorElement={<ErrorHandler />}
+          />
+        </Route>
       </Route>
 
-      {/* Doctor routes using the DoctorLayout */}
+      {/* Doctor routes using the DoctorDashboard layout */}
       <Route
         path="/dashboard"
         element={<DoctorDashboard />}
         errorElement={<ErrorHandler message="Page not found" />}
       >
         {/* Redirect from /dashboard to /dashboard/schedule */}
-        <Route index element={<Navigate to="/dashboard/schedule" />} />
-
+        <Route index element={<Navigate to="schedule" />} />
         <Route
           path="consultations"
           element={<Consultation />}
@@ -96,6 +116,7 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
       </Route>
+
       <Route
         path="*"
         element={<ErrorHandler statusCode={404} message="Page not found" />}
