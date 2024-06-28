@@ -27,6 +27,7 @@ interface IProps {
   phoneNumber: string;
   appointments: Appointment[];
   id: string;
+  groupedAppointments: { [key: string]: Appointment[] };
 }
 
 const Card = (props: IProps) => {
@@ -41,7 +42,7 @@ const Card = (props: IProps) => {
     fees,
     waitingTime,
     phoneNumber,
-    appointments,
+    groupedAppointments,
     id,
   } = props;
 
@@ -71,7 +72,7 @@ const Card = (props: IProps) => {
   };
 
   const handleNext = () => {
-    if (currentIndex < appointments.length - 3) {
+    if (currentIndex < Object.keys(groupedAppointments).length - 1) {
       setCurrentIndex(currentIndex + 1);
     }
   };
@@ -80,15 +81,17 @@ const Card = (props: IProps) => {
     navigate(`/book/${id}/${appointmentId}`);
   };
 
+  const dates = Object.keys(groupedAppointments);
+
   return (
-    <div className="max-w-4xl rounded-lg overflow-hidden shadow-lg border p-4 bg-white flex hover:bg-gray-50 transition-colors duration-300">
+    <div className="max-w-5xl rounded-lg overflow-hidden shadow-lg border p-4 bg-white flex flex-col md:flex-row md:items-stretch md:justify-between hover:bg-gray-50 transition-colors duration-300">
       {/* First Column: Image */}
-      <div className="w-1/6 flex justify-center items-center">
-        <img className="w-20 h-20 rounded-full" src={imageUrl} alt="Profile" />
+      <div className="w-full md:w-1/5 flex justify-center items-center mb-4 md:mb-0">
+        <img className="w-24 h-24 rounded-full" src={imageUrl} alt="Profile" />
       </div>
 
       {/* Second Column: Information */}
-      <div className="w-3/6 pr-2 text-left">
+      <div className="w-full md:w-3/5 pr-4 text-left flex flex-col justify-center">
         <h2 className="font-bold text-xl mb-2">{name}</h2>
         <p className="text-gray-600 mb-2">{title}</p>
         <div className="flex items-center mb-2">
@@ -115,23 +118,40 @@ const Card = (props: IProps) => {
       </div>
 
       {/* Third Column: Appointments and Booking */}
-      <div className="w-1/2 pl-2 p-4 flex flex-col items-center">
+      <div className="w-full md:w-3/5 pl-4 p-4 flex flex-col items-center">
         <div className="flex flex-col items-center">
-          <div className="appointment-container flex justify-between w-full">
-            {appointments.slice(currentIndex, currentIndex + 3).map((appointment) => (
-              <AppointmentCard
-                key={appointment.id}
-                appointment={appointment}
-                handleBook={() => handleBook(appointment.id)}
-              />
+          <div className="appointment-container flex flex-col md:flex-row md:justify-between w-full">
+            {dates.slice(currentIndex, currentIndex + 1).map((date) => (
+              <div key={date} className="flex flex-col items-center m-2 p-2 rounded-lg shadow-md-top shadow-md-left shadow-md-right w-32 h-48 md:w-auto md:h-auto">
+                <div className="date bg-blue-500 text-white py-1 px-2 rounded-t-lg text-center text-md border-b-2 border-white">
+                  {new Date(date).toLocaleDateString(undefined, {
+                    weekday: 'short',
+                    month: 'short',
+                    day: 'numeric',
+                  })}
+                </div>
+                <div className="appointments flex-grow overflow-y-auto flex flex-col justify-start items-center bg-white border-2 border-gray-300 rounded w-full h-full py-2">
+                  <AppointmentCard
+                    appointments={groupedAppointments[date]}
+                    onBook={handleBook}
+                  />
+                </div>
+              </div>
             ))}
           </div>
-
-          <div className="flex mt-4">
-            <button onClick={handlePrev} className={`bg-gray-200 p-2 rounded-full focus:outline-none ${currentIndex === 0 ? 'invisible' : ''}`}>
+          <div className="controls flex justify-between w-full mt-2">
+            <button
+              onClick={handlePrev}
+              className={`bg-blue-500 text-white px-3 py-1 rounded-full ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={currentIndex === 0}
+            >
               <FontAwesomeIcon icon={faChevronLeft} />
             </button>
-            <button onClick={handleNext} className={`bg-gray-200 p-2 rounded-full focus:outline-none ml-2 ${currentIndex >= appointments.length - 3 ? 'invisible' : ''}`}>
+            <button
+              onClick={handleNext}
+              className={`bg-blue-500 text-white px-3 py-1 rounded-full ${currentIndex >= dates.length - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              disabled={currentIndex >= dates.length - 1}
+            >
               <FontAwesomeIcon icon={faChevronRight} />
             </button>
           </div>
