@@ -13,7 +13,7 @@ const DoctorDashboard: React.FC = () => {
   useEffect(() => {
     const fetchDoctorData = async () => {
       try {
-        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667980ed403c655bd6da3b61');
+        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667ff9815e77f767fdfdad82');
         const doctor = response.data; 
         setDoctorData(doctor); 
       } catch (error) {
@@ -49,7 +49,7 @@ const DoctorDashboard: React.FC = () => {
         <div className="sidebar">
           <div className="sidebar-logo">
             <img
-              src="https://newtechclub.com/wp-content/uploads/2017/09/Vezeeta-logo.png"
+              src="../../public/freepik-gradient-linear-professional-healthcare-center-logo-20240628202343meqZ (1).png"
               alt="Logo"
               className="logo-image"
             />

@@ -113,6 +113,10 @@ export class Doctor extends Document {
   @Prop({ required: true })
   @IsString()
   contactInfo: string;
+
+  @Prop({ required: true })
+  @IsString()
+  about: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

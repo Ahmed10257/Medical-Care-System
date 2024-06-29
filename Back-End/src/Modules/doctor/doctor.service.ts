@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Doctor } from 'src/Common/Schemas/doctor.schema';
 import { CreateDoctorDto } from './dto/create-doctor.dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class DoctorService {
@@ -43,4 +44,21 @@ export class DoctorService {
 
     return deletedPatient;
   }
+
+  async verifyAndUpdateDoctorPassword(id: string, oldPassword: string, newPassword: string): Promise<boolean> {
+    const doctor = await this.doctorModel.findById(id).exec();
+    if (!doctor) {
+      throw new Error(`Doctor with ID ${id} not found`);
+    }
+
+    const isPasswordCorrect = await bcrypt.compare(oldPassword, doctor.password);
+    if (isPasswordCorrect) {
+      throw new Error('Incorrect old password');
+    }
+
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+    await this.doctorModel.findByIdAndUpdate(id, { password: hashedNewPassword }, { new: true }).exec();
+    return true;
+}
+
 }
