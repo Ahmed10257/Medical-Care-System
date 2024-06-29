@@ -21,6 +21,7 @@ import PatientProfile from "../pages/PatientProfile";
 import UpdateForm from "../components/patient-profile/UpdateForm";
 import ChangePassword from "../components/patient-profile/ChangePassword";
 import Appointments from "../components/patient-profile/Appointments";
+import ContactDashboard from "../pages/ContactDashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -55,6 +56,11 @@ const router = createBrowserRouter(
         <Route
           path="/signup"
           element={<Register />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="contact-dashboard"
+          element={<ContactDashboard />}
           errorElement={<ErrorHandler />}
         />
 
@@ -100,6 +106,7 @@ const router = createBrowserRouter(
           element={<Patients />}
           errorElement={<ErrorHandler />}
         />
+
         <Route
           path="entity"
           element={<Entity />}

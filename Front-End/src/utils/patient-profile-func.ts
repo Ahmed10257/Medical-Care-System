@@ -180,11 +180,11 @@ export const validateContact = (formData: ContactFrom) => {
   if (!formData.name) {
     newErrors.name = "Name is required.";
   } else if (formData.name.length < 3) {
-    newErrors.name = "Name must be at least 3 characters.";
+    newErrors.name = "At least 3 characters";
   } else if (formData.name.length > 50) {
-    newErrors.name = "Name must be at most 50 characters.";
+    newErrors.name = "At most 50 characters";
   } else if (!/^[a-zA-Z\s]*$/.test(formData.name)) {
-    newErrors.name = "Name must contain only letters and spaces.";
+    newErrors.name = "Must contain only letters";
   }
   if (!formData.email) {
     newErrors.email = "Email is required.";
@@ -192,22 +192,22 @@ export const validateContact = (formData: ContactFrom) => {
     newErrors.email = "Invalid email format.";
   }
   if (formData.mobile.toString().length === 0) {
-    newErrors.mobile = "Phone number is required.";
+    newErrors.mobile = "Mobile is required.";
   } else if (formData.mobile.toString().length > 11) {
-    newErrors.mobile = "Phone number must be 11 digits.";
-  } else if (formData.mobile.toString().length < 7) {
-    newErrors.mobile = "Phone number must be 11 digits.";
+    newErrors.mobile = "Must be 11 digits.";
+  } else if (formData.mobile.toString().length < 11) {
+    newErrors.mobile = "Must be 11 digits.";
   } else if (!phoneRegex.test(formData.mobile.toString())) {
-    newErrors.mobile = "Phone number must contain only numbers.";
+    newErrors.mobile = "Must contain only numbers.";
   }
   if (!formData.comments) {
     newErrors.comments = "Comment is required.";
   } else if (formData.comments.length < 10) {
-    newErrors.comments = "Comment must be at least 3 characters.";
+    newErrors.comments = "Must be at least 3 characters.";
   } else if (formData.comments.length > 300) {
-    newErrors.comments = "Comment must be at most 300 characters.";
+    newErrors.comments = "Must be at most 300 characters.";
   } else if (!/^[a-zA-Z\s]*$/.test(formData.comments)) {
-    newErrors.comments = "Comment must contain only letters and spaces.";
+    newErrors.comments = " Must contain only letters";
   }
 
   return newErrors;

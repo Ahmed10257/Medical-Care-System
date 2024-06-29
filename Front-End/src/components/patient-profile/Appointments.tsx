@@ -138,6 +138,11 @@ const Appointments = () => {
                           Cancelled
                         </span>
                       )}
+                      {appointment.status === "completed" && (
+                        <span className="text-green-500 font-bold">
+                          Completed
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
