@@ -68,9 +68,6 @@ const Login = () => {
 
     configAxios.post("/auth/login", user)
       .then((response) => {
-        console.log("Login successful", response);
-        console.log(response.data);
-        
         if (response.data.access_token) {
           localStorage.setItem("token", response.data.access_token);
 

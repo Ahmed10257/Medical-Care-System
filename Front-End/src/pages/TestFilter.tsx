@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Filter from "../components/filter-doctors/filter-box/Filter";
 import axios from "axios";
+import SortDoctorsDropDown from "../components/sort-doctors/SortDropDown";
 
 const TestFilter = () => {
   const [data, setData] = useState([
@@ -151,6 +152,9 @@ const TestFilter = () => {
           </tbody>
         </table>
       </div>
+
+
+      <SortDoctorsDropDown />
     </div>
   );
 };
