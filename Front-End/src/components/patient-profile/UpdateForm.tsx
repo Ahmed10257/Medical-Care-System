@@ -34,7 +34,6 @@ const UpdateForm = () => {
     api
       .get("/patient/667b250f09e1016668590d19")
       .then((response) => {
-        console.log(response.data);
         const { name, email, age, phone, addresses, birthDate } = response.data;
         setFormData({
           name: name || "",

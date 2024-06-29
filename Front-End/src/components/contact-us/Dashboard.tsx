@@ -25,6 +25,8 @@ const Dashboard: React.FC = () => {
   const [totalUsers, setTotalUsers] = useState(0);
   const [totalPositiveComments, setTotalPositiveComments] = useState(0);
   const [totalNegativeComments, setTotalNegativeComments] = useState(0);
+  const [averagePositiveComments, setAveragePositiveComments] = useState(0.0);
+  const [averageNegativeComments, setAverageNegativeComments] = useState(0.0);
 
   useEffect(() => {
     axios.get("http://localhost:3000/contact").then((response) => {
@@ -43,6 +45,7 @@ const Dashboard: React.FC = () => {
         checkBadImpression(user.comments)
       ).length;
       setTotalNegativeComments(negativeCount);
+      calcAverage(fetchedUsers);
     });
   }, []);
 
@@ -54,6 +57,23 @@ const Dashboard: React.FC = () => {
     if (currentPage < totalPages) {
       setCurrentPage(currentPage + 1);
     }
+  };
+
+  const calcAverage = (updatedUsers: User[]) => {
+    const positiveCount = updatedUsers.filter(
+      (user) => user.status === "positive"
+    ).length;
+    const negativeCount = updatedUsers.filter(
+      (user) => user.status === "negative"
+    ).length;
+
+    setAveragePositiveComments(
+      parseFloat(((positiveCount / updatedUsers.length) * 100).toFixed(2)) || 0
+    );
+
+    setAverageNegativeComments(
+      parseFloat(((negativeCount / updatedUsers.length) * 100).toFixed(2)) || 0
+    );
   };
 
   const handlePreviousPage = () => {
@@ -71,10 +91,12 @@ const Dashboard: React.FC = () => {
         (user) => user.status === "positive"
       ).length;
       setTotalPositiveComments(positiveCount);
+
       const negativeCount = updatedUsers.filter(
         (user) => user.status === "negative"
       ).length;
       setTotalNegativeComments(negativeCount);
+      calcAverage(updatedUsers);
     });
   };
 
@@ -172,27 +194,51 @@ const Dashboard: React.FC = () => {
                 <h2 className="text-xl text-center text-blue-500 font-bold mb-4">
                   User Details
                 </h2>
-                <div>
-                  <p>
-                    <strong className="text-blue-500">Name:</strong>{" "}
-                    {currentUser.name}
-                  </p>
-                  <p>
-                    <strong className="text-blue-500">Email:</strong>{" "}
-                    {currentUser.email}
-                  </p>
-                  <p>
-                    <strong className="text-blue-500">Comments:</strong>{" "}
-                    {currentUser.comments}
-                  </p>
-                  <p>
-                    <strong className="text-blue-500">Date:</strong>{" "}
-                    {currentUser.createdAt}
-                  </p>
-                  <p>
-                    <strong className="text-blue-500">Status:</strong>{" "}
-                    {currentUser.status}
-                  </p>
+                <div className="overflow-x-auto">
+                  <table className="min-w-full divide-y divide-gray-200">
+                    <tbody className="bg-white divide-y divide-gray-200">
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <strong className="text-blue-500">Name:</strong>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {currentUser.name}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <strong className="text-blue-500">Email:</strong>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {currentUser.email}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <strong className="text-blue-500">Comments:</strong>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {currentUser.comments}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <strong className="text-blue-500">Date:</strong>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {currentUser.createdAt}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                          <strong className="text-blue-500">Status:</strong>
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                          {currentUser.status}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
                 <button
                   onClick={closeModal}
@@ -209,10 +255,16 @@ const Dashboard: React.FC = () => {
             <TotalComments count={totalUsers} />
           </div>
           <div className="mb-4">
-            <TotalPositiveComments count={totalPositiveComments} />
+            <TotalPositiveComments
+              count={totalPositiveComments}
+              avg={averagePositiveComments}
+            />
           </div>
           <div className="mb-4">
-            <TotalNegativeComments count={totalNegativeComments} />
+            <TotalNegativeComments
+              count={totalNegativeComments}
+              avg={averageNegativeComments}
+            />
           </div>
         </div>
       </div>

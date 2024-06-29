@@ -1,6 +1,5 @@
 export const BadImpression = [
   "bad",
-  "shit",
   "slow",
   "terrible",
   "awful",
@@ -28,4 +27,12 @@ export const BadImpression = [
   "vile",
   "wretched",
   "inferior",
+  "not good",
+  "shit",
+  "do not like",
+  "did not like",
+  "hated",
+  "hate",
+  "hates",
+  "ugly",
 ];
