@@ -20,7 +20,7 @@ const LongCard = ({
   return (
     <div
       className={classNames(
-        "container border rounded-lg mx-auto my-6 px-6 flex flex-col md:flex-row items-center md:space-x-4 h-auto md:h-40",
+        "container border rounded-lg mx-auto my-6 px-6 flex flex-col md:flex-row items-center md:space-x-4 h-auto md:h-40 overflow-clip",
         `${backgroundColor}`
       )}
     >

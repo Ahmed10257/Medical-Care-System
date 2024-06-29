@@ -8,7 +8,7 @@ const Layout = () => {
       <header className="bg-green-200 w-full p-5">
         <Navbar />
       </header>
-      <main className="flex-grow ">
+      <main className="flex-grow">
         <Outlet />
       </main>
       <footer className="bg-gray-400 w-full p-5">

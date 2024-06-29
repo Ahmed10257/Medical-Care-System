@@ -25,7 +25,7 @@ const DropDown = ({ placeholder, options }: IProps) => {
         optionLabel="name"
         placeholder={placeholder}
         showClear
-        className="w-full lg:w-20rem"
+        className="w-full"
       />
     </div>
   );

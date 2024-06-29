@@ -17,7 +17,7 @@ const Home = (props: IProps) => {
     <div>
       <div className="relative">
         <Carousel />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-4/5 md:w-2/5">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-4/5 md:w-1/2">
           <SearchBar />
         </div>
       </div>

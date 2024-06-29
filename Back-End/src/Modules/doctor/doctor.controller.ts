@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -32,7 +33,6 @@ export class DoctorController {
     @Query('city') city: string,
     @Query('doctorOrHospital') doctorOrHospital: string,
   ) {
-    // Example: Calling a service method to handle the logic
     const results = await this.doctorService.searchDoctor({ speciality, city, doctorOrHospital });
     return results;
   }
