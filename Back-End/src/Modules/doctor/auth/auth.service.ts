@@ -1,31 +1,26 @@
-/* eslint-disable prettier/prettier */
 import {
-  ExecutionContext,
-  Injectable,
-  UnauthorizedException,
   BadRequestException,
+  Injectable,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
-import * as bcrypt from 'bcryptjs';
+import { DoctorService } from '../doctor.service';
 import { JwtService } from '@nestjs/jwt';
+import { SignUpDoctorDto } from 'src/Modules/auth/auth/dto/sign-up-doctor-dto';
+import { Doctor } from '../entities/doctor.entity';
+import * as bcrypt from 'bcryptjs';
 import { MailerService } from '@nestjs-modules/mailer';
-import { PatientService } from '../../patient/patient.service';
-import { SignUpDto } from './dto/sign-up.dto';
-import { Patient } from '../../patient/entities/patient.entity';
 
 @Injectable()
 export class AuthService {
   private readonly logger = new Logger(AuthService.name);
   constructor(
-    private patientService: PatientService,
-    // private doctorService: DoctorService,
+    private doctorService: DoctorService,
     private jwtService: JwtService,
     private mailerService: MailerService,
   ) {}
-
-  /******************************************* Patient Registration *******************************************/
-  async signIn(email: string, pass: string): Promise<any> {
-    const user = await this.patientService.findOneByEmail(email);
+  async signInDoctor(email: string, pass: string): Promise<any> {
+    const user = await this.doctorService.findOneByEmail(email);
     if (!user) {
       throw new UnauthorizedException('Invalid credentials: User not found');
     }
@@ -35,14 +30,14 @@ export class AuthService {
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user.toObject();
-    const payload = { email: user.email, sub: user._id, isPatient: true };
+    const payload = { email: user.email, sub: user._id, isDoctor: false };
     const token = this.jwtService.sign(payload);
     return {
       access_token: token,
     };
   }
 
-  async getPatientIdFromToken(token: string): Promise<string> {
+  async getDoctorIdFromToken(token: string): Promise<string> {
     const cleanToken = token.split(' ')[0];
     try {
       const payload = await this.jwtService.verifyAsync(cleanToken, {
@@ -50,18 +45,20 @@ export class AuthService {
       });
       return payload.sub;
     } catch (error) {
-      { error: 'Invalid token'}
+      {
+        error: 'Invalid token';
+      }
     }
   }
 
-  async signUp(signUpDto: SignUpDto): Promise<Patient> {
-    const { email, password, ...rest } = signUpDto;
-    const existingUser = await this.patientService.findOneByEmail(email);
+  async signUpDoctor(signUpDoctorDto: SignUpDoctorDto): Promise<Doctor> {
+    const { email, password, ...rest } = signUpDoctorDto;
+    const existingUser = await this.doctorService.findOneByEmail(email);
     if (existingUser) {
       throw new BadRequestException('Email already exists');
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await this.patientService.create({
+    const newUser = await this.doctorService.create({
       email,
       password: hashedPassword,
       ...rest,
@@ -70,16 +67,16 @@ export class AuthService {
   }
 
   async sendPasswordResetLink(email: string): Promise<void> {
-    const user = await this.patientService.findOneByEmail(email);
+    const user = await this.doctorService.findOneByEmail(email);
     if (!user) {
       throw new BadRequestException('Email does not exist');
     }
     const payload = { email: user.email, sub: user._id };
     const token = this.jwtService.sign(payload, { expiresIn: '1h' });
-    const resetUrl = `http://localhost:5173/reset-password?token=${token}`;
+    const resetUrl = `http://localhost:5173/doctor/doctor-reset-password?token=${token}`;
     try {
       const emailData = {
-        userName: user.name,
+        userName: user.firstName + ' ' + user.lastName,
         resetUrl: resetUrl,
       };
       const emailHtml = `<p>Hello ${emailData.userName},</p>
@@ -106,39 +103,16 @@ export class AuthService {
   async resetPassword(token: string, newPassword: string): Promise<void> {
     try {
       const payload = this.jwtService.verify(token);
-      const user = await this.patientService.findOneByEmail(payload.email);
+      const user = await this.doctorService.findOneByEmail(payload.email);
       if (!user) {
         throw new BadRequestException('Invalid token');
       }
       const hashedPassword = await bcrypt.hash(newPassword, 10);
-      await this.patientService.update(user._id.toString(), {
+      await this.doctorService.update(user._id.toString(), {
         password: hashedPassword,
       });
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired token');
-    }
-  }
-
-  /******************************************* Doctor Registration *******************************************/
-
-  // Authorization jwt token
-  async jwtTokenAnalysis(context: ExecutionContext): Promise<any> {
-    const request = context.switchToHttp().getRequest();
-    const authHeader = request.headers.authorization;
-
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      throw new UnauthorizedException('Invalid token');
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    try {
-      const payload = await this.jwtService.verifyAsync(token, {
-        secret: process.env.JWT_SECRET,
-      });
-      return payload;
-    } catch (err) {
-      throw new UnauthorizedException('Unauthorized');
     }
   }
 }

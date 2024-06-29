@@ -1,13 +1,15 @@
 interface IProps {
   title: string;
+  subTitle?: string;
   children: React.ReactNode;
 }
 
-const FormTemplate = ({ title, children }: IProps) => {
+const FormTemplate = ({ title, children , subTitle}: IProps) => {
   return (
-    <div className="flex flex-col bg-white min-h-full w-8/12 m-auto mt-10 shadow-md rounded-sm">
-      <h1 className="text-2xl font-bold text-gray-600 m-16 text-start">{title}</h1>
-      <div className="flex justify-center items-center">{children}</div>
+    <div className="flex flex-col bg-white min-h-full w-8/12 m-auto shadow-md rounded-sm pt-10">
+      <h1 className="text-xl font-bold text-gray-600  w-full ml-10 m-auto text-start">{title}</h1>
+      <h1 className="text-sm text-gray-400  w-full ml-10 m-auto text-start">{subTitle}</h1>
+      <div className="flex flex-col justify-center items-center">{children}</div>
     </div>
   );
 };

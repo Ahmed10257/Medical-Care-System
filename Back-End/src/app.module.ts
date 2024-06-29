@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { DoctorModule } from './Modules/doctor/doctor.module';
@@ -8,6 +8,7 @@ import { AppointmentModule } from './Modules/appointment/appointment.module';
 import { ConsultationModule } from './Modules/consultation/consultation.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './Modules/auth/auth.module';
+import { DoctorAuthModule } from './Modules/doctor/auth/auth.module';
 import { FacebookStrategy } from './facebook.strategy';
 
 @Module({
@@ -18,6 +19,7 @@ import { FacebookStrategy } from './facebook.strategy';
     ConsultationModule,
     MongooseModule.forRoot('mongodb://localhost:27017/medical-app'),
     AuthModule,
+    DoctorAuthModule
   ],
   controllers: [AppController],
   providers: [AppService, FacebookStrategy],

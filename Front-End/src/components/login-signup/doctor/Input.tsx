@@ -4,13 +4,14 @@ interface InputProps {
   type: string;
   id: string;
   name: string;
-  placeholder: string;
+  placeholder?: string;
   value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onBlur: (e: FocusEvent<HTMLInputElement>) => void;
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
   className?: string;
-  error: string;
+  error?: string;
   icon?: ComponentType<React.SVGProps<SVGSVGElement>>;
+  checked?: boolean;
 }
 
 const InputDoctor: React.FC<InputProps> = ({
@@ -24,6 +25,7 @@ const InputDoctor: React.FC<InputProps> = ({
   className,
   error,
   icon: Icon,
+  checked,
 }) => {
   const inputClass = `w-full transition-all duration-300 border-b ${
     value ? "border-grey-500" : "border-gray-500"
@@ -45,6 +47,7 @@ const InputDoctor: React.FC<InputProps> = ({
           value={value}
           onChange={onChange}
           onBlur={onBlur}
+          checked={checked}
           className={`${inputClass} ${Icon ? "pl-6" : ""}`}
         />
       </div>

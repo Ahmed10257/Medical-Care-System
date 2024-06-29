@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Doctor, DoctorDocument } from 'src/Common/Schemas/doctor.schema';
 import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
+import { UpdateDoctorDto } from './dto/update-doctor.dto';
 
 @Injectable()
 export class DoctorService {
@@ -25,16 +26,13 @@ export class DoctorService {
     return await this.doctorModel.findOne({ email }).exec();
   }
 
-  update(id: string, UpdateDoctorDto: SignUpDoctorDto) {
-    const updatePatient = this.doctorModel
-      .findByIdAndUpdate(id, UpdateDoctorDto, { new: true })
+  async update(
+    id: string,
+    updatePatientDto: UpdateDoctorDto,
+  ): Promise<DoctorDocument | null> {
+    return await this.doctorModel
+      .findByIdAndUpdate(id, updatePatientDto, { new: true })
       .exec();
-
-    if (!updatePatient) {
-      throw new Error(`Doctor with ID ${id} not found`);
-    }
-
-    return updatePatient;
   }
 
   remove(id: string) {

@@ -17,6 +17,8 @@ import ResetPassword from "../pages/ResetPassword";
 import DoctorLayout from "../pages/doctor-registeration/DoctorLayout";
 import DoctorLogin from "../pages/doctor-registeration/DoctorLogin";
 import DoctorRegister from "../pages/doctor-registeration/DoctorRegister";
+import DoctorForgetPassword from "../pages/doctor-registeration/DoctorForgetPassword";
+import DoctorResetPassword from "../pages/doctor-registeration/DoctorResetPassword";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -49,6 +51,8 @@ const router = createBrowserRouter(
         <Route element={<DoctorLogin />} index />
         <Route element={<DoctorLogin />} path="login" />
         <Route element={<DoctorRegister />} path="register" />
+        <Route element={<DoctorForgetPassword />} path="doctor-forget-password" />
+        <Route element={<DoctorResetPassword />} path="doctor-reset-password" />
       </Route>
     </>
   )

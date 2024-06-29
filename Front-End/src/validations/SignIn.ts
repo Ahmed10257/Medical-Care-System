@@ -18,7 +18,7 @@ export const validateSignIn = (values: SignInInputs) => {
     errors.password = "Password must be 6 characters or more";
   } else if (values.password.length > 20) {
     errors.password = "Password must be 20 characters or less";
-  } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,20}$/.test(values.password)) {
+  } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,}$/.test(values.password)) {
     errors.password = "Password must contain at least one uppercase letter, one lowercase letter, and one number";
   }
 

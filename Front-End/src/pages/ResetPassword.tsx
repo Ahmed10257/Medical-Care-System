@@ -5,6 +5,20 @@ import Input from '../components/login-signup/Input';
 import ErrorMessage from '../components/login-signup/ErrorMessage';
 import Button from '../components/login-signup/Button';
 import { configAxios } from '../config/api';
+import Swal from 'sweetalert2';
+
+const validatePassword = (password: string) => {
+  if (!password) {
+    return "Password is required";
+  } else if (password.length < 6) {
+    return "Password must be 6 characters or more";
+  } else if (password.length > 20) {
+    return "Password must be 20 characters or less";
+  } else if (!/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&_-])[A-Za-z\d@$!%*?&_-]{8,}$/.test(password)) {
+    return "Password must contain at least one uppercase letter, one lowercase letter, and one number";
+  }
+  return "";
+};
 
 const ResetPassword = () => {
   const [searchParams] = useSearchParams();
@@ -25,6 +39,13 @@ const ResetPassword = () => {
 
   const onSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
+      return;
+    }
+
     if (!password || !confirmPassword) {
       setError('Password and confirm password are required');
       return;
@@ -35,10 +56,19 @@ const ResetPassword = () => {
     }
 
     try {
-      await configAxios.post('/auth/reset-password', { token, password });
-      alert('Password reset successfully');
+      await configAxios.post('/doctor-auth/doctor-reset-password', { token, password });
+      Swal.fire(
+        'Success',
+        'Password reset successfully',
+        'success'
+      );
     } catch (err) {
       setError('Failed to reset password');
+      Swal.fire(
+        'Error',
+        'Failed to reset password',
+        'error'
+      );
     }
   };
 
@@ -57,6 +87,7 @@ const ResetPassword = () => {
                 id="password"
                 value={password}
                 onChange={onChangeHandler}
+                onBlur={() => setError(validatePassword(password))}
                 error={error}
                 className="w-full sm:w-full md:w-full lg:w-full p-2"
                 placeholder="New Password"
@@ -75,6 +106,11 @@ const ResetPassword = () => {
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={onConfirmChangeHandler}
+                onBlur={() => {
+                  if (confirmPassword && password !== confirmPassword) {
+                    setError('Passwords do not match');
+                  }
+                }}
                 error={error}
                 className="w-full sm:w-full md:w-full lg:w-full p-2"
                 placeholder="Confirm New Password"
