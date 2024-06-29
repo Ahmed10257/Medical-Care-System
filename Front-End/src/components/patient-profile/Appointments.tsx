@@ -1,101 +1,51 @@
 import { useState, useEffect } from "react";
 import { CircleX } from "lucide-react";
-import axios from "axios";
+import Modal from "react-modal";
 import { PatientAppointment } from "../../interfaces/patient-profile";
+import {
+  fetchAppointments,
+  handleCancel,
+} from "../../utils/patient-profile-func";
+import "./modal-styles.css"; // Import the CSS file
+
+Modal.setAppElement("#root"); // Set the app element for accessibility
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState<PatientAppointment[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [appointmentToCancel, setAppointmentToCancel] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
-    fetchAppointments();
+    fetchAppointments(setAppointments);
   }, []);
 
-  const fetchAppointments = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:3000/appointments/patient/667b250f09e1016668590d19" // patient ID From Token
-      );
-      if (!response.ok) {
-        throw new Error("Failed to fetch appointments");
-      }
-      const data = await response.json();
-
-      const appointmentsWithDoctorDetails = await Promise.all(
-        data.map(async (appointment: PatientAppointment) => {
-          const doctorDetails = appointment.doctor_id
-            ? await getDoctorDetails(appointment.doctor_id)
-            : {
-                name: "Unknown Doctor",
-                address: { country: "Unknown", city: "Unknown", region: 0 },
-              };
-          return {
-            ...appointment,
-            doctorName: doctorDetails.name,
-            doctorAddress: `${doctorDetails.address.country} - ${doctorDetails.address.city} - ${doctorDetails.address.region}`,
-          };
-        })
-      );
-
-      setAppointments(appointmentsWithDoctorDetails);
-    } catch (error) {
-      console.error("Error fetching appointments:", error);
-    }
+  const openModal = (id: string) => {
+    setAppointmentToCancel(id);
+    setIsModalOpen(true);
   };
 
-  const handleCancel = async (id: string) => {
-    try {
-      const response = await axios.patch(
-        `http://localhost:3000/appointments/${id}`,
-        {
-          status: "cancelled",
-        }
-      );
-
-      const updatedAppointment = response.data;
-
-      const doctorDetails = await getDoctorDetails(
-        updatedAppointment.doctor_id
-      );
-      const updatedAppointmentWithDoctorDetails = {
-        ...updatedAppointment,
-        doctorName: doctorDetails.name,
-        doctorAddress: `${doctorDetails.address.country} - ${doctorDetails.address.city} - ${doctorDetails.address.region}`,
-      };
-
-      const updatedAppointments = appointments.map((appointment) =>
-        appointment._id === id
-          ? updatedAppointmentWithDoctorDetails
-          : appointment
-      );
-
-      setAppointments(updatedAppointments);
-    } catch (error) {
-      console.error("Error cancelling appointment:", error);
-    }
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setAppointmentToCancel(null);
   };
 
-  const getDoctorDetails = async (doctorId: string) => {
-    try {
-      const response = await fetch(`http://localhost:3000/doctor/${doctorId}`);
-      if (!response.ok) {
-        throw new Error("Failed to fetch doctor");
-      }
-      const data = await response.json();
-      return {
-        name: data.name,
-        address: {
-          country: data.address.country,
-          city: data.address.city,
-          region: data.address.region,
-        },
-      };
-    } catch (error) {
-      console.error("Error fetching doctor:", error);
-      return {
-        name: "Unknown Doctor",
-        address: { country: "Unknown", city: "Unknown", region: 0 },
-      };
-    }
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "400px",
+      padding: "20px",
+      color: "#333", // Change font color
+    },
+    overlay: {
+      backgroundColor: "rgba(0, 0, 0, 0.75)",
+    },
   };
 
   return (
@@ -113,7 +63,7 @@ const Appointments = () => {
             My Appointments
           </h2>
           <div className="overflow-x-auto">
-            <table className="min-w-full border-collapse border border-gray-200  sm:table">
+            <table className="min-w-full border-collapse border border-gray-200 sm:table">
               <thead>
                 <tr
                   style={{
@@ -177,7 +127,7 @@ const Appointments = () => {
                       {appointment.status === "confirmed" && (
                         <button
                           className="flex flex-col items-center font-bold justify-center text-red-500"
-                          onClick={() => handleCancel(appointment._id)}
+                          onClick={() => openModal(appointment._id)}
                         >
                           <CircleX className="h-6 w-6 ml-4" />
                           <span className=" text-center ml-3">Cancel</span>
@@ -188,6 +138,11 @@ const Appointments = () => {
                           Cancelled
                         </span>
                       )}
+                      {appointment.status === "completed" && (
+                        <span className="text-green-500 font-bold">
+                          Completed
+                        </span>
+                      )}
                     </td>
                   </tr>
                 ))}
@@ -196,6 +151,41 @@ const Appointments = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        onRequestClose={closeModal}
+        contentLabel="Confirm Cancellation"
+        style={customStyles}
+        closeTimeoutMS={300}
+      >
+        <div>
+          <h2 className="text-xl font-bold mb-4">Confirm Cancellation</h2>
+          <p>Are you sure you want to cancel this appointment?</p>
+          <div className="flex justify-end mt-4">
+            <button
+              className="bg-blue-600 font-bold hover:bg-blue-500 text-white px-4 py-2 rounded mr-2"
+              onClick={() =>
+                handleCancel(
+                  appointmentToCancel,
+                  appointments,
+                  setAppointments,
+                  setIsModalOpen,
+                  setAppointmentToCancel
+                )
+              }
+            >
+              Confirm
+            </button>
+            <button
+              className="bg-gray-500 text-white font-bold hover:bg-gray-400 px-4 py-2 rounded"
+              onClick={closeModal}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

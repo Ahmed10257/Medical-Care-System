@@ -36,15 +36,15 @@ export class Address {
 
 @Schema()
 export class Patient {
-  toObject(): { [x: string]: any; password: any; } {
-      throw new Error('Method not implemented.');
+  toObject(): { [x: string]: any; password: any } {
+    throw new Error('Method not implemented.');
   }
   @IsString()
   @Prop({ required: true })
   name: string;
 
   @IsNumber()
-  @Prop({ required: false })
+  @Prop({ required: false, default: 18 })
   age: number;
 
   @IsString()
@@ -62,7 +62,17 @@ export class Patient {
   @ValidateNested({ each: true })
   @Type(() => Address)
   @ArrayMinSize(1)
-  @Prop({ type: [Address], required: true })
+  @Prop({
+    type: [Address],
+    required: true,
+    default: [
+      {
+        city: 'Cairo',
+        street: 'El-Merghany',
+        country: 'Egypt',
+      },
+    ],
+  })
   addresses: Address[];
 
   @IsString()
@@ -81,7 +91,7 @@ export class Patient {
   @Prop({ default: true })
   isPatient: boolean;
 
-  @Prop({ default: 'patient'})
+  @Prop({ default: 'patient' })
   role: string;
 
   @Prop({ type: [String], default: [] })

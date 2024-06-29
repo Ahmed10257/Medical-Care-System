@@ -31,8 +31,10 @@ import DoctorRegister from "../pages/doctor-registeration/DoctorRegister";
 import DoctorForgetPassword from "../pages/doctor-registeration/DoctorForgetPassword";
 import DoctorResetPassword from "../pages/doctor-registeration/DoctorResetPassword";
 import DoctorProfile from "../pages/DoctorProfile";
-
-
+import UpdateForm from "../components/patient-profile/UpdateForm";
+import ChangePassword from "../components/patient-profile/ChangePassword";
+import Appointments from "../components/patient-profile/Appointments";
+import ContactDashboard from "../pages/ContactDashboard";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -69,11 +71,6 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
         <Route
-          path="/patient-profile"
-          element={<PatientProfile />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
           path="/contact"
           element={<ContactUs />}
           errorElement={<ErrorHandler />}
@@ -104,13 +101,17 @@ const router = createBrowserRouter(
           errorElement={<ErrorHandler />}
         />
 
-          <Route
-          path="/doctor/:id"  
+        <Route
+          path="/doctor/:id"
           element={<DoctorProfile />}
           errorElement={<ErrorHandler />}
         />
+        <Route
+          path="contact-dashboard"
+          element={<ContactDashboard />}
+          errorElement={<ErrorHandler />}
+        />
       </Route>
-
 
       {/* Doctor routes using the DoctorLayout */}
       <Route
@@ -119,8 +120,7 @@ const router = createBrowserRouter(
         errorElement={<ErrorHandler message="Page not found" />}
       >
         {/* Redirect from /dashboard to /dashboard/schedule */}
-        <Route index element={<Navigate to="/dashboard/schedule" />} />
-
+        <Route index element={<Navigate to="schedule" />} />
         <Route
           path="consultations"
           element={<Consultation />}
@@ -131,6 +131,7 @@ const router = createBrowserRouter(
           element={<Patients />}
           errorElement={<ErrorHandler />}
         />
+
         <Route
           path="entity"
           element={<Entity />}
@@ -151,8 +152,33 @@ const router = createBrowserRouter(
         <Route element={<DoctorLogin />} index />
         <Route element={<DoctorLogin />} path="login" />
         <Route element={<DoctorRegister />} path="register" />
-        <Route element={<DoctorForgetPassword />} path="doctor-forget-password" />
+        <Route
+          element={<DoctorForgetPassword />}
+          path="doctor-forget-password"
+        />
         <Route element={<DoctorResetPassword />} path="doctor-reset-password" />
+      </Route>
+      <Route
+        path="/patient-profile"
+        element={<PatientProfile />}
+        errorElement={<ErrorHandler />}
+      >
+        <Route index element={<Navigate to="myprofile" />} />
+        <Route
+          path="myprofile"
+          element={<UpdateForm />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="changePassword"
+          element={<ChangePassword />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="appointments"
+          element={<Appointments />}
+          errorElement={<ErrorHandler />}
+        />
       </Route>
       <Route
         path="*"

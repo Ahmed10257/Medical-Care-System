@@ -14,7 +14,7 @@ import { DoctorAuthModule } from './Modules/doctor/auth/auth.module';
 import { FacebookStrategy } from './facebook.strategy';
 import { ReviewModule } from './Modules/review/review.module';
 import { UploadModule } from './Modules/UploadPhoto/uploadPhoto.module';
-
+import { ContactModule } from './Modules/contact/contact.module';
 
 @Module({
   imports: [
@@ -25,11 +25,13 @@ import { UploadModule } from './Modules/UploadPhoto/uploadPhoto.module';
     PatientModule,
     AppointmentModule,
     ConsultationModule,
-    AvailableAppointmentModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/medical-app'),
+    AvailableAppointmentModule,
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/medical-app'),
     AuthModule,
     DoctorAuthModule,
     ReviewModule,
     UploadModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [AppService, FacebookStrategy],

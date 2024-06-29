@@ -32,9 +32,8 @@ const UpdateForm = () => {
       baseURL: "http://localhost:3000",
     });
     api
-      .get("/patient/667b250f09e1016668590d19")
+      .get("/patient/66806d430a3838d113383f3f")
       .then((response) => {
-        console.log(response.data);
         const { name, email, age, phone, addresses, birthDate } = response.data;
         setFormData({
           name: name || "",
@@ -99,7 +98,7 @@ const UpdateForm = () => {
       return;
     }
     axios
-      .patch("http://localhost:3000/patient/667b250f09e1016668590d19", formData)
+      .patch("http://localhost:3000/patient/66806d430a3838d113383f3f", formData)
       .then((response) => {
         Swal.fire({
           title: "Success",

@@ -33,3 +33,10 @@ export interface PatientAppointment {
     region: number;
   };
 }
+
+export interface ContactFrom {
+  name: string;
+  mobile: string;
+  email: string;
+  comments: string;
+}
