@@ -10,8 +10,9 @@ import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
 import axios from 'axios';
 import HoverRating from './Stars';
+import { FaRegEdit } from "react-icons/fa";
+import { IRating, IReview } from '../../interfaces/DoctorData';
 import { useParams } from 'react-router-dom';
-import { IReview } from '../../interfaces/DoctorData';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,19 +23,30 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-interface IProps {
-  renderReviewNewAdded: (NewReview: IReview) => void;
+interface ModalEditReviewProps {
+  id_review: string;
+  renderReviewOverallRating: (OverallReview: number, reviewUpdated: IReview) => void;
 }
 
-const ModalReview: FC<IProps> = ({renderReviewNewAdded }) => {
-  const { id } = useParams<{ id: string }>();
+const ModalEditReview: FC<ModalEditReviewProps> = ({ id_review, renderReviewOverallRating }) => {
   const [open, setOpen] = useState(false);
   const [reviewComment, setReviewComment] = useState('');
   const [rating, setRating] = useState<number | null>(2);
   const [error, setError] = useState('');
+  const [reviewId, setReviewId] = useState(id_review);
+  const { id } = useParams();
 
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleClickOpen = async () => {
+    try {
+      const response = await axios.get(`http://127.0.0.1:3000/reviews/${reviewId}`);
+      setReviewComment(response.data.review);
+      setRating(response.data.rating);
+      setReviewId(response.data._id);
+      setOpen(true);
+    } catch (error) {
+      console.error('Error fetching review:', error);
+      setError('Error fetching review. Please try again.');
+    }
   };
 
   const handleClose = () => {
@@ -48,22 +60,42 @@ const ModalReview: FC<IProps> = ({renderReviewNewAdded }) => {
     }
 
     try {
-      const response = await axios.post('http://127.0.0.1:3000/reviews', {
-        doctor: id,
-        patient: "66792459742795e5fb87f3fa", //replace id of patient
+      const response = await axios.put(`http://127.0.0.1:3000/reviews/${reviewId}`, {
         rating: rating,
         review: reviewComment,
       });
 
-      console.log('Review submitted successfully:', response.data);
-      renderReviewNewAdded(response.data);
+      const restData: IReview[] = response.data.restData.filter((review: IReview) => review.doctor === id);
+
+      // Update restData with new rating
+      const updatedRestData: IReview[] = restData.map(review => {
+        if (review._id === reviewId) {
+          return {
+            ...review,
+            rating: rating || 0 
+          };
+        }
+        return review;
+      });
+
+      const Reviews: IRating[] = updatedRestData.map((review: IReview) => ({
+        rating: review.rating || 0 
+      }));
+
+      // Calculate overall rating
+      const totalRating = Reviews.reduce((sum, review) => sum + review.rating, 0);
+      const calculatedOverallRating = Reviews.length ? totalRating / Reviews.length : 0;
+      console.log('Review Rating:', calculatedOverallRating);
+
       handleClose();
       setReviewComment('');
       setRating(null);
       setError('');
+      renderReviewOverallRating(Math.round(calculatedOverallRating), response.data.review);
+
     } catch (error) {
-      console.error('Error submitting review:', error);
-      setError('Error submitting review. Please try again.');
+      console.error('Error updating review:', error);
+      setError('Error updating review. Please try again.');
     }
   };
 
@@ -76,9 +108,9 @@ const ModalReview: FC<IProps> = ({renderReviewNewAdded }) => {
 
   return (
     <React.Fragment>
-      <Box sx={{ textAlign: 'center', mt: 4 }}>
-        <Button variant="outlined" onClick={handleClickOpen}>
-          Add your Review
+      <Box sx={{ textAlign: '', mt: 1 }}>
+        <Button onClick={handleClickOpen}>
+          <FaRegEdit size={20} className="text-blue-600 hover:text-blue-700 w-6 h-6 transition-transform duration-300 hover:scale-150 " />
         </Button>
       </Box>
       <Dialog
@@ -90,9 +122,9 @@ const ModalReview: FC<IProps> = ({renderReviewNewAdded }) => {
         sx={{ '& .MuiDialog-paper': { width: '600px', maxWidth: '600px' } }}
       >
         <Typography component="div" className="text-center p-2 rounded-t-lsm text-white bg-blue-600" gutterBottom>
-          Add Your Review
+          Edit Your Review
         </Typography>
-        <DialogTitle>Add Your Review</DialogTitle>
+        <DialogTitle>Edit Your Review</DialogTitle>
         <DialogContent>
           <HoverRating value={rating} onChange={setRating} />
           <TextField
@@ -120,4 +152,4 @@ const ModalReview: FC<IProps> = ({renderReviewNewAdded }) => {
   );
 };
 
-export default ModalReview;
+export default ModalEditReview;

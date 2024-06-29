@@ -47,7 +47,17 @@ interface IPatient {
 export interface IReview {
   _id: string;
   patient: IPatient;
+  doctor?:string
   rating: number;
   review: string;
   createdAt: string;
+}
+
+export interface ICountPatientReview{
+  doctorId:number
+  patientCount:number
+}
+
+export interface IRating {
+  rating:number
 }

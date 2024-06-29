@@ -12,6 +12,7 @@ const DoctorAbout: FC<IProps> = ({ about }) => {
     return (
         <>
 
+ {/* ------------small Screen-------------------------------------------------- */}
         <div className=" flex  rounded-lg md:hidden lg:hidden">
             <Accordion>
                 <AccordionSummary
@@ -23,12 +24,15 @@ const DoctorAbout: FC<IProps> = ({ about }) => {
                     </Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <Typography>
+                    <Typography className="text-start text-gray-600">
                     {about}
                     </Typography>
                 </AccordionDetails>
             </Accordion>
             </div>
+
+    {/* ------------md and lag Screen-------------------------------------------------- */}
+
         <div className="bg-white  gap-4 p-8 rounded-lg mb-4 hidden md:flex lg:flex">
             <div className="">
                 <UserRound color="blue" />

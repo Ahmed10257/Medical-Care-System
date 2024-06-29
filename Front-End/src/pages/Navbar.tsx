@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import NormalNav from "../components/Navbar/NormalNav";
 import SidBar from "../components/Navbar/SidBar";
+import logo from '../assets/logo/lo.png'
 const Navbar = () => {
   return (
     <>
@@ -8,13 +9,15 @@ const Navbar = () => {
         <div className="max-w-screen-xl flex  items-center justify-between mx-16">
           <div>
             <Link to='/'
-              className="flex items-center space-x-1 rtl:space-x-reverse"
+              className=" "
             >
+              <div className="flex w-20 h-20">
               <img
-                src="https://game.vezeeta.com/assets/vezeetaLogo.png"
-                width={200}
+                src={logo}
                 alt="Vezeeta Logo"
+              
               />
+              </div>
             </Link>
           </div>
 

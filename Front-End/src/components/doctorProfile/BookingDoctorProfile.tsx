@@ -2,10 +2,9 @@
 import { PiMoneyWavy,PiLetterCircleVThin ,PiCircleHalfFill} from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuCalendarClock } from "react-icons/lu";
-import { Address } from "../../interfaces";
+import { Address } from "../../interfaces/DoctorData";
 
 interface IProps{
-
     Fees:number
     WaitingTime:number
     address:Address

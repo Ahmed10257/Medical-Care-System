@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { RollerCoaster } from 'lucide-react';
-import RatingStar from "./RatingStar";
+import Rating  from "@mui/material/Rating";
 
 interface IProps{
     rating:number
@@ -26,7 +26,9 @@ const TopRate:FC<IProps>= ({rating,nameReviwer,reviewComment,date}) => {
 
             <div className=" w-full flex justify-around pt-5 pb-5 ">
                 <div > 
-                <RatingStar rating={rating}/>
+                
+                <Rating name="half-rating-read" defaultValue={rating} precision={0.5} readOnly />
+
 
 
                 </div>

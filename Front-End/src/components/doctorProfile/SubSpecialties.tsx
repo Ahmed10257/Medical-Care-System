@@ -1,40 +1,37 @@
 import { FC } from "react"
-import { Accordion, AccordionDetails, AccordionSummary, ListItem, Stack } from "@mui/material";
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import Typography from '@mui/material/Typography';
 
 interface IProps{
-
+  specializes:string[]
 }
-const SubSpecialties:FC<IProps>= () => {
+
+const SubSpecialties:FC<IProps> = ({specializes}) => {
+
+
+  const renderspecializes = specializes.map((specialize, indx) => (
+   
+    <div key={indx} className=" p-2 border border-blue-600  text-blue-700 font-semibold rounded-md">
+    {specialize}
+</div>
+));
   return (
-    <div className=" w-full flex  rounded-lg border-t-2 md:hidden lg:hidden">
-    <Accordion>
+    <div className="w-full flex rounded-lg border-t-2 md:hidden lg:hidden">
+      <Accordion className="w-full">
         <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2-content"
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2-content"
         >
-            <Typography className="flex gap-3 text-gray-500"> 
-                 Sub-Specialties
-            </Typography>
+          <Typography className="text-gray-500"> 
+            Sub-Specialties
+          </Typography>
         </AccordionSummary>
         <AccordionDetails>
-            <Typography>
-            <Stack direction="row" spacing={2}>
-            <ListItem>Item 1</ListItem>
-            <ListItem>Item 2</ListItem>
-            <ListItem>Item 3</ListItem>
-            <ListItem>Item 1</ListItem>
-            <ListItem>Item 2</ListItem>
-            <ListItem>Item 3</ListItem>
-            <ListItem>Item 1</ListItem>
-            <ListItem>Item 2</ListItem>
-  
-
-          </Stack>
-            </Typography>
+          <div className="flex flex-row w-full gap-3">
+              {renderspecializes}
+          </div>
         </AccordionDetails>
-    </Accordion>
+      </Accordion>
     </div>
   )
 }

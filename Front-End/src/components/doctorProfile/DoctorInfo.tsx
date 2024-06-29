@@ -1,11 +1,10 @@
 import { FC } from "react";
-import './style.css';
 import ShowMoreText from "react-show-more-text";
 import TopRate from "./TopRate";
 import SpecDoctor from "./SpecDoctor";
-import RatingStar from "./RatingStar";
-import { IReview } from "../../interfaces";
+import { IReview } from "../../interfaces/DoctorData";
 import { Avatar } from "@mui/material";
+import Rating from '@mui/material/Rating';
 
 interface IProps {
     doctorName: string
@@ -15,7 +14,7 @@ interface IProps {
     imageProfile: string
     overallReview: number
     numberOfReviews: number
-    firstTopReview?: IReview | null // Make this prop optional and allow null
+    firstTopReview?: IReview | null 
 }
 
 const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, specializes, imageProfile, numberOfReviews, overallReview, firstTopReview }) => {
@@ -23,16 +22,16 @@ const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, speci
         console.log(isExpanded);
     };
 
-    console.log(imageProfile);
-
+  
     return (
         <div className="bg-white grid grid-cols-4 rounded-lg p-3 mb-4 gap-4">
             <div className="col-span-1 px-5 pt-5">
-                <div className="md:hidden lg:hidden">
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" variant="square"   sx={{ width: 80, height: 80 }} />
+                <div className="md:hidden lg:hidden ">
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" variant="square"   sx={{ width: 60, height: 60 }} />
                 </div>
 
-                <div className="hidden md:block lg:block">
+                <div className="hidden md:block lg:block ">
+                    
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"    sx={{ width: 120, height: 120 }} />
                 </div>
 
@@ -44,9 +43,9 @@ const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, speci
                         <p className="text-gray-500 font-semibold  text-start  text-balance md:lg:text-2xl pt-5">
                         Doctor {doctorName}
                         </p>
-                        <p className="md:hidden lg:hidden">
-                        <RatingStar rating={overallReview} />
-                        </p>
+                        <div className="md:hidden lg:hidden text-start">
+                        <Rating name="half-rating-read" value={overallReview} precision={0.5} readOnly />
+                        </div>
                         <p className="text-blue-700  md:hidden lg:hidden"> 
                         Overall Rating From {numberOfReviews} Visitors
                         </p>
@@ -95,7 +94,8 @@ const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, speci
 
                 <div className="flex-col hidden md:flex lg:flex">
                     <div className="text-sm pt-5 flex gap-14 items-center">
-                        <RatingStar rating={overallReview} />
+                        <Rating name="read-only" value={overallReview}  precision={0.5}  readOnly />
+
                         <p className="text-xs text-gray-500">
                             Overall Rating From {numberOfReviews} Visitors
                             <a href="#patients-reviews" className="dark:hover:underline px-3 text-blue-500">

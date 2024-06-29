@@ -1,10 +1,8 @@
 import { Link } from 'react-router-dom';
-interface IProps {
+import logo from '../assets/logo/0.png'
 
-}
 
-const Footer = (props: IProps) => {  
-    console.log(props);  
+const Footer = () => {  
     return (
         <>
             <footer className="bg-white dark:bg-blue-600">
@@ -13,7 +11,7 @@ const Footer = (props: IProps) => {
 
                         <div className="text-start  order-2   md:order-none   sm:px-20    md:px-1 lg:px-9">
                             <h2 className="mb-6 md:text-lg sm:text-sm font-semibold text-gray-900 uppercase dark:text-white hidden md:block">
-                                <img src="https://game.vezeeta.com/assets/vezeetaLogo.png" width={250} alt="Vezeeta Logo" />
+                                <img src={logo}  className='w-32 h-16' alt="Vezeeta Logo" />
                             </h2>
 
                             <h2 className="mb-6 md:hidden md:text-lg sm:text-sm font-extrabold text-gray-900 uppercase dark:text-white">

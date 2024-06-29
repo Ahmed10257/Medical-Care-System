@@ -2,8 +2,8 @@ import { FC } from "react"
 import { FaMoneyCheckDollar } from "react-icons/fa6";
 import { TbClockHour3 } from "react-icons/tb";
 import { IoLocationOutline } from "react-icons/io5";
-import { Address } from "../../interfaces";
-import RatingStar from "./RatingStar";
+import { Address } from "../../interfaces/DoctorData";
+import Rating from '@mui/material/Rating';
 
 interface IProps{
     nameDoctor:string
@@ -13,6 +13,7 @@ interface IProps{
     overRating:number
 }
 const DoctorDetails:FC<IProps>= ({nameDoctor,address,WaitingTime,Fees,overRating}) => {
+    
   return (
     <div className="bg-white  flex flex-col rounded-lg  mb-4 ">
             
@@ -51,7 +52,8 @@ const DoctorDetails:FC<IProps>= ({nameDoctor,address,WaitingTime,Fees,overRating
             Patients’ Reviews :
 
              <div>
-             <RatingStar  rating={overRating}/>
+             <Rating name="read-only" value={overRating}  precision={0.5}  readOnly />
+
              </div>
              <div>
              <span className="bg-blue-600 text-white rounded-md p-2 px-2 "><span className="font-bold px-1">{overRating.toFixed(1)}</span>/5</span>
