@@ -24,7 +24,7 @@ const Patients: React.FC = () => {
   const [loading, setLoading] = useState(false); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [patientsPerPage] = useState(10); 
-  const doctorId = '667980ed403c655bd6da3b61'; 
+  const doctorId = '667ff9815e77f767fdfdad82'; 
 
   useEffect(() => {
     const fetchAppointmentsAndPatients = async () => {

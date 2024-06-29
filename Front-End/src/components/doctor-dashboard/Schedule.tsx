@@ -15,6 +15,8 @@ const Schedule: React.FC = () => {
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
+  getAuthDoctor();
+
   const doctorId = '667980ed403c655bd6da3b61'; 
 
   useEffect(() => {
@@ -41,8 +43,9 @@ const Schedule: React.FC = () => {
   const handleDateChange = (e: { value: Date | Date[] }) => {
     if (e.value instanceof Date) {
       const selectedDate = new Date(e.value);
+      // selectedDate.setDate(selectedDate.getDate());
       selectedDate.setHours(12);  
-      selectedDate.setMinutes(0); 
+      // selectedDate.setMinutes(0); 
       
       setDate(selectedDate);
       console.log('Selected date:', selectedDate);
@@ -94,7 +97,9 @@ const Schedule: React.FC = () => {
   // Filter appointments based on the selected date
   const filteredAppointments = appointments.filter(appointment => {
     const appointmentDate = new Date(appointment.date).toISOString().split('T')[0];
+    console.log('Appointment date:', appointmentDate);
     const selectedDate = date?.toISOString().split('T')[0];
+    console.log('Selected date:', selectedDate);
     return appointmentDate === selectedDate;
   });
 

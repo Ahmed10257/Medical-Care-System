@@ -10,6 +10,7 @@ import {
 import { DoctorService } from './doctor.service';
 import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('doctor')
 export class DoctorController {
@@ -38,5 +39,19 @@ export class DoctorController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.doctorService.remove(id);
+  }
+
+  @Patch(':id/update-password')
+  async updateDoctorPassword(
+    @Param('id') id: string,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ): Promise<{ success: boolean }> {
+    try {
+      const { oldPassword, newPassword } = updatePasswordDto;
+      const updated = await this.doctorService.verifyAndUpdateDoctorPassword(id, oldPassword, newPassword);
+      return { success: updated };
+    } catch (error) {
+      throw new Error(`Failed to update password: ${error.message}`);
+    }
   }
 }

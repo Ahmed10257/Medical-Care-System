@@ -88,22 +88,17 @@ export class Doctor extends Document {
   @IsBoolean()
   isDoctor: boolean;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   genaralSpecialization: string;
 
-  // @Prop({ required: true })
-  // @ValidateNested()
-  // @Type(() => Clinic)
-  // clinic: Clinic;
+  @Prop({ required: false })
+  @IsNumber()
+  fees: number;
 
-  // @Prop({ required: true })
-  // @IsNumber()
-  // fees: number;
-
-  // @Prop({ required: true })
-  // @IsNumber()
-  // waitingTime: number;
+  @Prop({ required: false })
+  @IsNumber()
+  waitingTime: number;
 
   @Prop({ required: true })
   specializes: string[];
@@ -112,7 +107,7 @@ export class Doctor extends Document {
   @IsNumber()
   views: number;
 
-  @Prop({ required: true })
+  @Prop({ required: false })
   @IsString()
   about: string;
 }
