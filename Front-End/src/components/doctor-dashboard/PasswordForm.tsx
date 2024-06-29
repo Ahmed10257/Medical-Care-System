@@ -159,13 +159,15 @@ const PasswordForm: React.FC<PasswordFormProps> = ({ onClose }) => {
 
           <div className="flex justify-center mt-6">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="text-white w-full md:w-28 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4 mr-4"
+            style={{ backgroundColor: "#F21313" }}
               type="submit"
             >
               Update
             </button>
             <button
-              className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 ml-4 rounded focus:outline-none focus:shadow-outline"
+                            className="bg-gray-500 w-full md:w-28 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
+
               type="button"
               onClick={() => {
                 onClose(); 

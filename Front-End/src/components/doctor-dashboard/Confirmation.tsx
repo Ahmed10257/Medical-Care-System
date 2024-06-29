@@ -22,7 +22,7 @@ interface Patient {
 const Confirmation: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [patients, setPatients] = useState<{ [key: string]: string }>({});
-  const [doctorId, setDoctorId] = useState<string>('667980ed403c655bd6da3b61'); 
+  const [doctorId, setDoctorId] = useState<string>('667ff9815e77f767fdfdad82'); 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(3);

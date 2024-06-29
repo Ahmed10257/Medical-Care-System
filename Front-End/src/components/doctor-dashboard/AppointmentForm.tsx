@@ -19,19 +19,30 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onCancel })
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (dateTime) {
-      const dateTimeString = new Date(dateTime).toISOString();
+      const selectedDate = new Date(dateTime);
+      const currentDate = new Date();
+
+      if (selectedDate < currentDate) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid Date',
+          text: 'The selected date and time is in the past. Please select a future date and time.',
+        });
+        return;
+      }
+
+      const dateTimeString = selectedDate.toISOString();
       console.log(dateTimeString);
 
       try {
         await axios.post('http://localhost:3000/available-appointments', {
-          doctor_id: '667980ed403c655bd6da3b61',
+          doctor_id: '667ff9815e77f767fdfdad82',
           date: dateTimeString
         });
 
         onSubmit(); 
         setDateTime(null);
 
-       
         Swal.fire({
           icon: 'success',
           title: 'Appointment added',

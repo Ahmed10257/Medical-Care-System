@@ -4,7 +4,7 @@ export class CreateAvailableAppointmentDto {
   @IsMongoId()
   doctor_id: string;
 
-  @IsDate()
-  @MinDate(new Date())
+  // @IsDate()
+  // @MinDate(new Date())
   date: Date;
 }
