@@ -1,0 +1,42 @@
+
+.page-background {
+    background-image: url('../../assets/images/veseeta.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+
+.step-content {
+    padding: 16px;
+    border: 2px dashed #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 150px;
+  }
+  
+
+  .step-transition-enter {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  .step-transition-enter-active {
+    opacity: 1;
+    transform: translateX(0);
+    transition: opacity 300ms, transform 300ms;
+  }
+  .step-transition-exit {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .step-transition-exit-active {
+    opacity: 0;
+    transform: translateX(100%);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  

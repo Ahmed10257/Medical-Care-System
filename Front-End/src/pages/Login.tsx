@@ -87,7 +87,7 @@ const Login = () => {
       .catch((error) => {
         console.log("Login error", error);
         const errorMessage = error.response.data.message;
-        let displayMessage = "Something went wrong!";
+        const displayMessage = "Something went wrong!";
         
         if (errorMessage.includes("Invalid credentials")) {
           if (errorMessage.includes("User not found")) {

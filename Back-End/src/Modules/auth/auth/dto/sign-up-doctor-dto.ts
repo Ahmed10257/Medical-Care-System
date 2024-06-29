@@ -1,22 +1,18 @@
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsString,
-  IsNumber,
-  IsEnum,
-  IsDate,
-  IsBoolean,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsEnum } from 'class-validator';
 
 enum Gender {
-  Male = 'male',
-  Female = 'female',
+  male = 'male',
+  female = 'female',
 }
 
 export class SignUpDoctorDto {
   @IsString()
   @IsNotEmpty()
-  name: string;
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  lastName: string;
 
   @IsEmail()
   email: string;
@@ -29,17 +25,12 @@ export class SignUpDoctorDto {
   @IsNotEmpty()
   specialization: string;
 
-  @IsNumber()
-  @IsNotEmpty()
-  phone: number;
-
   @IsString()
+  @IsNotEmpty()
+  phone: string;
+
   @IsNotEmpty()
   address: string;
-
-  @IsString()
-  @IsNotEmpty()
-  clinic: string;
 
   @IsString()
   @IsNotEmpty()
@@ -49,11 +40,6 @@ export class SignUpDoctorDto {
   @IsNotEmpty()
   gender: Gender;
 
-  @IsDate()
   @IsNotEmpty()
   birthdate: Date;
-
-  @IsBoolean()
-  @IsNotEmpty()
-  isDoctor: boolean;
 }

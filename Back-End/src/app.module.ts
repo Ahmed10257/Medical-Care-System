@@ -9,6 +9,7 @@ import { ConsultationModule } from './Modules/consultation/consultation.module';
 import { AvailableAppointmentModule } from './Modules/available-appointment/available-appointment.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './Modules/auth/auth.module';
+import { DoctorAuthModule } from './Modules/doctor/auth/auth.module';
 import { FacebookStrategy } from './facebook.strategy';
 
 @Module({
@@ -19,6 +20,7 @@ import { FacebookStrategy } from './facebook.strategy';
     ConsultationModule,
     AvailableAppointmentModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/medical-app'),
     AuthModule,
+    DoctorAuthModule
   ],
   controllers: [AppController],
   providers: [AppService, FacebookStrategy],

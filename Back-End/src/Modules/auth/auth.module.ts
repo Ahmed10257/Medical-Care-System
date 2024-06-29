@@ -8,7 +8,6 @@ import { MailModule } from './mailer/mailer.module';
 @Module({
   imports: [
     PatientModule,
-    // DoctorModule,
     JwtModule.register({
       global: true,
       secret: process.env.JWT_SECRET,
