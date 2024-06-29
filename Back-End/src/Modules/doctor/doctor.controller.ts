@@ -8,15 +8,14 @@ import {
   Delete,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
 
 @Controller('doctor')
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) {}
 
   @Post()
-  create(@Body() createDoctorDto: CreateDoctorDto) {
+  create(@Body() createDoctorDto: SignUpDoctorDto) {
     return this.doctorService.create(createDoctorDto);
   }
 
@@ -31,7 +30,7 @@ export class DoctorController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDoctorDto: UpdateDoctorDto) {
+  update(@Param('id') id: string, @Body() updateDoctorDto: SignUpDoctorDto) {
     return this.doctorService.update(id, updateDoctorDto);
   }
 

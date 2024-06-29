@@ -1,5 +1,4 @@
 /* eslint-disable prettier/prettier */
-// eslint-disable-next-line prettier/prettier
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -9,10 +8,19 @@ import { AppointmentModule } from './Modules/appointment/appointment.module';
 import { ConsultationModule } from './Modules/consultation/consultation.module';
 import { AvailableAppointmentModule } from './Modules/available-appointment/available-appointment.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { AuthModule } from './Modules/auth/auth.module';
+import { FacebookStrategy } from './facebook.strategy';
 
 @Module({
-  imports: [DoctorModule, PatientModule, AppointmentModule, ConsultationModule, AvailableAppointmentModule, MongooseModule.forRoot('mongodb://localhost:27017/medical-app')],
+  imports: [
+    DoctorModule,
+    PatientModule,
+    AppointmentModule,
+    ConsultationModule,
+    AvailableAppointmentModule, MongooseModule.forRoot('mongodb://127.0.0.1:27017/medical-app'),
+    AuthModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, FacebookStrategy],
 })
-export class AppModule { }
+export class AppModule {}

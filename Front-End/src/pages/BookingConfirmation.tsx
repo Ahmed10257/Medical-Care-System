@@ -21,7 +21,7 @@ const BookingConfirmation: React.FC = () => {
         const doctorResponse = await axios.get<Doctor>(`http://localhost:3000/doctor/${doctor_id}`);
         setDoctor(doctorResponse.data);
 
-        const patientId = "6675bf9a2be1ad7bb7b1b2f8"
+        const patientId = "668047b3239d2ea30ac90b44"
         const patientResponse = await axios.get<{ name: string }>(`http://localhost:3000/patient/${patientId}`);
         setPatientName(patientResponse.data.name);
       } catch (err) {

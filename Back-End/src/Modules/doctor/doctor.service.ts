@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Doctor } from 'src/Common/Schemas/doctor.schema';
-import { CreateDoctorDto } from './dto/create-doctor.dto';
-import { UpdateDoctorDto } from './dto/update-doctor.dto';
+import { Doctor, DoctorDocument } from 'src/Common/Schemas/doctor.schema';
+import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
 
 @Injectable()
 export class DoctorService {
   constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) {}
 
-  create(CreateDoctorDto: CreateDoctorDto) {
+  create(CreateDoctorDto: SignUpDoctorDto) {
     const createPatient = new this.doctorModel(CreateDoctorDto);
     return createPatient.save();
   }
@@ -22,7 +21,11 @@ export class DoctorService {
     return this.doctorModel.findById(id).exec();
   }
 
-  update(id: string, UpdateDoctorDto: UpdateDoctorDto) {
+  async findOneByEmail(email: string): Promise<DoctorDocument | null> {
+    return await this.doctorModel.findOne({ email }).exec();
+  }
+
+  update(id: string, UpdateDoctorDto: SignUpDoctorDto) {
     const updatePatient = this.doctorModel
       .findByIdAndUpdate(id, UpdateDoctorDto, { new: true })
       .exec();

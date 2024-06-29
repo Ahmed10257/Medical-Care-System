@@ -11,9 +11,10 @@ import {
   ValidateNested,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+
 export type PatientDocument = HydratedDocument<Patient>;
 
-enum gender {
+enum Gender {
   Male = 'male',
   Female = 'female',
 }
@@ -35,64 +36,70 @@ export class Address {
 
 @Schema()
 export class Patient {
+  toObject(): { [x: string]: any; password: any; } {
+      throw new Error('Method not implemented.');
+  }
   @IsString()
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
   @IsNumber()
-  @Prop()
+  @Prop({ required: false })
   age: number;
 
-  @IsNumber()
-  @Prop()
-  phone: number;
+  @IsString()
+  @Prop({ required: true })
+  phone: string;
 
   @IsString()
-  @Prop()
+  @Prop({ required: true, unique: true })
   email: string;
 
   @IsString()
-  @Prop()
+  @Prop({ required: true })
   password: string;
 
   @ValidateNested({ each: true })
   @Type(() => Address)
   @ArrayMinSize(1)
-  @Prop({ type: [Address] })
+  @Prop({ type: [Address], required: true })
   addresses: Address[];
 
   @IsString()
   @Prop()
   image: string;
 
-  @IsEnum(gender)
-  @Prop({ type: String, enum: gender })
-  gender: gender;
+  @IsEnum(Gender)
+  @Prop({ type: String, enum: Gender, required: true })
+  gender: Gender;
 
   @IsDate()
-  @Prop()
+  @Type(() => Date)
+  @Prop({ required: true })
   birthDate: Date;
 
   @Prop({ default: true })
   isPatient: boolean;
 
-  @Prop()
-  medicaalRecord: string[];
+  @Prop({ default: 'patient'})
+  role: string;
 
-  async savePassword(this: PatientDocument) {
-    if (this.isModified('password')) {
-      const hashedPassword = await bcrypt.hash(this.password, 10);
-      this.password = hashedPassword;
-    }
-  }
+  @Prop({ type: [String], default: [] })
+  medicalRecord: string[];
 }
 
 export const PatientSchema = SchemaFactory.createForClass(Patient);
 
 PatientSchema.pre<PatientDocument>('save', async function (next) {
   if (this.isModified('password')) {
-    const hashedPassword = await bcrypt.hash(this.password, 10);
-    this.password = hashedPassword;
+    console.log('Pre-save hook: checking password for', this.email);
+    if (!this.password.startsWith('$2a$')) {
+      const hashedPassword = await bcrypt.hash(this.password, 10);
+      console.log('Pre-save hook: hashed password', hashedPassword);
+      this.password = hashedPassword;
+    } else {
+      console.log('Pre-save hook: password already hashed', this.password);
+    }
   }
   next();
 });
