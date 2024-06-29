@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, HydratedDocument } from 'mongoose';
 import {
@@ -85,21 +84,13 @@ export class Doctor extends Document {
   @IsDate()
   birthdate: Date;
 
-  @Prop({ default: true})
+  @Prop({ default: true })
   @IsBoolean()
   isDoctor: boolean;
 
   @Prop({ required: true })
   @IsString()
-  specialization: string;
-
-  // @Prop({ required: true })
-  // @IsNumber()
-  // rating: number;
-
-  // @Prop({ required: true })
-  // @IsNumber()
-  // numberOfVisitors: number;
+  genaralSpecialization: string;
 
   // @Prop({ required: true })
   // @ValidateNested()
@@ -114,9 +105,16 @@ export class Doctor extends Document {
   // @IsNumber()
   // waitingTime: number;
 
-  // @Prop({ required: true })
-  // @IsString()
-  // contactInfo: string;
+  @Prop({ required: true })
+  specializes: string[];
+
+  @Prop({ default: 0 })
+  @IsNumber()
+  views: number;
+
+  @Prop({ required: true })
+  @IsString()
+  about: string;
 }
 
 export const DoctorSchema = SchemaFactory.createForClass(Doctor);

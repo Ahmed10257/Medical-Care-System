@@ -48,5 +48,19 @@ export class CreateDoctorDto {
   isDoctor: boolean;
 
   @IsString()
-  specialization: string;
+  genaralSpecialization: string;
+
+  specializes: string[];
+
+  @IsNumber()
+  views: number;
+
+  @IsNumber()
+  fees: number;
+
+  @IsNumber()
+  waitingTime: number;
+
+  @IsString()
+  about: string;
 }

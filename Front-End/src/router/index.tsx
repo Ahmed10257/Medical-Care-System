@@ -30,6 +30,8 @@ import DoctorLogin from "../pages/doctor-registeration/DoctorLogin";
 import DoctorRegister from "../pages/doctor-registeration/DoctorRegister";
 import DoctorForgetPassword from "../pages/doctor-registeration/DoctorForgetPassword";
 import DoctorResetPassword from "../pages/doctor-registeration/DoctorResetPassword";
+import DoctorProfile from "../pages/DoctorProfile";
+
 
 
 const router = createBrowserRouter(
@@ -99,6 +101,12 @@ const router = createBrowserRouter(
         <Route
           path="/confirmation/:id/:doctor_id"
           element={<BookingConfirmation />}
+          errorElement={<ErrorHandler />}
+        />
+
+          <Route
+          path="/doctor/:id"  
+          element={<DoctorProfile />}
           errorElement={<ErrorHandler />}
         />
       </Route>
