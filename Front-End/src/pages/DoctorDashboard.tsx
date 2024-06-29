@@ -86,7 +86,7 @@ const DoctorDashboard: React.FC = () => {
                   <span>Patients</span>
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/dashboard/consultations">
                   <img
                     src="https://cdn-icons-png.flaticon.com/512/1478/1478254.png"
@@ -95,7 +95,7 @@ const DoctorDashboard: React.FC = () => {
                   />
                   <span>Consultations</span>
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link to="#">
                   <img
