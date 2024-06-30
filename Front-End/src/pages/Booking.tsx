@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { configAxios as axios } from "../config/api";
 import DoctorCard from '../components/BookedDoctorCard';
 import BookingForm from '../components/BookingForm';
-import { Doctor, Appointment, Patient } from '../interfaces';
+import { Doctor, Appointment, Patient } from '../interfaces/Booking';
 import { getAuthPatient } from '../utils/functions';
 
 interface RouteParams {

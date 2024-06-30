@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Card from "../components/DoctorCard";
-import { DoctorWithAppointments, Appointment } from "../interfaces";
+import { DoctorWithAppointments } from "../interfaces/Booking";
 import { useSearch } from "../contexts/SearchContext";
 import Filter from "../components/filter-doctors/filter-box/Filter";
 import SearchBar from "../components/SearchBar/SearchBar";
@@ -57,6 +57,16 @@ const Search = () => {
           <Filter />
         </div>
         <div className="col-span-9">
+          {doctorsWithAppointments.length === 0 ? (
+            <div className="flex flex-col items-center justify-center h-128 mt-10 bg-gray-50 rounded-lg shadow-lg p-6">
+              <h3 className="text-3xl font-bold text-gray-700">No Results Found</h3>
+              <img
+                className="w-1/4 mt-4"
+                src="https://i.pinimg.com/236x/53/a5/9e/53a59edee823832cd1b73e6c73700cc5.jpg"
+              />
+            </div>
+
+          ) : (
           <div className="grid grid-cols-1 gap-4">
             {currentDoctors.map(({ doctor, appointments }) => (
               <Card
@@ -77,6 +87,8 @@ const Search = () => {
               />
             ))}
           </div>
+          )}
+          {doctorsWithAppointments.length > 0 && (
           <div className="flex justify-center items-center mt-4">
             <button
               className={`btn ${
@@ -110,6 +122,7 @@ const Search = () => {
               Next
             </button>
           </div>
+          )}
         </div>
       </div>
     </div>

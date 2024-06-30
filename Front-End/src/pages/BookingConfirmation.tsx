@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { configAxios as axios } from "../config/api";
 import BookingConfirmationCard from '../components/BookingConfirmationCard';
-import { AppointmentDetails, Doctor } from '../interfaces';
+import { AppointmentDetails, Doctor } from '../interfaces/Booking';
 import { getAuthPatient } from '../utils/functions';
 
 const BookingConfirmation: React.FC = () => {
@@ -55,8 +55,8 @@ const BookingConfirmation: React.FC = () => {
         bookingDate={`Appointment Date: ${new Date(appointment.date).toLocaleString()}`}
         doctorName={doctor.name}
         waitingTime="200"
-      examinationFees="300"
-      vezeetaPoints={350}
+        examinationFees="300"
+        vezeetaPoints={350}
       />
     </div>
   );

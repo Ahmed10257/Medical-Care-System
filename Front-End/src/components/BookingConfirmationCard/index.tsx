@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faMoneyBillWave, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
-import { BookingConfirmationProps } from '../../interfaces';
+import { BookingConfirmationProps } from '../../interfaces/Booking';
 const BookingConfirmationCard: React.FC<BookingConfirmationProps> = ({
   patientName,
   bookingDate,

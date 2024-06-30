@@ -11,7 +11,7 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { Appointment } from '../../interfaces';
+import { Appointment } from '../../interfaces/Booking';
 import AppointmentCard from '../AppointmentCard';
 
 interface IProps {

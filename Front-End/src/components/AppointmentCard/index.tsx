@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Appointment } from '../../interfaces';
+import { Appointment } from '../../interfaces/Booking';
 
 interface IProps {
     appointments: Appointment[];
@@ -25,7 +25,7 @@ const AppointmentCard: React.FC<IProps> = ({ appointments, onBook }) => {
                         className={`time-button w-full text-lg py-2 rounded-md transition-colors duration-300 ${selectedTime === appointment.id ? 'bg-blue-500 text-white' : 'bg-gray-100'
                             }`}
                         onClick={() => setSelectedTime(appointment.id)}
-                        >
+                    >
                         {formatTime(appointment.date)}
                     </button>
                 </div>

@@ -62,19 +62,55 @@ const SearchBar = ({}: IProps) => {
     e.preventDefault();
     const payload = { speciality, city, doctorOrHospital };
     try {
-      const response = await axios.get("http://127.0.0.1:3000/doctor/search", {
-        params: payload,
-      });
-      setSearchResults(response.data);
-      console.log(response.data);
-      // console.log(setSearchResults);
-      console.log(payload);
+        const response = await axios.get("http://127.0.0.1:3000/doctor/search", {
+            params: payload,
+        });
 
-      navigate("/search");
+        const transformedData = response.data.map((doc: any) => {
+            const clinic = doc.clinic || {};
+            const address = doc.address || {};
+
+            return {
+                _id: doc._id,
+                doctor: {
+                    _id: doc._id,
+                    name: doc.name || 'Unknown',
+                    phone: doc.phone || 0,
+                    email: doc.email || '',
+                    address: {
+                        city: address.city || '',
+                        country: address.country || '',
+                        region: address.region || 0,
+                    },
+                    image: doc.image || '',
+                    gender: doc.gender || 'Unknown',
+                    birthdate: doc.birthdate || '',
+                    isDoctor: doc.isDoctor || false,
+                    specialization: doc.specialization || '',
+                    rating: doc.rating || 0,
+                    numberOfVisitors: doc.numberOfVisitors || 0,
+                    clinic: {
+                        street: clinic.street || '',
+                        building: clinic.building || '',
+                    },
+                    fees: doc.fees || 0,
+                    waitingTime: doc.waitingTime || 0,
+                    contactInfo: doc.contactInfo || '',
+                },
+                appointments: doc.appointments ? doc.appointments.map((appt: any) => ({
+                    id: appt._id,
+                    date: appt.date,
+                })) : [],
+            };
+        });
+
+        setSearchResults(transformedData);
+        navigate("/search");
     } catch (error) {
-      console.error("Error:", error);
+        console.error("Error:", error);
     }
-  };
+};
+
 
   return (
     <div className="bg-white shadow-lg rounded-lg p-4 flex flex-col items-center lg:items-start ">
