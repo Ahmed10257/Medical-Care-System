@@ -29,7 +29,6 @@ const Search = () => {
   console.log("Current Doctors:", JSON.stringify(currentDoctors, null, 2));
 
   const totalPages = Math.ceil(doctorsWithAppointments.length / doctorsPerPage);
-
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };

@@ -111,6 +111,28 @@ const router = createBrowserRouter(
           element={<ContactDashboard />}
           errorElement={<ErrorHandler />}
         />
+        <Route
+          path="/patient-profile"
+          element={<PatientProfile />}
+          errorElement={<ErrorHandler />}
+        >
+          <Route index element={<Navigate to="myprofile" />} />
+          <Route
+            path="myprofile"
+            element={<UpdateForm />}
+            errorElement={<ErrorHandler />}
+          />
+          <Route
+            path="changePassword"
+            element={<ChangePassword />}
+            errorElement={<ErrorHandler />}
+          />
+          <Route
+            path="appointments"
+            element={<Appointments />}
+            errorElement={<ErrorHandler />}
+          />
+        </Route>
       </Route>
 
       {/* Doctor routes using the DoctorLayout */}
@@ -158,28 +180,7 @@ const router = createBrowserRouter(
         />
         <Route element={<DoctorResetPassword />} path="doctor-reset-password" />
       </Route>
-      <Route
-        path="/patient-profile"
-        element={<PatientProfile />}
-        errorElement={<ErrorHandler />}
-      >
-        <Route index element={<Navigate to="myprofile" />} />
-        <Route
-          path="myprofile"
-          element={<UpdateForm />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="changePassword"
-          element={<ChangePassword />}
-          errorElement={<ErrorHandler />}
-        />
-        <Route
-          path="appointments"
-          element={<Appointments />}
-          errorElement={<ErrorHandler />}
-        />
-      </Route>
+
       <Route
         path="*"
         element={<ErrorHandler statusCode={404} message="Page not found" />}

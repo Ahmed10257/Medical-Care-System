@@ -3,7 +3,7 @@ import {
   FormPasswordData,
   ContactFrom,
 } from "../interfaces/patient-profile";
-import axios from "axios";
+import { configAxios as axios } from "../config/api";
 import { PatientAppointment } from "../interfaces/patient-profile";
 
 // UpdateForm Component
@@ -75,11 +75,12 @@ export const validatePassword = (formData: FormPasswordData) => {
 // Appointment Component
 // -----------------------------------------------------------------------
 export const fetchAppointments = async (
+  pId: string,
   setAppointments: React.Dispatch<React.SetStateAction<PatientAppointment[]>>
 ) => {
   try {
     const response = await fetch(
-      "http://localhost:3000/appointments/patient/667b250f09e1016668590d19" // patient ID From Token
+      `http://localhost:3000/appointments/patient/${pId}`
     );
     if (!response.ok) {
       throw new Error("Failed to fetch appointments");

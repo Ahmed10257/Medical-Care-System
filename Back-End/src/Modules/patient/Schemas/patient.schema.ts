@@ -83,7 +83,6 @@ export class Patient {
   @Prop({ type: String, enum: Gender, required: true })
   gender: Gender;
 
-  @IsDate()
   @Type(() => Date)
   @Prop({ required: true })
   birthDate: Date;

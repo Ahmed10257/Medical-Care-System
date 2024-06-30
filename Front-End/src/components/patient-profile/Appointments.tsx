@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import { CircleX } from "lucide-react";
 import Modal from "react-modal";
 import { PatientAppointment } from "../../interfaces/patient-profile";
+import { getAuthPatient } from "../../utils/functions";
+import "./modal-styles.css";
 import {
   fetchAppointments,
   handleCancel,
 } from "../../utils/patient-profile-func";
-import "./modal-styles.css"; // Import the CSS file
 
-Modal.setAppElement("#root"); // Set the app element for accessibility
+Modal.setAppElement("#root");
 
 const Appointments = () => {
   const [appointments, setAppointments] = useState<PatientAppointment[]>([]);
@@ -16,10 +17,21 @@ const Appointments = () => {
   const [appointmentToCancel, setAppointmentToCancel] = useState<string | null>(
     null
   );
+  const [pId, setPId] = useState<string>("");
 
   useEffect(() => {
-    fetchAppointments(setAppointments);
+    async function fetchData() {
+      const id = await getAuthPatient();
+      setPId(id);
+    }
+    fetchData();
   }, []);
+
+  useEffect(() => {
+    if (pId) {
+      fetchAppointments(pId, setAppointments);
+    }
+  }, [pId]);
 
   const openModal = (id: string) => {
     setAppointmentToCancel(id);
@@ -41,7 +53,7 @@ const Appointments = () => {
       transform: "translate(-50%, -50%)",
       width: "400px",
       padding: "20px",
-      color: "#333", // Change font color
+      color: "#333",
     },
     overlay: {
       backgroundColor: "rgba(0, 0, 0, 0.75)",

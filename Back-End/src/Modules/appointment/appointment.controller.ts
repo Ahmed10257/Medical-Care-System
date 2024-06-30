@@ -14,7 +14,7 @@ import { Appointment } from './entities/appointment.entity';
 
 @Controller()
 export class AppointmentsController {
-  constructor(private readonly appointmentService: AppointmentService) { }
+  constructor(private readonly appointmentService: AppointmentService) {}
 
   @Post('appointments')
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
@@ -44,7 +44,7 @@ export class AppointmentsController {
     return this.appointmentService.remove(id);
   }
 
-  @Get('patient/:patientId')
+  @Get('appointments/patient/:patientId')
   async findAllByPatientId(
     @Param('patientId') patientId: string,
   ): Promise<Appointment> {

@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { validatePassword } from "../../utils/patient-profile-func";
 import { LockKeyhole, KeyRound, ShieldCheck } from "lucide-react";
+import { getAuthPatient } from "../../utils/functions";
 
 interface FormPasswordData {
   oldPassword: string;
@@ -13,6 +14,7 @@ interface FormPasswordData {
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [pId, setPId] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState<{
     oldPassword?: string;
@@ -27,6 +29,14 @@ const ChangePassword = () => {
     if (field === "newPassword") setNewPassword(value);
     if (field === "confirmPassword") setConfirmPassword(value);
   };
+
+  useEffect(() => {
+    async function fetchData() {
+      const id = await getAuthPatient();
+      setPId(id);
+    }
+    fetchData();
+  }, []);
 
   const changePassword = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
@@ -45,7 +55,7 @@ const ChangePassword = () => {
 
     try {
       const responseVerify = await axios.post(
-        `http://localhost:3000/patient/6680585b911459c61b051f01/verify-password`,
+        `http://localhost:3000/patient/${pId}/verify-password`,
         {
           password: oldPassword,
           newPassword: newPassword,
