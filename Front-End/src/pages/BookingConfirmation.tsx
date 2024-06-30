@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import { configAxios as axios } from "../config/api";
 import BookingConfirmationCard from '../components/BookingConfirmationCard';
 import { AppointmentDetails, Doctor } from '../interfaces';
+import { getAuthPatient } from '../utils/functions';
 
 const BookingConfirmation: React.FC = () => {
   const { id, doctor_id } = useParams<{ id: string; doctor_id: string }>();
@@ -21,7 +22,7 @@ const BookingConfirmation: React.FC = () => {
         const doctorResponse = await axios.get<Doctor>(`http://localhost:3000/doctor/${doctor_id}`);
         setDoctor(doctorResponse.data);
 
-        const patientId = "668047b3239d2ea30ac90b44"
+        const patientId = await getAuthPatient();
         const patientResponse = await axios.get<{ name: string }>(`http://localhost:3000/patient/${patientId}`);
         setPatientName(patientResponse.data.name);
       } catch (err) {
@@ -50,12 +51,12 @@ const BookingConfirmation: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <BookingConfirmationCard
-        patientName={patientName}
+        patientName="Mohamed Torkey"
         bookingDate={`Appointment Date: ${new Date(appointment.date).toLocaleString()}`}
         doctorName={doctor.name}
-        waitingTime={doctor.waitingTime.toString()}
-        examinationFees="300"
-        vezeetaPoints={600}
+        waitingTime="200"
+      examinationFees="300"
+      vezeetaPoints={350}
       />
     </div>
   );

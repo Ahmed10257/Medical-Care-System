@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { configAxios as axios } from "../config/api";
 import DoctorCard from '../components/BookedDoctorCard';
 import BookingForm from '../components/BookingForm';
 import { Doctor, Appointment, Patient } from '../interfaces';
+import { getAuthPatient } from '../utils/functions';
 
 interface RouteParams {
   doctor_id: string;
@@ -29,7 +30,8 @@ const Book: React.FC = () => {
         const appointmentResponse = await axios.get<Appointment>(`http://localhost:3000/available-appointments/${appointment_id}`);
         setAppointment(appointmentResponse.data);
 
-        const patientId = "668047b3239d2ea30ac90b44";
+        const patientId = await getAuthPatient();
+        console.log(patientId)
         const patientResponse = await axios.get<Patient>(`http://localhost:3000/patient/${patientId}`);
         setPatient(patientResponse.data);
       } catch (err) {

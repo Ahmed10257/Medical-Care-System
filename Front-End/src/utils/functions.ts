@@ -13,7 +13,7 @@ export async function getAuthPatient() {
   try {
     const response = await configAxios.get("/auth/patient-id-from-token");
     console.log(response.data);
-    return response.data.doctorId;
+    return response.data.patientId;
   } catch (error) {
     console.log(error);
   }

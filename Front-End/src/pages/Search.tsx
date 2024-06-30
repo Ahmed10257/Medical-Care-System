@@ -1,32 +1,23 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Card from "../components/DoctorCard";
 import { DoctorWithAppointments, Appointment } from "../interfaces";
-import { SearchContext, useSearch } from "../contexts/SearchContext";
+import { useSearch } from "../contexts/SearchContext";
+import Filter from "../components/filter-doctors/filter-box/Filter";
+import SearchBar from "../components/SearchBar/SearchBar";
 
 const Search = () => {
-  const [doctorsWithAppointments, setDoctorsWithAppointments] = useState<
-    DoctorWithAppointments[]
-  >([]);
+  const [doctorsWithAppointments, setDoctorsWithAppointments] = useState<DoctorWithAppointments[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const doctorsPerPage = 5;
   const { searchResults } = useSearch();
-
-  useContext(SearchContext);
 
   useEffect(() => {
     setDoctorsWithAppointments(searchResults);
   }, [searchResults]);
 
-  console.log(doctorsWithAppointments);
-  console.log(searchResults);
-
   const indexOfLastDoctor = currentPage * doctorsPerPage;
   const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
-  const currentDoctors = doctorsWithAppointments.slice(
-    indexOfFirstDoctor,
-    indexOfLastDoctor
-  );
-  console.log("Current Doctors:", JSON.stringify(currentDoctors, null, 2));
+  const currentDoctors = doctorsWithAppointments.slice(indexOfFirstDoctor, indexOfLastDoctor);
 
   const totalPages = Math.ceil(doctorsWithAppointments.length / doctorsPerPage);
 
@@ -59,12 +50,12 @@ const Search = () => {
   return (
     <div className="container mx-auto">
       <div className="grid grid-cols-12 gap-4">
-        <div className="col-span-12 h-20 bg-black"></div>
-
-        <div className="col-span-3 h-80 sticky top-10 bg-black">
-          {/* Sidebar content */}
+        <div className="col-span-12 h-60 w-full">
+          <SearchBar />
         </div>
-
+        <div className="col-span-3 h-80 sticky top-10">
+          <Filter />
+        </div>
         <div className="col-span-9">
           <div className="grid grid-cols-1 gap-4">
             {currentDoctors.map(({ doctor, appointments }) => (

@@ -70,7 +70,7 @@ const SearchBar = ({}: IProps) => {
       // console.log(setSearchResults);
       console.log(payload);
 
-      // navigate("/search");
+      navigate("/search");
     } catch (error) {
       console.error("Error:", error);
     }

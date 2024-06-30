@@ -63,7 +63,7 @@ export class DoctorService {
     return true;
   }
 
-  async searchDoctor({ speciality, city, doctorOrHospital }: { speciality?: string; city?: string; doctorOrHospital?: string }): Promise<Doctor[]> {
+  async searchDoctor({ speciality, city, doctorOrHospital }: { speciality?: string; city?: string; doctorOrHospital?: string }): Promise<any[]> {
     const query = {};
     console.log("Input Parameters - Speciality:", speciality, "City:", city, "DoctorOrHospital:", doctorOrHospital);
     if (speciality) {
@@ -76,7 +76,45 @@ export class DoctorService {
       query['name'] = { $regex: doctorOrHospital, $options: 'i' };
     }
     console.log("Query:", query);
-    return this.doctorModel.find(query);
+
+    const pipeline = [
+      {
+        $match: query
+      },
+      {
+        $lookup: {
+          from: 'availableappointments',
+          localField: '_id',
+          foreignField: 'doctor_id',
+          as: 'appointments',
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          name: 1,
+          phone: 1,
+          email: 1,
+          address: 1,
+          image: 1,
+          gender: 1,
+          birthdate: 1,
+          isDoctor: 1,
+          specialization: 1,
+          rating: 1,
+          numberOfVisitors: 1,
+          clinic: 1,
+          fees: 1,
+          waitingTime: 1,
+          contactInfo: 1,
+          appointments: 1,
+        },
+      },
+    ];
+
+    const results = await this.doctorModel.aggregate(pipeline).exec();
+    return results;
   }
+
 
 }
