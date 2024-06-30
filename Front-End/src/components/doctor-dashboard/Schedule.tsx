@@ -8,6 +8,7 @@ import 'primeicons/primeicons.css';
 import './Schedule.css';
 import './CustomStyle.css';
 import AppointmentForm from './AppointmentForm';
+import { getAuthDoctor } from '../../utils/functions';
 
 const Schedule: React.FC = () => {
   const [date, setDate] = useState<Date | null>(new Date());
@@ -17,12 +18,12 @@ const Schedule: React.FC = () => {
 
   getAuthDoctor();
 
-  const doctorId = '667980ed403c655bd6da3b61'; 
-
+  
   useEffect(() => {
     const fetchAppointments = async () => {
       setLoading(true);
       try {
+        const doctorId = await getAuthDoctor(); 
         const response = await axios.get('http://localhost:3000/available-appointments', {
           params: {
             doctor_id: doctorId,

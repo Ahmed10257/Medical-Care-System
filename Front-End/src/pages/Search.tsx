@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Card from '../components/DoctorCard';
-import { DoctorWithAppointments } from '../interfaces';
+import { DoctorWithAppointments, Appointment } from '../interfaces';
 
 const Search = () => {
     const [doctorsWithAppointments, setDoctorsWithAppointments] = useState<DoctorWithAppointments[]>([]);
@@ -36,6 +36,17 @@ const Search = () => {
         setCurrentPage(currentPage - 1);
     };
 
+    const groupAppointmentsByDate = (appointments: Appointment[]) => {
+        return appointments.reduce((groups: { [key: string]: Appointment[] }, appointment) => {
+            const date = new Date(appointment.date).toDateString();
+            if (!groups[date]) {
+                groups[date] = [];
+            }
+            groups[date].push(appointment);
+            return groups;
+        }, {});
+    };
+
     return (
         <div className="container mx-auto">
             <div className="grid grid-cols-12 gap-4">
@@ -62,6 +73,7 @@ const Search = () => {
                                 waitingTime={`${doctor.waitingTime} Minutes`}
                                 phoneNumber={doctor.contactInfo}
                                 appointments={appointments}
+                                groupedAppointments={groupAppointmentsByDate(appointments)}
                             />
                         ))}
                     </div>
