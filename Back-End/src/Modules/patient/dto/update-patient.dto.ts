@@ -51,6 +51,5 @@ export class UpdatePatientDto {
   gender?: Gender;
 
   @IsOptional()
-  @IsDate()
   birthDate?: Date;
 }

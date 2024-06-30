@@ -6,8 +6,10 @@ import Select from "react-select";
 import { egyptianCities } from "../../data/patient-profile";
 import { FormData } from "../../interfaces/patient-profile";
 import { validate } from "../../utils/patient-profile-func";
+import { getAuthPatient } from "../../utils/functions";
 
 const UpdateForm = () => {
+  const [pId, setPId] = useState<string>("");
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -28,13 +30,27 @@ const UpdateForm = () => {
   const [error, setError] = useState<null | string>(null);
 
   useEffect(() => {
+    async function fetchData() {
+      const id = await getAuthPatient();
+      setPId(id);
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (!pId) return;
+
     const api = axios.create({
       baseURL: "http://localhost:3000",
     });
+
+    setIsLoading(true);
+
     api
-      .get("/patient/66806d430a3838d113383f3f")
+      .get(`/patient/${pId}`)
       .then((response) => {
         const { name, email, age, phone, addresses, birthDate } = response.data;
+
         setFormData({
           name: name || "",
           email: email || "",
@@ -58,7 +74,7 @@ const UpdateForm = () => {
         setError(error.message);
         setIsLoading(false);
       });
-  }, []);
+  }, [pId]);
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -97,8 +113,9 @@ const UpdateForm = () => {
       setErrors(newErrors);
       return;
     }
+
     axios
-      .patch("http://localhost:3000/patient/66806d430a3838d113383f3f", formData)
+      .patch(`http://localhost:3000/patient/${pId}`, formData)
       .then((response) => {
         Swal.fire({
           title: "Success",
@@ -115,6 +132,7 @@ const UpdateForm = () => {
           confirmButtonText: "Ok",
         });
       });
+    console.log(formData.birthDate);
   };
 
   if (isLoading) console.log(isLoading);

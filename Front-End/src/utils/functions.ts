@@ -12,8 +12,8 @@ export async function getAuthPatient() {
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await configAxios.get("/auth/patient-id-from-token");
-    console.log(response.data);
-    return response.data.doctorId;
+    // console.log(response.data);
+    return response.data.patientId;
   } catch (error) {
     console.log(error);
   }
