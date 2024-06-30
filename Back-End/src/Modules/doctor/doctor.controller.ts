@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Controller,
   Get,
@@ -6,6 +7,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
@@ -14,7 +16,7 @@ import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('doctor')
 export class DoctorController {
-  constructor(private readonly doctorService: DoctorService) {}
+  constructor(private readonly doctorService: DoctorService) { }
 
   @Post()
   create(@Body() createDoctorDto: SignUpDoctorDto) {
@@ -26,6 +28,15 @@ export class DoctorController {
     return this.doctorService.findAll();
   }
 
+  @Get('search')
+  async searchDoctors(
+    @Query('speciality') speciality: string,
+    @Query('city') city: string,
+    @Query('doctorOrHospital') doctorOrHospital: string,
+  ) {
+    const results = await this.doctorService.searchDoctor({ speciality, city, doctorOrHospital });
+    return results;
+  }
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.doctorService.findOne(id);

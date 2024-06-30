@@ -36,4 +36,4 @@ import { ContactModule } from './Modules/contact/contact.module';
   controllers: [AppController],
   providers: [AppService, FacebookStrategy],
 })
-export class AppModule {}
+export class AppModule { }

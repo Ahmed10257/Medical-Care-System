@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -8,7 +9,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class DoctorService {
-  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) {}
+  constructor(@InjectModel(Doctor.name) private doctorModel: Model<Doctor>) { }
 
   create(CreateDoctorDto: SignUpDoctorDto) {
     const createPatient = new this.doctorModel(CreateDoctorDto);
@@ -60,6 +61,22 @@ export class DoctorService {
     const hashedNewPassword = await bcrypt.hash(newPassword, 10);
     await this.doctorModel.findByIdAndUpdate(id, { password: hashedNewPassword }, { new: true }).exec();
     return true;
-}
+  }
+
+  async searchDoctor({ speciality, city, doctorOrHospital }: { speciality?: string; city?: string; doctorOrHospital?: string }): Promise<Doctor[]> {
+    const query = {};
+    console.log("Input Parameters - Speciality:", speciality, "City:", city, "DoctorOrHospital:", doctorOrHospital);
+    if (speciality) {
+      query['specialization'] = speciality;
+    }
+    if (city) {
+      query['address.city'] = city;
+    }
+    if (doctorOrHospital) {
+      query['name'] = { $regex: doctorOrHospital, $options: 'i' };
+    }
+    console.log("Query:", query);
+    return this.doctorModel.find(query);
+  }
 
 }
