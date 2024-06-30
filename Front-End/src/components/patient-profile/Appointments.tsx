@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { PatientAppointment } from "../../interfaces/patient-profile";
 import { getAuthPatient } from "../../utils/functions";
 import "./modal-styles.css";
+import SearchBar from "../../components/SearchBar/SearchBar";
 import {
   fetchAppointments,
   handleCancel,
@@ -62,8 +63,10 @@ const Appointments = () => {
 
   return (
     <>
-      <div className="container mx-auto mt-5 p-5 w-full">
-        <div className="mb-3">Mansour Search bar component</div>
+      <div className="container mx-auto mt-0  w-full">
+        <div className="mb-3 hidden mt- lg:block">
+          <SearchBar />
+        </div>
         <div className="rounded-lg border border-gray-200 overflow-hidden">
           <h2
             className="text-xl font-bold p-1 text-center"
