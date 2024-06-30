@@ -52,8 +52,8 @@ const Cities = [
 ];
 
 const SearchBar = ({}: IProps) => {
-  const [speciality, setSpeciality] = useState(null);
-  const [city, setCity] = useState(null);
+  const [speciality, setSpeciality] = useState<string | null>("");
+  const [city, setCity] = useState("");
   const [doctorOrHospital, setDoctorOrHospital] = useState("");
   const navigate = useNavigate();
   const { setSearchResults } = useSearch();
@@ -105,7 +105,7 @@ const SearchBar = ({}: IProps) => {
             <DropDown
               placeholder="Choose Speciality"
               options={Specialities}
-              onChange={(e) => setSpeciality(e.value)}
+              onChange={(e) => setSpeciality(e?.name)}
             />
           </div>
           <div className="flex items-center border rounded-xl px-2 py-1 space-x-2 h-12 w-full my-2 mx-2">
@@ -113,7 +113,9 @@ const SearchBar = ({}: IProps) => {
             <DropDown
               placeholder="Choose City"
               options={Cities}
-              onChange={(e) => setCity(e.value)}
+              onChange={(e) => {
+                setCity(e.name);
+              }}
             />
           </div>
           {/* <div className="flex items-center border rounded-xl px-2 py-1 space-x-2 h-12 w-full my-2">

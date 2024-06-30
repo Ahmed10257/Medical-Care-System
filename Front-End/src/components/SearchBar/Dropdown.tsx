@@ -7,20 +7,25 @@ interface SelectOptions {
 
 interface IProps {
   value: SelectOptions | null;
-  onChange: (e: DropdownChangeEvent) => void;
+  onChange: (value: SelectOptions | null) => void;
   options: SelectOptions[];
   placeholder: string;
 }
 
-const DropDown = ({ placeholder, options }: IProps) => {
+const DropDown = ({ placeholder, options, onChange }: IProps) => {
   const [selection, setSelection] = useState<SelectOptions | null>(null);
   const Selectoptions: SelectOptions[] = options;
+
+  const handleChange = (e: DropdownChangeEvent) => {
+    setSelection(e.value);
+    onChange(e.value);
+  };
 
   return (
     <div className="card flex justify-content-center ">
       <Dropdown
         value={selection}
-        onChange={(e: DropdownChangeEvent) => setSelection(e.value)}
+        onChange={handleChange}
         options={Selectoptions}
         optionLabel="name"
         placeholder={placeholder}
