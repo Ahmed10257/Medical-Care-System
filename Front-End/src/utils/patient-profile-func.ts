@@ -2,9 +2,9 @@ import {
   FormData,
   FormPasswordData,
   ContactFrom,
+  PatientAppointment,
 } from "../interfaces/patient-profile";
 import { configAxios as axios } from "../config/api";
-import { PatientAppointment } from "../interfaces/patient-profile";
 
 // UpdateForm Component
 // -----------------------------------------------------------------------
@@ -79,13 +79,8 @@ export const fetchAppointments = async (
   setAppointments: React.Dispatch<React.SetStateAction<PatientAppointment[]>>
 ) => {
   try {
-    const response = await fetch(
-      `http://localhost:3000/appointments/patient/${pId}`
-    );
-    if (!response.ok) {
-      throw new Error("Failed to fetch appointments");
-    }
-    const data = await response.json();
+    const response = await axios.get(`/appointments/patient/${pId}`);
+    const data = response.data;
 
     const appointmentsWithDoctorDetails = await Promise.all(
       data.map(async (appointment: PatientAppointment) => {
@@ -111,11 +106,8 @@ export const fetchAppointments = async (
 // -----------------------------------------------------------------------
 export const getDoctorDetails = async (doctorId: string) => {
   try {
-    const response = await fetch(`http://localhost:3000/doctor/${doctorId}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch doctor");
-    }
-    const data = await response.json();
+    const response = await axios.get(`/doctor/${doctorId}`);
+    const data = response.data;
     return {
       name: data.name,
       address: {
@@ -143,12 +135,9 @@ export const handleCancel = async (
   if (!appointmentToCancel) return;
 
   try {
-    const response = await axios.patch(
-      `http://localhost:3000/appointments/${appointmentToCancel}`,
-      {
-        status: "cancelled",
-      }
-    );
+    const response = await axios.patch(`/appointments/${appointmentToCancel}`, {
+      status: "cancelled",
+    });
 
     const updatedAppointment = response.data;
 
@@ -204,7 +193,7 @@ export const validateContact = (formData: ContactFrom) => {
   if (!formData.comments) {
     newErrors.comments = "Comment is required.";
   } else if (formData.comments.length < 10) {
-    newErrors.comments = "Must be at least 3 characters.";
+    newErrors.comments = "Must be at least 10 characters.";
   } else if (formData.comments.length > 300) {
     newErrors.comments = "Must be at most 300 characters.";
   } else if (!/^[a-zA-Z\s]*$/.test(formData.comments)) {
