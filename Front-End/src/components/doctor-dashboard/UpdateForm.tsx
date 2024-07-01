@@ -89,12 +89,6 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
     //   errors.phone = "Phone number must contain only numbers.";
     // }
 
-    if (!formData.address.city) {
-      errors.city = "City is required.";
-    }
-    if (!formData.address.state) {
-      errors.state = "State is required.";
-    }
 
     return errors;
   };
@@ -173,7 +167,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
             </div>
             {errors.lastName && <p className="text-error">{errors.lastName}</p>}
             <br />
-            <div className="flex flex-col md:flex-row">
+            {/* <div className="flex flex-col md:flex-row">
               <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="address.city">
                 <FontAwesomeIcon icon={faMapMarkerAlt} className="inline mx-1 w-4 h-5" />City
               </label>
@@ -186,7 +180,7 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
                 className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.city && 'border-red-500'}`}
               />
             </div>
-            {errors.city && <p className="text-error">{errors.city}</p>}
+            {errors.city && <p className="text-error">{errors.city}</p>} */}
             {/* <br />
             <div className="flex flex-col md:flex-row">
               <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="address.state">

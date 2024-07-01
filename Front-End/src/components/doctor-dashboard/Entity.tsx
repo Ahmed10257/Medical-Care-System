@@ -125,9 +125,9 @@ const Entity: React.FC = () => {
                 {/* <Briefcase className="inline m-2 mx-1 w-5 h-5" />
                 Specialty: {doctorData.genaralSpecialization}
                 <br /> */}
-                <MapPin className="inline m-2 mx-1 w-5 h-5" />
+                {/* <MapPin className="inline m-2 mx-1 w-5 h-5" />
                 Location: {doctorData.address.city}, {doctorData.address.state}
-                <br />
+                <br /> */}
                 <Phone className="inline m-2 mx-1 w-5 h-5" />
                 Contact: {doctorData.phone}
                 <br />
