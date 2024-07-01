@@ -1,9 +1,8 @@
-import { Facebook } from 'lucide-react';
+import { Facebook } from "lucide-react";
 
 const FaceBookBtn = () => {
-
   const handleFacebookLogin = () => {
-    window.location.href = 'http://localhost:3000/facebook';
+    window.location.href = "http://localhost:3000/facebook";
   };
 
   return (

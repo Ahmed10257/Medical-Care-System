@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { validatePassword } from "../../utils/patient-profile-func";
 import { LockKeyhole, KeyRound, ShieldCheck } from "lucide-react";
 import { getAuthPatient } from "../../utils/functions";
+import { configAxios } from "../../config/api";
 
 interface FormPasswordData {
   oldPassword: string;
@@ -54,8 +54,8 @@ const ChangePassword = () => {
     }
 
     try {
-      const responseVerify = await axios.post(
-        `http://localhost:3000/patient/${pId}/verify-password`,
+      const responseVerify = await configAxios.post(
+        `/patient/${pId}/verify-password`,
         {
           password: oldPassword,
           newPassword: newPassword,

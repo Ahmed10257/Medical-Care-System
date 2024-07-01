@@ -1,12 +1,12 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Phone, CalendarFold, MapPin, Mail, User, Baby } from "lucide-react";
 import Swal from "sweetalert2";
-import axios from "axios";
 import Select from "react-select";
 import { egyptianCities } from "../../data/patient-profile";
 import { FormData } from "../../interfaces/patient-profile";
 import { validate } from "../../utils/patient-profile-func";
 import { getAuthPatient } from "../../utils/functions";
+import { configAxios } from "../../config/api";
 
 const UpdateForm = () => {
   const [pId, setPId] = useState<string>("");
@@ -40,13 +40,9 @@ const UpdateForm = () => {
   useEffect(() => {
     if (!pId) return;
 
-    const api = axios.create({
-      baseURL: "http://localhost:3000",
-    });
-
     setIsLoading(true);
 
-    api
+    configAxios
       .get(`/patient/${pId}`)
       .then((response) => {
         const { name, email, age, phone, addresses, birthDate } = response.data;
@@ -114,8 +110,8 @@ const UpdateForm = () => {
       return;
     }
 
-    axios
-      .patch(`http://localhost:3000/patient/${pId}`, formData)
+    configAxios
+      .patch(`/patient/${pId}`, formData)
       .then((response) => {
         Swal.fire({
           title: "Success",

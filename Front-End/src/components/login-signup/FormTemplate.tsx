@@ -1,14 +1,24 @@
+import { ReactNode } from "react";
+
 interface IProps {
   title: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
   lgWidth?: string;
   mdWidth?: string;
   smWidth?: string;
 }
 
-const FormTemplate = ({ title, children, lgWidth, mdWidth, smWidth}: IProps) => {
+const FormTemplate = ({
+  title,
+  children,
+  lgWidth,
+  mdWidth,
+  smWidth,
+}: IProps) => {
   return (
-    <div className={`lg:w-${lgWidth} md:w-${mdWidth} sm:w-${smWidth} w-5/12 flex flex-col bg-white rounded-xl border`}>
+    <div
+      className={`lg:w-${lgWidth} md:w-${mdWidth} sm:w-${smWidth} w-11/12 flex flex-col bg-white rounded-xl border`}
+    >
       <div className="bg-blue-600 rounded-t-xl h-6 text-white flex items-center justify-center">
         <h1>{title}</h1>
       </div>

@@ -1,5 +1,4 @@
-
-import { ChangeEvent } from 'react';
+import { ChangeEvent } from "react";
 
 interface InputProps {
   type: string;
@@ -13,7 +12,17 @@ interface InputProps {
   className?: string;
 }
 
-const Input = ({ type, name, id, value, onChange, placeholder, onBlur, error, className }: InputProps) => {
+const Input = ({
+  type,
+  name,
+  id,
+  value,
+  onChange,
+  placeholder,
+  onBlur,
+  error,
+  className,
+}: InputProps) => {
   return (
     <input
       type={type}
@@ -23,8 +32,8 @@ const Input = ({ type, name, id, value, onChange, placeholder, onBlur, error, cl
       onChange={onChange}
       placeholder={placeholder}
       onBlur={onBlur}
-      className={`${className} border p-3 rounded-md w-7/12 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-        error ? 'border-red-500' : 'border-gray-300'
+      className={`${className} border p-3 rounded-md w-full focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+        error ? "border-red-500" : "border-gray-300"
       }`}
     />
   );
