@@ -51,7 +51,7 @@ const BookingConfirmation: React.FC = () => {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <BookingConfirmationCard
-        patientName="Mohamed Torkey"
+        patientName={patientName}
         bookingDate={`Appointment Date: ${new Date(appointment.date).toLocaleString()}`}
         doctorName={doctor.name}
         waitingTime="200"
