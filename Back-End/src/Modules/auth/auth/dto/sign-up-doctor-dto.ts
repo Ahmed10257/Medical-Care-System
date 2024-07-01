@@ -23,7 +23,7 @@ export class SignUpDoctorDto {
 
   @IsString()
   @IsNotEmpty()
-  specialization: string;
+  genaralSpecialization: string;
 
   @IsString()
   @IsNotEmpty()

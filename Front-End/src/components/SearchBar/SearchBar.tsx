@@ -1,7 +1,7 @@
 import { CalendarPlus } from "lucide-react";
 import { useState } from "react";
 import DropDown from "./Dropdown";
-import axios from "axios";
+import { configAxios as axios} from "../../config/api";
 import { useSearch } from "../../contexts/SearchContext";
 import { useNavigate } from "react-router-dom";
 // import { DoctorWithAppointments } from "../../interfaces/index";
@@ -70,7 +70,7 @@ const SearchBar = ({}: IProps) => {
       // console.log(setSearchResults);
       console.log(payload);
 
-      // navigate("/search");
+      navigate("/search");
     } catch (error) {
       console.error("Error:", error);
     }

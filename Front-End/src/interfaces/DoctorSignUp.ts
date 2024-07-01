@@ -6,7 +6,7 @@ export interface DoctorSignUp {
     email: string;
     password: string;
     phone: string;
-    specialization: string;
+    genaralSpecialization: string;
     address: {
         region: number;
         city: string;

@@ -36,9 +36,12 @@ export class AuthService {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...result } = user.toObject();
     const payload = { email: user.email, sub: user._id, isPatient: true };
-    const token = this.jwtService.sign(payload);
+    const token = this.jwtService.sign(payload, {
+      secret: process.env.JWT_SECRET,
+    });
     return {
       access_token: token,
+      user: user,
     };
   }
 
@@ -117,6 +120,12 @@ export class AuthService {
     } catch (error) {
       throw new UnauthorizedException('Invalid or expired token');
     }
+  }
+
+  getCookieForLogOut() {
+    return [
+      'Authentication=; HttpOnly; Path=/; Max-Age=0',
+    ];
   }
 
   /******************************************* Doctor Registration *******************************************/

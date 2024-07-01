@@ -3,7 +3,7 @@ import Filter from "../components/filter-doctors/filter-box/Filter";
 import SortDoctorsDropDown from "../components/sort-doctors/SortDropDown";
 import { configAxios } from "../config/api";
 
-const TestFilter = () => {
+const Filtering = () => {
   const [data, setData] = useState([
     {
       _id: "",
@@ -156,4 +156,4 @@ const TestFilter = () => {
   );
 };
 
-export default TestFilter;
+export default Filtering;

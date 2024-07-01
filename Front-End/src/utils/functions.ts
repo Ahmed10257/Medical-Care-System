@@ -1,18 +1,30 @@
 import { configAxios } from "../config/api";
 
 export function isAuth(): boolean {
-  return !!localStorage.getItem("token");
+  return !!localStorage.getItem("user");
 }
 
 export function logout(): void {
-  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  configAxios.post('/auth/logout').then((res)=>{
+    console.log(res.data);
+  })
+}
+
+export function getRole () {
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  if (user.isPatient) {
+    return "patient";
+  } else {
+    return "doctor";
+  }
 }
 
 export async function getAuthPatient() {
   // eslint-disable-next-line no-useless-catch
   try {
     const response = await configAxios.get("/auth/patient-id-from-token");
-    // console.log(response.data);
+    console.log(response.data);
     return response.data.patientId;
   } catch (error) {
     console.log(error);

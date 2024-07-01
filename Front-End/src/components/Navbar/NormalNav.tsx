@@ -3,7 +3,7 @@ import DropDown from "./DropDown";
 import "./style.css";
 import { Link } from "react-router-dom";
 import { getAuthPatient, isAuth } from "../../utils/functions";
-import axios from "axios";
+import {configAxios as axios} from "../../config/api";
 import { IPatient } from "../../interfaces/DoctorData";
 
 const NormalNav = () => {

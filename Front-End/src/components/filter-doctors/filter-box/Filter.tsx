@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FilterProps } from "../../../types/filterDoctor";
 import RadioList from "../dropDownList/RadioList";
 
-const title = ["Professor", "Lecturer", "Consultant", "Specialist"];
+const title = ["Cardiology", "Dermatology", "Neurology", "Pediatrics", "Surgery"];
 const gender = ["Male", "Female"];
 const availability = ["Any Day", "Today", "Tomorrow"];
 const examinationFee = ["any", "Less than 50", "From 50 to 100", "From 100 to 200", "From 200 to 300", "Greater than 300"];

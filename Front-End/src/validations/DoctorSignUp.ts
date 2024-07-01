@@ -7,7 +7,7 @@ export const DoctorSignUpValidation = (values: DoctorSignUp) => {
     email: "",
     password: "",
     phone: "",
-    specialization: "",
+    genaralSpecialization: "",
     address: {
       region: "",
       city: "",
@@ -76,12 +76,12 @@ export const DoctorSignUpValidation = (values: DoctorSignUp) => {
     errors.phone = "Phone number must be 10 digits";
   }
 
-  if (!values.specialization) {
-    errors.specialization = "specialization is required";
-  } else if (values.specialization.length < 2) {
-    errors.specialization = "specialization must be 2 characters or more";
-  } else if (values.specialization.length > 20) {
-    errors.specialization = "specialization must be 20 characters or less";
+  if (!values.genaralSpecialization) {
+    errors.genaralSpecialization = "specialization is required";
+  } else if (values.genaralSpecialization.length < 2) {
+    errors.genaralSpecialization = "specialization must be 2 characters or more";
+  } else if (values.genaralSpecialization.length > 20) {
+    errors.genaralSpecialization = "specialization must be 20 characters or less";
   }
 
   if (!values.address.region) {

@@ -48,6 +48,15 @@ export class AuthController {
     return this.authService.signUp(signUpDto);
   }
 
+  @Post('logout')
+  async logOut(@Req() request) {
+    request.res.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
+    return {
+      statusCode: 200,
+      message: 'Logout successful',
+    };
+  }
+
   @Get('patient-id-from-token')
   async getPatientIdFromToken(
     @Req() request: Request & { cookies: Record<string, string> },

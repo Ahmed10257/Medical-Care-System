@@ -8,6 +8,7 @@ import Button from "../../components/login-signup/doctor/Button";
 import { Link } from "react-router-dom";
 import { configAxios } from "../../config/api";
 import Swal from "sweetalert2";
+import { getRole } from "../../utils/functions";
 
 interface IUser {
   email: string;
@@ -70,9 +71,9 @@ const DoctorLogin = () => {
       .then((response) => {
         console.log("Login successful", response);
         console.log(response.data);
-
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        console.log(getRole());
         if (response.data.access_token) {
-          localStorage.setItem("token", response.data.access_token);
 
           Swal.fire({
             icon: "success",
