@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faPhone, faMapMarkerAlt, faEnvelope, faImage } from '@fortawesome/free-solid-svg-icons';
 import { DoctorData } from './Entity';
 import Swal from 'sweetalert2';
+import { getAuthDoctor } from '../../utils/functions';
 
 interface UpdateFormProps {
   doctorData: DoctorData;
@@ -15,6 +16,8 @@ interface UpdateFormProps {
 const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }) => {
   const [formData, setFormData] = useState<DoctorData>(doctorData);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  console.log('formData',formData);
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -50,14 +53,24 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
   const validate = (formData: DoctorData) => {
     const errors: { [key: string]: string } = {};
 
-    if (!formData.name) {
-      errors.name = "Name is required.";
-    } else if (formData.name.length < 3) {
-      errors.name = "Name must be at least 3 characters.";
-    } else if (formData.name.length > 50) {
-      errors.name = "Name must be at most 50 characters.";
-    } else if (!/^[a-zA-Z\s]*$/.test(formData.name)) {
-      errors.name = "Name must contain only letters and spaces.";
+    if (!formData.firstName) {
+      errors.firstName = "First Name is required.";
+    } else if (formData.firstName.length < 3) {
+      errors.firstName = "First Name must be at least 3 characters.";
+    } else if (formData.firstName.length > 50) {
+      errors.firstName = "First Name must be at most 50 characters.";
+    } else if (!/^[a-zA-Z\s]*$/.test(formData.firstName)) {
+      errors.firstName = "First Name must contain only letters and spaces.";
+    }
+
+    if (!formData.lastName) {
+      errors.lastName = "Last Name is required.";
+    } else if (formData.lastName.length < 3) {
+      errors.lastName = "Last Name must be at least 3 characters.";
+    } else if (formData.lastName.length > 50) {
+      errors.lastName = "Last Name must be at most 50 characters.";
+    } else if (!/^[a-zA-Z\s]*$/.test(formData.lastName)) {
+      errors.lastName = "Last Name must contain only letters and spaces.";
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -67,20 +80,20 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
       errors.email = "Invalid email format.";
     }
 
-    const phoneRegex = /^[0-9]*$/;
-    if (!formData.phone) {
-      errors.phone = "Phone number is required.";
-    } else if (formData.phone.toString().length !== 10) {
-      errors.phone = "Phone number must be 10 digits.";
-    } else if (!phoneRegex.test(formData.phone.toString())) {
-      errors.phone = "Phone number must contain only numbers.";
-    }
+    // const phoneRegex = /^[0-9]*$/;
+    // if (!formData.phone) {
+    //   errors.phone = "Phone number is required.";
+    // } else if (formData.phone.toString().length !== 11) {
+    //   errors.phone = "Phone number must be 11 digits.";
+    // } else if (!phoneRegex.test(formData.phone.toString())) {
+    //   errors.phone = "Phone number must contain only numbers.";
+    // }
 
     if (!formData.address.city) {
       errors.city = "City is required.";
     }
-    if (!formData.address.country) {
-      errors.country = "Country is required.";
+    if (!formData.address.state) {
+      errors.state = "State is required.";
     }
 
     return errors;
@@ -96,7 +109,8 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
     }
 
     try {
-      const response = await axios.patch(`http://localhost:3000/doctor/${doctorData._id}`, formData);
+      const id = await getAuthDoctor();
+      const response = await axios.patch(`http://localhost:3000/doctor/${id}`, formData);
       onUpdate(response.data);
       onClose();
       Swal.fire({
@@ -130,19 +144,34 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
           <br />
           <form className="update-form mt-5 p-4" onSubmit={handleSubmit}>
             <div className="flex flex-col md:flex-row">
-              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="name">
-                <FontAwesomeIcon icon={faUser} className="inline mx-1 w-4 h-5" />Name
+              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="firstName">
+                <FontAwesomeIcon icon={faUser} className="inline mx-1 w-4 h-5" />First Name
               </label>
               <input
                 type="text"
-                name="name"
-                value={formData.name}
+                name="firstName"
+                value={formData.firstName}
                 onChange={handleChange}
-                placeholder="Name"
-                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.name && 'border-red-500'}`}
+                placeholder="First Name"
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.firstName && 'border-red-500'}`}
               />
             </div>
-            {errors.name && <p className="text-error">{errors.name}</p>}
+            {errors.firstName && <p className="text-error">{errors.firstName}</p>}
+            <br />
+            <div className="flex flex-col md:flex-row">
+              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="lastName">
+                <FontAwesomeIcon icon={faUser} className="inline mx-1 w-4 h-5" />Last Name
+              </label>
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                onChange={handleChange}
+                placeholder="Last Name"
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.lastName && 'border-red-500'}`}
+              />
+            </div>
+            {errors.lastName && <p className="text-error">{errors.lastName}</p>}
             <br />
             <div className="flex flex-col md:flex-row">
               <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="address.city">
@@ -158,21 +187,21 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
               />
             </div>
             {errors.city && <p className="text-error">{errors.city}</p>}
-            <br />
+            {/* <br />
             <div className="flex flex-col md:flex-row">
-              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="address.country">
-                <FontAwesomeIcon icon={faMapMarkerAlt} className="inline mx-1 w-4 h-5" />Country
+              <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="address.state">
+                <FontAwesomeIcon icon={faMapMarkerAlt} className="inline mx-1 w-4 h-5" />State
               </label>
               <input
                 type="text"
-                name="address.country"
-                value={formData.address.country}
+                name="address.state"
+                value={formData.address.state}
                 onChange={handleChange}
-                placeholder="Country"
-                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.country && 'border-red-500'}`}
+                placeholder="State"
+                className={`shadow appearance-none focus:border-blue-400 border-solid border-2 rounded w-full md:w-8/12 md:ml-4 md:mt-0 mt-2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${errors.state && 'border-red-500'}`}
               />
             </div>
-            {errors.country && <p className="text-error">{errors.country}</p>}
+            {errors.state && <p className="text-error">{errors.state}</p>} */}
             <br />
             <div className="flex flex-col md:flex-row items-center">
               <label className="w-full md:w-24 text-gray-700 text-md font-bold mb-2 md:mb-0 flex items-center" htmlFor="phone">
@@ -229,7 +258,6 @@ const UpdateForm: React.FC<UpdateFormProps> = ({ doctorData, onUpdate, onClose }
                 type="button"
                 onClick={handleCancel}
                 className="bg-gray-500 w-full md:w-28 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4"
-
               >
                 Cancel
               </button>

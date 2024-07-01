@@ -8,25 +8,40 @@ import 'primeicons/primeicons.css';
 import './Schedule.css';
 import './CustomStyle.css';
 import AppointmentForm from './AppointmentForm';
+import { getAuthDoctor } from '../../utils/functions';
+
 
 const Schedule: React.FC = () => {
   const [date, setDate] = useState<Date | null>(new Date());
   const [showForm, setShowForm] = useState(false);
   const [appointments, setAppointments] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [doctorId, setDoctorId] = useState<string | null>(null);
 
-  getAuthDoctor();
+  useEffect(() => {
+    const fetchDoctorId = async () => {
+      try {
+        const id = await getAuthDoctor();
+        setDoctorId(id);
+      } catch (error) {
+        console.error('Error fetching doctor ID:', error);
+      }
+    };
 
-  const doctorId = '667980ed403c655bd6da3b61'; 
+    fetchDoctorId();
+  }, []);
 
   useEffect(() => {
     const fetchAppointments = async () => {
+      if (!doctorId || !date) return;
+
       setLoading(true);
       try {
+        console.log(doctorId)
         const response = await axios.get('http://localhost:3000/available-appointments', {
           params: {
             doctor_id: doctorId,
-            date: date?.toISOString().split('T')[0] 
+            date: date.toISOString().split('T')[0]
           }
         });
         setAppointments(response.data);
@@ -38,27 +53,21 @@ const Schedule: React.FC = () => {
     };
 
     fetchAppointments();
-  }, [date]); 
+  }, [doctorId, date]);
 
   const handleDateChange = (e: { value: Date | Date[] }) => {
     if (e.value instanceof Date) {
       const selectedDate = new Date(e.value);
-      // selectedDate.setDate(selectedDate.getDate());
-      selectedDate.setHours(12);  
-      // selectedDate.setMinutes(0); 
-      
+      selectedDate.setHours(12); // Adjust the hours to avoid timezone issues
       setDate(selectedDate);
-      console.log('Selected date:', selectedDate);
     }
   };
-  
 
   const handlePrevDay = () => {
     if (date) {
       const prevDate = new Date(date);
       prevDate.setDate(date.getDate() - 1);
       setDate(prevDate);
-      console.log('Previous day:', prevDate);
     }
   };
 
@@ -67,14 +76,12 @@ const Schedule: React.FC = () => {
       const nextDate = new Date(date);
       nextDate.setDate(date.getDate() + 1);
       setDate(nextDate);
-      console.log('Next day:', nextDate);
     }
   };
 
   const handleSetCurrentDate = () => {
     const currentDate = new Date();
     setDate(currentDate);
-    console.log('Current date:', currentDate);
   };
 
   const handleRefreshPage = () => {
@@ -94,13 +101,10 @@ const Schedule: React.FC = () => {
     setShowForm(false);
   };
 
-  // Filter appointments based on the selected date
   const filteredAppointments = appointments.filter(appointment => {
     const appointmentDate = new Date(appointment.date).toISOString().split('T')[0];
-    console.log('Appointment date:', appointmentDate);
     const selectedDate = date?.toISOString().split('T')[0];
-    console.log('Selected date:', selectedDate);
-    return appointmentDate === selectedDate;
+    return appointmentDate === selectedDate && appointment.doctor_id === doctorId;
   });
 
   return (
@@ -142,29 +146,29 @@ const Schedule: React.FC = () => {
             </button>
           </div>
         </div>
-        <br/>
+        <br />
         {!showForm ? (
-          <div className='appointments-by-day'>
-          <div className="appointments-list">
-            {loading ? (
-              <p>Loading appointments...</p>
-            ) : filteredAppointments.length > 0 ? (
-              filteredAppointments.map((appointment, index) => (
-                <div key={index} className="appointment-item">
-                  <p>{new Date(appointment.date).toLocaleString()}</p>
+          <div className="appointments-by-day">
+            <div className="appointments-list">
+              {loading ? (
+                <p>Loading appointments...</p>
+              ) : filteredAppointments.length > 0 ? (
+                filteredAppointments.map((appointment, index) => (
+                  <div key={index} className="appointment-item">
+                    <p>{new Date(appointment.date).toLocaleString()}</p>
+                  </div>
+                ))
+              ) : (
+                <div className="no-appointments">
+                  <img
+                    src="https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/calendar.svg"
+                    alt="appointment"
+                    className="appointment-img"
+                  />
+                  <p>No appointments available for this doctor on the selected date</p>
                 </div>
-              ))
-            ) : (
-              <div className="no-appointments">
-                <img
-                  src="https://cdn.vezeeta.com/account-mgmt-web/1-22-7/assets/calendar.svg"
-                  alt="appointment"
-                  className="appointment-img"
-                />
-                <p>No appointments available for this doctor on the selected date</p>
-              </div>
-            )}
-          </div>
+              )}
+            </div>
           </div>
         ) : (
           <div className="appointment-form-container">

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import { configAxios as axios } from "../../config/api";
 import Swal from 'sweetalert2';
 import { DollarSign, Clock, User } from 'lucide-react';
+import { getAuthDoctor } from '../../utils/functions';
 
 interface FormData {
   fees?: number;
@@ -15,8 +16,21 @@ interface Props {
   onClose: () => void;
 }
 
+
+
 const WorkingForm: React.FC<Props> = ({ initialData, onUpdate, onClose }) => {
-  const doctorId = '667ff9815e77f767fdfdad82'; 
+  const [pId, setPId] = useState<string>("");
+ 
+    useEffect(() => {
+        async function fetchData() {
+            const id = await getAuthDoctor();
+            setPId(id);
+        }
+        fetchData();
+    }, []);
+  console.log('pId',pId);
+  const doctorId = pId; 
+  console.log('doctorId',doctorId);
 
   const [formData, setFormData] = useState<FormData>({
     fees: initialData.fees || 0,
@@ -42,6 +56,7 @@ const WorkingForm: React.FC<Props> = ({ initialData, onUpdate, onClose }) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
+      console.log('doctorId',doctorId);
       const response = await axios.patch(`http://localhost:3000/doctor/${doctorId}`, formData);
       onUpdate(response.data);
       onClose();

@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
-
 import './Confirmation.css';
 import './CustomStyle.css';
+import { getAuthDoctor } from '../../utils/functions';
 
 interface Appointment {
   _id: string;
@@ -22,25 +22,36 @@ interface Patient {
 const Confirmation: React.FC = () => {
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [patients, setPatients] = useState<{ [key: string]: string }>({});
-  const [doctorId, setDoctorId] = useState<string>('667ff9815e77f767fdfdad82'); 
+  const [doctorId, setDoctorId] = useState<string>(''); 
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage] = useState<number>(3);
 
   useEffect(() => {
-    fetchAppointments();
+    const fetchDoctorId = async () => {
+      const id = await getAuthDoctor();
+      console.log('dd',id);
+      setDoctorId(id);
+    };
+    fetchDoctorId();
+  }, []);
+
+  useEffect(() => {
+    if (doctorId) {
+      console.log('doctorId',doctorId);
+      fetchAppointments();
+    }
   }, [doctorId]);
 
   const fetchAppointments = async () => {
     try {
-      const response = await axios.get(`http://localhost:3000/appointments`, {
-        params: {
-          doctor_id: doctorId
-        }
-      });
+      const response = await axios.get(`http://localhost:3000/appointments`);
 
-      // Filter appointments to include only 'confirmed', 'cancelled', and 'completed' statuses
-      const filteredAppointments = response.data.filter((appointment: Appointment) =>
+      // Filter appointments by doctor ID
+      const doctorAppointments = response.data.filter((appointment: Appointment) => appointment.doctor_id === doctorId);
+
+      // Further filter appointments to include only 'confirmed', 'cancelled', and 'completed' statuses
+      const filteredAppointments = doctorAppointments.filter((appointment: Appointment) =>
         ['confirmed', 'cancelled', 'completed'].includes(appointment.status)
       );
 
@@ -135,14 +146,14 @@ const Confirmation: React.FC = () => {
       <div className="confirmation-container">
         <div className='confirmation-header'>
           <h1
-      className="text-xl font-bold text-center w-full rounded-t-lg border p-1"
-      style={{
-      background: "#0487D9",
-      color: "white",
-      }}
-      >
-        Confirmed Appointments
-      </h1>
+            className="text-xl font-bold text-center w-full rounded-t-lg border p-1"
+            style={{
+              background: "#0487D9",
+              color: "white",
+            }}
+          >
+            Confirmed Appointments
+          </h1>
         </div>
         <div className="appointment-list">
           <div className="search-container">
@@ -187,10 +198,8 @@ const Confirmation: React.FC = () => {
                             className={`btn complete ${isActiveButton(appointment._id, 'complete') ? 'active' : ''}`}
                             onClick={() => handleCompleteAppointment(appointment._id)}
                             disabled={!isActiveButton(appointment._id, 'complete')}
-
                           >
                             Complete
-
                           </button>
                         )}
                         {appointment.status === 'completed' && (

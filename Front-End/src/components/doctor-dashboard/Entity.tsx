@@ -4,7 +4,8 @@ import './Entity.css';
 import { Mail, User, Phone, MapPin, Briefcase, DollarSign, Clock } from 'lucide-react';
 import UpdateForm from './UpdateForm';
 import WorkingForm from './WorkingForm';
-import PasswordForm from './PasswordForm'; // Import the PasswordForm component
+import PasswordForm from './PasswordForm'; 
+import { getAuthDoctor } from '../../utils/functions';
 
 interface Address {
   country: string;
@@ -13,28 +14,22 @@ interface Address {
 }
 
 export interface DoctorData {
-  _id: string;
-  name: string;
-  phone: number;
+  firstName: string;
+  lastName: string;
+  phone: string;
   email: string;
   address: Address;
   image: string;
   gender: string;
   birthdate: string;
   isDoctor: boolean;
-  specialization: string;
+  genaralSpecialization: string;
   rating: number;
   numberOfVisitors: number;
   password: string;
-  clinic: {
-    street: string;
-    building: string;
-  };
   fees: number;
   waitingTime: number;
-  contactInfo: string;
   about: string;
-  __v: number;
 }
 
 const Entity: React.FC = () => {
@@ -46,7 +41,8 @@ const Entity: React.FC = () => {
   useEffect(() => {
     const fetchDoctorData = async () => {
       try {
-        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667ff9815e77f767fdfdad82');
+        const id = await getAuthDoctor();
+        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/'+ id);
         const doctor = response.data;
         setDoctorData(doctor);
       } catch (error) {
@@ -101,7 +97,7 @@ const Entity: React.FC = () => {
                   <div>
                     <div className="entity-img-container">
                       <img src={doctorData.image} alt="Entity" className="img-fluid mb-3 entity-img" />
-                      <h2 className="entity-title">Dr. {doctorData.name}</h2>
+                      <h2 className="entity-title">Dr. {doctorData.firstName} {doctorData.lastName}</h2>
                     </div>
                     <h2 className="entity-title">About The Clinic</h2>
                     <p className="entity-description">
@@ -126,11 +122,11 @@ const Entity: React.FC = () => {
             <div className="doctor-card col-sm-8">
               <h5 className="card-title mb-2 entity-title">About The Doctor</h5>
               <p className="card-text entity-description">
-                <Briefcase className="inline m-2 mx-1 w-5 h-5" />
-                Specialty: {doctorData.specialization}
-                <br />
+                {/* <Briefcase className="inline m-2 mx-1 w-5 h-5" />
+                Specialty: {doctorData.genaralSpecialization}
+                <br /> */}
                 <MapPin className="inline m-2 mx-1 w-5 h-5" />
-                Location: {doctorData.address.city}, {doctorData.address.country}
+                Location: {doctorData.address.city}, {doctorData.address.state}
                 <br />
                 <Phone className="inline m-2 mx-1 w-5 h-5" />
                 Contact: {doctorData.phone}

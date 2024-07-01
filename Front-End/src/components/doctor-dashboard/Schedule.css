@@ -12,10 +12,11 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap; 
+  background-color: #efecec;
 }
 
 .date-controls button {
-  background: white;
+  background: #efecec;
   border: 1px solid #ccc;
   color: black;
   padding: 5px 10px;
@@ -38,6 +39,8 @@
   border-radius: 5px;
   transition: border-color 0.3s ease;
   max-width: 200px; 
+  margin-right: 20px;
+  color: #efecec;
 }
 
 .date-input:focus {
@@ -60,7 +63,7 @@
 }
 
 .add-appointment .refresh-button {
-  background: white;
+  background: #efecec;
   border: none;
   color: rgb(107, 102, 102);
   padding: 8px 16px;
@@ -118,11 +121,16 @@
   border-radius: 5px;
   width: 200px;
   margin-left: 20px;
+  background-color: #efecec;
+}
+.custom-calendar .p-inputtext {
+  color: black;
+  background-color: #efecec;
 }
 
 
 .p-datepicker {
-  background-color: white;
+  background-color: #efecec;
   font-size: small;
   color: gray;
   border-radius: 5px;
@@ -139,6 +147,7 @@
   text-align: center;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
+  background-color: #efecec;
 }
 
 .p-datepicker-prev, .p-datepicker-next {

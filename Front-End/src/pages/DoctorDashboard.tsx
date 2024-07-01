@@ -2,10 +2,24 @@ import { Link, Outlet } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../components/doctor-dashboard/DoctorDashboard.css';
+import {getAuthDoctor} from '../utils/functions';
 
 interface DoctorData {
-  name: string;
+
+  firstName: string;
+  lastName: string;
 }
+
+// const [pId, setPId] = useState<string>("");
+ 
+// useEffect(() => {
+//     async function fetchData() {
+//         const id = await getAuthDoctor();
+//         console.log(id);
+//         setPId(id);
+//     }
+//     fetchData();
+// }, []);
 
 const DoctorDashboard: React.FC = () => {
   const [doctorData, setDoctorData] = useState<DoctorData | null>(null);
@@ -13,7 +27,9 @@ const DoctorDashboard: React.FC = () => {
   useEffect(() => {
     const fetchDoctorData = async () => {
       try {
-        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/667ff9815e77f767fdfdad82');
+        const pId = await getAuthDoctor();
+        console.log(pId);
+        const response = await axios.get<DoctorData>('http://localhost:3000/doctor/' + pId);
         const doctor = response.data; 
         setDoctorData(doctor); 
       } catch (error) {
@@ -34,7 +50,7 @@ const DoctorDashboard: React.FC = () => {
           <div className="user-menu">
             {doctorData && (
               <>
-                <span>{doctorData.name}</span>
+                <span>{doctorData.firstName} {doctorData.lastName}</span>
                 <img
                   src="https://static.vecteezy.com/system/resources/previews/005/544/718/original/profile-icon-design-free-vector.jpg"
                   alt="User"
@@ -49,7 +65,7 @@ const DoctorDashboard: React.FC = () => {
         <div className="sidebar">
           <div className="sidebar-logo">
             <img
-              src="../../public/freepik-gradient-linear-professional-healthcare-center-logo-20240628202343meqZ (1).png"
+              src="../../public/1.png"
               alt="Logo"
               className="logo-image"
             />

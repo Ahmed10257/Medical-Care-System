@@ -21,27 +21,31 @@ export class Address {
   @IsNumber()
   region: number;
 }
+
 export class UpdateDoctorDto extends PartialType(CreateDoctorDto) {
-  @IsString()
-  name?: string;
+  // @IsString()
+  firstName?: string;
 
-  @IsNumber()
-  phone?: number;
+  // @IsString()
+  lastName?: string;
 
-  @IsEmail()
+  // @IsString()
+  phone?: string;
+
+  // @IsEmail()
   email?: string;
 
-  @IsString()
+  // @IsString()
   password?: string;
 
-  @ValidateNested()
-  @Type(() => Address)
+  // @ValidateNested()
+  // @Type(() => Address)
   address?: Address;
 
-  @IsString()
+  // @IsString()
   image?: string;
 
-  @IsEnum(Gender)
+  // @IsEnum(Gender)
   gender?: Gender;
 
   birthdate?: Date;
@@ -49,6 +53,15 @@ export class UpdateDoctorDto extends PartialType(CreateDoctorDto) {
   @IsBoolean()
   isDoctor?: boolean;
 
-  @IsString()
-  specialization?: string;
+  // @IsString()
+  generalSpecialization?: string;
+
+  // @IsNumber()
+  fees?: number;
+
+  // @IsNumber()
+  waitingTime?: number;
+
+  // @IsString()
+  about?: string;
 }

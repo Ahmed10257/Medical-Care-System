@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css'; 
 import './Patients.css'; 
+import { getAuthDoctor } from '../../utils/functions';
 
 interface Patient {
   _id: string;
@@ -24,32 +25,36 @@ const Patients: React.FC = () => {
   const [loading, setLoading] = useState(false); 
   const [currentPage, setCurrentPage] = useState(1); 
   const [patientsPerPage] = useState(10); 
-  const doctorId = '667ff9815e77f767fdfdad82'; 
+  const [doctorId, setDoctorId] = useState<string | null>(null); // State to hold doctorId
 
   useEffect(() => {
     const fetchAppointmentsAndPatients = async () => {
       setLoading(true); 
-
       try {
+        // Fetch doctorId
+        const id = await getAuthDoctor();
+        setDoctorId(id); // Update doctorId state
         // Fetch all appointments
         const appointmentsResponse = await axios.get<Appointment[]>(
           `http://localhost:3000/appointments`
         );
 
         const allAppointments = appointmentsResponse.data;
-        
-        // Filter appointments to get completed appointments for the specific doctor
-        const completedAppointments = allAppointments.filter(
-          appointment => appointment.doctor_id === doctorId && (appointment.status === 'completed' || appointment.status === 'confirmed') 
+
+        // Filter appointments to get completed and confirmed appointments for the specific doctor
+        const filteredAppointments = allAppointments.filter(
+          appointment =>
+            appointment.doctor_id === id && 
+            (appointment.status === 'completed' || appointment.status === 'confirmed')
         );
 
-        // Extract patient IDs from completed appointments
-        const patientIds = completedAppointments.map(appointment => appointment.patient_id);
+        // Extract patient IDs from filtered appointments
+        const patientIds = filteredAppointments.map(appointment => appointment.patient_id);
 
         // Fetch all patients
         const patientsResponse = await axios.get<Patient[]>(`http://localhost:3000/patient`);
 
-        // Filter patients based on patient IDs from completed appointments
+        // Filter patients based on patient IDs from filtered appointments
         const patients = patientsResponse.data.filter(patient =>
           patientIds.includes(patient._id)
         );
@@ -63,7 +68,9 @@ const Patients: React.FC = () => {
       }
     };
 
-    fetchAppointmentsAndPatients();
+    if (doctorId) {
+      fetchAppointmentsAndPatients();
+    }
   }, [doctorId]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -80,7 +87,6 @@ const Patients: React.FC = () => {
   const formatId = (id: string) => {
     return id.substring(0, 7);
   };
-
 
   // Change page
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
