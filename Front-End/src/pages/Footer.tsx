@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import logo from '../assets/logo/0.png'
 
 
 const Footer = () => {  
@@ -10,14 +9,12 @@ const Footer = () => {
                     <div className="grid grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-4">
 
                         <div className="text-start  order-2   md:order-none   sm:px-20    md:px-1 lg:px-9">
-                            <h2 className="mb-6 md:text-lg sm:text-sm font-semibold text-gray-900 uppercase dark:text-white hidden md:block">
-                                <img src={logo}  className='w-32 h-16' alt="Vezeeta Logo" />
-                            </h2>
+        
 
-                            <h2 className="mb-6 md:hidden md:text-lg sm:text-sm font-extrabold text-gray-900 uppercase dark:text-white">
+                            <h2 className="mb-6  md:text-lg sm:text-sm font-extrabold text-gray-900 uppercase dark:text-white">
                                Vezeeta
                             </h2>
-                            <ul className="text-white font-medium text-sm">
+                            <ul className="text-white font-medium text-sm p-3">
                                 <li className="mb-2">
                                     <Link to='about' className="hover:underline">About</Link>
                                 </li>
@@ -62,7 +59,7 @@ const Footer = () => {
                             </h2>
                             <ul className="text-white font-medium text-sm">
                                 <li className="mb-2">
-                                    <Link to="#" className="hover:underline">Join Vezeeta doctors</Link>
+                                    <Link to="doctor" className="hover:underline">Join Vezeeta doctors</Link>
                                 </li>
                             </ul>
                         </div>

@@ -35,10 +35,13 @@ export class ReviewController {
     return await this.reviewService.countPatientsPerDoctor();
   }
 
-  @Get(':id')
+  @Get(':id/:patientId')
   // @UseGuards(AuthGuard)
-  async getReview(@Param('id') id: string) {
-    return this.reviewService.findReviewById(id, '66792459742795e5fb87f3fa');
+  async getReview(
+    @Param('id') id: string,
+    @Param('patientId') patientId: string,
+  ) {
+    return this.reviewService.findReviewById(id, patientId);
   }
 
   @Get('doctor/:doctorId')
@@ -49,18 +52,13 @@ export class ReviewController {
     return this.reviewService.findByDoctorId(doctorId, paginationDto);
   }
 
-  @Put(':id')
-  // @UseGuards(AuthGuard)
+  @Put(':id/:patientId')
   async updateReview(
     @Param('id') id: string,
     @Body() updateReviewDto: UpdateReviewDto,
-    // @Req() req,
+    @Param('patientId') patientId: string,
   ) {
-    return this.reviewService.updateReview(
-      id,
-      updateReviewDto,
-      '66792459742795e5fb87f3fa',
-    );
+    return this.reviewService.updateReview(id, updateReviewDto, patientId);
   }
 
   @Delete(':id')

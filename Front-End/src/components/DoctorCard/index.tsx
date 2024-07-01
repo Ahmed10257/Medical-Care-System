@@ -46,6 +46,8 @@ const Card = (props: IProps) => {
     id,
   } = props;
 
+  console.log("dID",id);
+  
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 

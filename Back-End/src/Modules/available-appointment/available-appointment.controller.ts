@@ -36,6 +36,10 @@ export class AvailableAppointmentController {
     return this.availableAppointmentsService.findById(id);
   }
 
+  @Get('available-appointments/doctor/:id')
+  async getAppointmentsForDoctor(@Param('id') doctorId: string) {
+    return this.availableAppointmentsService.findByDoctorId(doctorId);
+  }
   @Patch('available-appointments/:id')
   update(
     @Param('id') id: string,

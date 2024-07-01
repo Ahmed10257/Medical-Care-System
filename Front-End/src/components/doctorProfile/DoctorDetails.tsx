@@ -6,19 +6,20 @@ import { Address } from "../../interfaces/DoctorData";
 import Rating from '@mui/material/Rating';
 
 interface IProps{
-    nameDoctor:string
+    firstName:string
+    lastName:string
     Fees:number
     WaitingTime:number
     address:Address
     overRating:number
 }
-const DoctorDetails:FC<IProps>= ({nameDoctor,address,WaitingTime,Fees,overRating}) => {
+const DoctorDetails:FC<IProps>= ({firstName,lastName,address,WaitingTime,Fees,overRating}) => {
     
   return (
     <div className="bg-white  flex flex-col rounded-lg  mb-4 ">
             
             <div className="text-sm  text-start font-semibold bg-white p-2 text-gray-500 border-b-2 ">
-            Doctor {nameDoctor} HCC's details
+            Doctor {firstName} {lastName} HCC's details
             </div>
 
             <div className=" justify-evenly items-center  border-b-2  p-3 gap-5 flex">

@@ -8,6 +8,7 @@ import OverallRating from "../components/doctorProfile/OverallRating";
 import PatientRate from "../components/doctorProfile/PatientRate";
 import BookingDoctorProfile from "../components/doctorProfile/BookingDoctorProfile";
 import {
+  AppointmentsDoctor,
   OverallViewRating,
   useDoctorData,
   useFetchCountPatientReview,
@@ -22,6 +23,7 @@ import ViewMore from '../components/doctorProfile/ViewMore';
 import DoctorNotAvailable from '../components/doctorProfile/DoctorNotAvailable';
 import { ICountPatientReview, IReview } from '../interfaces/DoctorData';
 import NoReview from '../components/doctorProfile/NoReview';
+import { Appointment } from '../interfaces';
 
 
 const DoctorProfile = () => {
@@ -42,6 +44,7 @@ const DoctorProfile = () => {
     setReRenderReviews(reviews);
   }, [reviews]);
 
+  
   useEffect(() => {
     setTotalRating(overallRating);
   }, [overallRating]);
@@ -57,7 +60,30 @@ const DoctorProfile = () => {
     }
   }, [countPatientReview, id]);
 
+  //-----------------------appointments--------------------------------
+  const {appointments}=AppointmentsDoctor();
 
+  useEffect(() => {
+    if (appointments.length <= 0) {
+      setAvailableDoctor(false);
+    } else {
+      setAvailableDoctor(true);
+    }
+  }, [appointments]);
+    
+  const groupAppointmentsByDate = (appointments: Appointment[]) => {
+      return appointments.reduce(
+        (groups: { [key: string]: Appointment[] }, appointment) => {
+          const date = new Date(appointment.date).toDateString();
+          if (!groups[date]) {
+            groups[date] = [];
+          }
+          groups[date].push(appointment);
+          return groups;
+        },
+        {}
+      );
+    };
   //-------------------handle------------------------------------------
   const handleClose = () => {
     setOpen(false);
@@ -171,7 +197,8 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
             {/* section of Search Bar */}
       <div className="hidden md:block">
         <SearchBar
-          doctorName={dataDoctor.name}
+          firstName={dataDoctor.firstName}
+          lastName={dataDoctor.lastName}
           phoneNubmer={dataDoctor.phone}
         />
       </div>
@@ -183,13 +210,13 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
               Vezeeta
             </Link>
             <span className="text-gray-500 text-xs">
-              <span className="px-2">/</span> Doctor {dataDoctor.name}
+              <span className="px-2">/</span> Doctor {dataDoctor.firstName} {dataDoctor.lastName}
             </span>
           </p>
         </div>
         <div className="w-full flex justify-between md:px-5 lg:pl-10 xl:pl-16 items-start pb-5">
           {/* section of Doctor Information */}
-          <DoctorNotAvailable doctorName={dataDoctor.name} genaralSpecialization={dataDoctor.genaralSpecialization} specializes={dataDoctor.specializes}/>
+          <DoctorNotAvailable firstName={dataDoctor.firstName} lastName={dataDoctor.lastName}genaralSpecialization={dataDoctor.genaralSpecialization} specializes={dataDoctor.specializes}/>
 
         </div>
       </div>
@@ -203,7 +230,8 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
       {/* section of Search Bar */}
       <div className="hidden md:block">
         <SearchBar
-          doctorName={dataDoctor.name}
+          firstName={dataDoctor.firstName}
+          lastName={dataDoctor.lastName}
           phoneNubmer={dataDoctor.phone}
         />
       </div>
@@ -215,7 +243,7 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
               Vezeeta
             </Link>
             <span className="text-gray-500 text-xs">
-              <span className="px-2">/</span> Doctor {dataDoctor.name}
+              <span className="px-2">/</span> Doctor  {dataDoctor.firstName} {dataDoctor.lastName}
             </span>
           </p>
         </div>
@@ -224,8 +252,8 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
 
           <div className="pr-5 lg:w-7/12 ">
             <DoctorInfo
-              doctorName={dataDoctor.name}
-              view={dataDoctor.views}
+              firstName={dataDoctor.firstName}
+              lastName={dataDoctor.lastName}              view={dataDoctor.views}
               genaralSpecialization={dataDoctor.genaralSpecialization}
               specializes={dataDoctor.specializes}
               imageProfile={dataDoctor.image}
@@ -239,12 +267,15 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
                 Fees={dataDoctor.fees}
                 WaitingTime={dataDoctor.waitingTime}
                 address={dataDoctor.address}
+                groupedAppointments={groupAppointmentsByDate(appointments)}
+
               />
             </div>
 
             <div className="md:hidden">
               <DoctorDetails
-                nameDoctor={dataDoctor.name}
+                 firstName={dataDoctor.firstName}
+                 lastName={dataDoctor.lastName}
                 address={dataDoctor.address}
                 Fees={dataDoctor.fees}
                 WaitingTime={dataDoctor.waitingTime}
@@ -275,9 +306,12 @@ const renderReviews = ReRenderReviews.map((review, indx) => {
           {/* Section of Booking in large screen */}
           <div className=" me-10 hidden lg:w-5/12 lg:block sticky top-0">
             <BookingDoctorProfile
+
               Fees={dataDoctor.fees}
               WaitingTime={dataDoctor.waitingTime}
               address={dataDoctor.address}
+              groupedAppointments={groupAppointmentsByDate(appointments)}
+
             />
           </div>
         </div>

@@ -4,12 +4,13 @@ import SpecDoctor from "./SpecDoctor";
 import { Avatar } from "@mui/material";
 
 interface IProps {
-    doctorName: string
+    firstName:string
+    lastName:string    
     genaralSpecialization: string
     specializes: string[]
 }
 
-const DoctorNotAvailable: FC<IProps> = ({ doctorName, genaralSpecialization, specializes, }) => {
+const DoctorNotAvailable: FC<IProps> = ({ firstName,lastName, genaralSpecialization, specializes, }) => {
    
     const executeOnClick = (isExpanded: boolean) => {
         console.log(isExpanded);
@@ -32,7 +33,7 @@ const DoctorNotAvailable: FC<IProps> = ({ doctorName, genaralSpecialization, spe
                 <div className="flex justify-between">
                     <div className=" flex flex-col gap-1  ">
                         <p className="text-gray-500 font-semibold  text-start  text-balance md:lg:text-2xl pt-5">
-                        Doctor {doctorName}
+                        Doctor {firstName} {lastName}
                         </p>
                 
 

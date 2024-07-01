@@ -6,7 +6,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import axios from 'axios';
+import { configAxios as axios } from "../../config/api";
 import { ICountPatientReview, IRating, IReview } from '../../interfaces/DoctorData';
 import { MdDeleteForever } from "react-icons/md";
 import { useParams } from 'react-router-dom';

@@ -14,7 +14,7 @@ import { Appointment } from './entities/appointment.entity';
 
 @Controller()
 export class AppointmentsController {
-  constructor(private readonly appointmentService: AppointmentService) { }
+  constructor(private readonly appointmentService: AppointmentService) {}
 
   @Post('appointments')
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
