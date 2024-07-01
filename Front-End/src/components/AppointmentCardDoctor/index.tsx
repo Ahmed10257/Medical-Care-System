@@ -1,0 +1,57 @@
+import React, { useState } from 'react';
+import { AppointmentDoctor } from '../../interfaces/Booking';
+
+interface IProps {
+    appointments: Appointment[];
+    onBook: (appointmentId: string) => void;
+}
+
+const AppointmentCardDoctor: React.FC<IProps> = ({ appointments, onBook }) => {
+    const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
+    console.log(appointments);
+
+
+    const formatTime = (timeString: string) => {
+        const date = new Date(timeString);
+        return date.toLocaleTimeString(undefined, {
+            hour: '2-digit',
+            minute: '2-digit',
+        });
+    };
+
+    return (
+        <div className="appointment-card  text-center mb-4 px-4 py-2 flex flex-col justify-center items-center">
+            {appointments.map((appointment) => {
+                console.log("ddd", appointment._id);
+
+                return (
+                    (
+
+                        <div key={appointment._id} className="time-button-container w-full mb-2">
+                            <button
+                                className={`time-button w-full text-lg py-2 rounded-md transition-colors duration-300 ${selectedTime === appointment._id ? 'bg-blue-500 text-white' : 'bg-gray-100'
+                                    }`}
+
+                                onClick={() => setSelectedTime(appointment._id)}
+                            >
+                                {formatTime(appointment.date)}
+                            </button>
+                        </div>
+                    )
+                )
+            })}
+            <div className="book-button-container">
+                <button
+                    className="bg-red-600 w-20 text-white px-4 py-2 mt-2 rounded-md hover:bg-red-600 transition-colors duration-300"
+                    onClick={() => selectedTime && onBook(selectedTime)}
+                    disabled={!selectedTime}
+                >
+                    Book
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default AppointmentCardDoctor;

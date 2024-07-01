@@ -3,14 +3,14 @@ import { PiMoneyWavy,PiLetterCircleVThin ,PiCircleHalfFill} from "react-icons/pi
 import { IoLocationOutline } from "react-icons/io5";
 import { LuCalendarClock } from "react-icons/lu";
 import { Address } from "../../interfaces/DoctorData";
-import { Appointment } from "../../interfaces";
+import { Appointment } from "../../interfaces/Booking";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faChevronLeft,
     faChevronRight
   } from '@fortawesome/free-solid-svg-icons';
-import AppointmentCard from "../AppointmentCard";
+import AppointmentCardDoctor from "../AppointmentCardDoctor";
 
 
 interface IProps{
@@ -117,7 +117,7 @@ const BookingDoctorProfile:FC<IProps>= ({Fees,WaitingTime,address,groupedAppoint
                         </div>
 
                         <div className="w-full h-full bg-white ">
-                        <AppointmentCard
+                        <AppointmentCardDoctor
                             appointments={groupedAppointments[date]}
                             onBook={handleBook}
                         />

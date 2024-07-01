@@ -11,7 +11,7 @@ import {
   faChevronRight
 } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
-import { Appointment } from '../../interfaces';
+import { Appointment } from '../../interfaces/Booking';
 import AppointmentCard from '../AppointmentCard';
 
 interface IProps {
@@ -46,8 +46,8 @@ const Card = (props: IProps) => {
     id,
   } = props;
 
-  console.log("dID",id);
-  
+  console.log("dID", id);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
@@ -94,7 +94,9 @@ const Card = (props: IProps) => {
 
       {/* Second Column: Information */}
       <div className="w-full md:w-3/5 pr-4 text-left flex flex-col justify-center">
-        <h2 className="font-bold text-xl mb-2">{name}</h2>
+        <a href={`/doctor/${id}`} className="font-bold text-xl mb-2 hover:text-blue-500">
+          {name}
+        </a>
         <p className="text-gray-600 mb-2">{title}</p>
         <div className="flex items-center mb-2">
           {generateStars(rating)}

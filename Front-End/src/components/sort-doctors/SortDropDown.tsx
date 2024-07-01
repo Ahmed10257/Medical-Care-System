@@ -131,15 +131,6 @@ const SortDoctorsDropDown = () => {
           </li>
         </ul>
       )}
-      <div>
-        {sortedDoctors.map((doctor) => (
-          <div key={doctor.id} className="p-2 border-b border-gray-300">
-            <h3 className="text-lg font-semibold">{doctor.name}</h3>
-            <p>Price: {doctor.fees}</p>
-            <p>Wait Time: {doctor.waitingTime} minutes</p>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };

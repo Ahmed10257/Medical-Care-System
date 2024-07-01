@@ -30,6 +30,10 @@ export interface Doctor {
 }
 
 export interface Appointment {
+    id: string;
+    date: string;
+}
+export interface AppointmentDoctor {
     _id: string;
     date: string;
 }

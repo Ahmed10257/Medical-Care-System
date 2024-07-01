@@ -29,7 +29,7 @@ export class AppointmentService {
         doctor_id: availableAppointment.doctor_id,
         patient_id: patient_id,
         date: availableAppointment.date,
-        status: 'pending',
+        status: 'confirmed',
       });
 
       const savedAppointment = await newAppointment.save();
