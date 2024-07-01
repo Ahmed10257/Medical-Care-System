@@ -8,7 +8,7 @@ import TextField from '@mui/material/TextField';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import axios from 'axios';
+import { configAxios as axios } from "../../config/api";
 import HoverRating from './Stars';
 import { useParams } from 'react-router-dom';
 import { IReview } from '../../interfaces/DoctorData';

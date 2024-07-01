@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -8,11 +8,12 @@ import TextField from '@mui/material/TextField';
 import DialogTitle from '@mui/material/DialogTitle';
 import Slide from '@mui/material/Slide';
 import { TransitionProps } from '@mui/material/transitions';
-import axios from 'axios';
+import { configAxios as axios } from "../../config/api";
 import HoverRating from './Stars';
 import { FaRegEdit } from "react-icons/fa";
 import { IRating, IReview } from '../../interfaces/DoctorData';
 import { useParams } from 'react-router-dom';
+import { getAuthPatient } from '../../utils/functions';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,11 +35,20 @@ const ModalEditReview: FC<ModalEditReviewProps> = ({ id_review, renderReviewOver
   const [rating, setRating] = useState<number | null>(2);
   const [error, setError] = useState('');
   const [reviewId, setReviewId] = useState(id_review);
+  const [pId, setPId] = useState<string>("");
   const { id } = useParams();
+
+  useEffect(() => {
+    async function fetchData() {
+      const id = await getAuthPatient();
+      setPId(id);
+    }
+    fetchData();
+  }, []);
 
   const handleClickOpen = async () => {
     try {
-      const response = await axios.get(`http://127.0.0.1:3000/reviews/${reviewId}`);
+      const response = await axios.get(`http://127.0.0.1:3000/reviews/${reviewId}/${pId}`);
       setReviewComment(response.data.review);
       setRating(response.data.rating);
       setReviewId(response.data._id);
@@ -60,7 +70,7 @@ const ModalEditReview: FC<ModalEditReviewProps> = ({ id_review, renderReviewOver
     }
 
     try {
-      const response = await axios.put(`http://127.0.0.1:3000/reviews/${reviewId}`, {
+      const response = await axios.put(`http://127.0.0.1:3000/reviews/${reviewId}/${pId}`, {
         rating: rating,
         review: reviewComment,
       });

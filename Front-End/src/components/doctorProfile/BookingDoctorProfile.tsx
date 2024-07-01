@@ -1,15 +1,53 @@
- import { FC } from "react"
+ import { FC, useState } from "react"
 import { PiMoneyWavy,PiLetterCircleVThin ,PiCircleHalfFill} from "react-icons/pi";
 import { IoLocationOutline } from "react-icons/io5";
 import { LuCalendarClock } from "react-icons/lu";
 import { Address } from "../../interfaces/DoctorData";
+import { Appointment } from "../../interfaces";
+import { useNavigate, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+    faChevronLeft,
+    faChevronRight
+  } from '@fortawesome/free-solid-svg-icons';
+import AppointmentCard from "../AppointmentCard";
+
 
 interface IProps{
     Fees:number
     WaitingTime:number
     address:Address
+    groupedAppointments: { [key: string]: Appointment[] };
+
 }
-const BookingDoctorProfile:FC<IProps>= ({Fees,WaitingTime,address}) => {
+const BookingDoctorProfile:FC<IProps>= ({Fees,WaitingTime,address,groupedAppointments}) => {
+
+   
+
+   const {id}=useParams<string>();   
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const navigate = useNavigate();
+
+    const handlePrev = () => {
+        if (currentIndex > 0) {
+          setCurrentIndex(currentIndex - 1);
+        }
+      };
+    
+      const handleNext = () => {
+        if (currentIndex < Object.keys(groupedAppointments).length - 1) {
+          setCurrentIndex(currentIndex + 1);
+        }
+      };
+    
+      const handleBook = (appointmentId: string) => {
+        console.log("dddsadsaasdd",appointmentId);
+        
+        navigate(`/book/${id}/${appointmentId}`);
+      };
+    
+      const dates = Object.keys(groupedAppointments);
+
   return (
     <div className="bg-white  flex flex-col rounded-lg  mb-4 ">
             <div className="w-full text-center text-sm p-1 bg-blue-600 text-white rounded-t-md hidden  lg:block">
@@ -53,10 +91,52 @@ const BookingDoctorProfile:FC<IProps>= ({Fees,WaitingTime,address}) => {
             </div>
             <div className="flex  items-center justify-start md:justify-center lg:justify-center  font-semibold text-lg text-gray-800 p-3">
             Choose your appointment
+            </div>
 
+            <div className="flex  bg-gray-100 items-center justify-center">
+
+                  <button
+                        onClick={handlePrev}
+                        className={`bg-blue-500 text-white px-3 py-1 rounded-full ${currentIndex === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={currentIndex === 0}
+                    >
+                        <FontAwesomeIcon icon={faChevronLeft} />
+                    </button>
+
+                    {dates.slice(currentIndex, currentIndex + 3).map((date) => (
+                        <div
+                        key={date}
+                        className="flex flex-col items-center  p-3 text-sm rounded-md  shadow-md-top shadow-md-left shadow-md-right w-40  md:w-auto md:h-auto"
+                        >
+                        <div className="date  bg-blue-600 text-white w-full  rounded-t-md p-2 text-center text-md ">
+                            {new Date(date).toLocaleDateString(undefined, {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                            })}
+                        </div>
+
+                        <div className="w-full h-full bg-white ">
+                        <AppointmentCard
+                            appointments={groupedAppointments[date]}
+                            onBook={handleBook}
+                        />
+                        </div>
+                    
+                        </div>
+                    ))}
+
+                   
+                    <button
+                        onClick={handleNext}
+                        className={`bg-blue-500 text-white px-3 py-1 rounded-full ${currentIndex >= dates.length - 3 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        disabled={currentIndex >= dates.length - 3}
+                    >
+                        <FontAwesomeIcon icon={faChevronRight} />
+                    </button>
+                 
             </div>
-            <div className="h-48 w-full bg-slate-100 border-b-2">
-            </div>
+
             <div className="flex items-center justify-center  border-b-2  text-sm text-gray-800 p-3 bottom-2">
             Reservation required, first-come, first-served
             </div>

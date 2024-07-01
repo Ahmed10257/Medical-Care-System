@@ -65,8 +65,7 @@ export class ReviewService {
     // Fetch paginated data
     const data = await this.reviewModel
       .find({ doctor: doctorId })
-      .populate('doctor')
-      .populate('patient')
+      .populate('Patient')
       .limit(limit)
       .exec();
 

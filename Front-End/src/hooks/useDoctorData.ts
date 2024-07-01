@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
-import axios from 'axios';
 import { useParams } from "react-router-dom";
 import { ICountPatientReview, IDoctor, IReview } from "../interfaces/DoctorData";
+import { Appointment } from "../interfaces";
+import { configAxios as axios } from "../config/api";
+
+
 
 //---------------------Fetch Data Of Doctor---------------------------------------
 export const useDoctorData = () => {
@@ -47,6 +50,7 @@ export const OverallViewRating = () => {
                     rating: review.rating,
                 }));
 
+                
                 setAllRating(patientRating);
 
                 // Calculate overall rating
@@ -91,7 +95,8 @@ export const useReviewsOfDoctor = () => {
         const fetchReviewsData = async () => {
             try {                                 
                 const response = await axios.get(`http://127.0.0.1:3000/reviews/doctor/${id}?limit=${limit}`);
-
+                console.log("llll",response.data);
+                
                 const patientReviews: IReview[] = response.data.data.map((review: IReview) => ({
                     _id:review._id,
                     patient: { name: review.patient.name },
@@ -134,3 +139,32 @@ export const useFetchCountPatientReview = () => {
   
     return countPatientReview;
   };
+
+
+  //fetch Appointments for doctor
+  export const AppointmentsDoctor = () => {
+    const [appointments, setAppointments] = useState<Appointment[]>([]);
+    const [loadingPage, setLoadingPage] = useState(true);
+    const [error, setError] = useState<string>('');
+
+    const { id } = useParams<{ id: string }>();
+
+    useEffect(() => {
+        const availableAppointments = async () => {
+            try {
+                const response = await axios.get(`http://127.0.0.1:3000/available-appointments/doctor/${id}`);
+                console.log("dd", response.data.data);
+
+                setAppointments(response.data.data); 
+                setLoadingPage(false);
+            } catch (err) {
+                setError("Error fetching available appointments for doctor");
+                setLoadingPage(false);
+            }
+        };
+
+        availableAppointments();
+    }, [id]);
+
+    return { appointments, loadingPage, error }; 
+};

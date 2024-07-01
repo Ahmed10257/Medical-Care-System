@@ -49,6 +49,21 @@ export class AvailableAppointmentService {
     }
   }
 
+  async findByDoctorId(doctorId: string) {
+    const total = await this.availableAppointmentModel.countDocuments({
+      doctor_id: doctorId,
+    });
+
+    // Fetch paginated data
+    const data = await this.availableAppointmentModel
+      .find({ doctor_id: doctorId })
+      .exec();
+    return {
+      data,
+      total,
+    };
+  }
+
   async updateById(
     id: string,
     updateAvailableAppointmentDto: UpdateAvailableAppointmentDto,

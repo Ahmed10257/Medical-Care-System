@@ -44,6 +44,28 @@ const router = createBrowserRouter(
         element={<Layout />}
         errorElement={<ErrorHandler message="Page not found" />}
       >
+        <Route
+        path="/patient-profile"
+        element={<PatientProfile />}
+        errorElement={<ErrorHandler />}
+      >
+        <Route index element={<Navigate to="myprofile" />} />
+        <Route
+          path="myprofile"
+          element={<UpdateForm />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="changePassword"
+          element={<ChangePassword />}
+          errorElement={<ErrorHandler />}
+        />
+        <Route
+          path="appointments"
+          element={<Appointments />}
+          errorElement={<ErrorHandler />}
+        />
+      </Route>
         <Route element={<PrivateRoute />}>
           <Route index element={<Home />} />
         </Route>

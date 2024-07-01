@@ -5,7 +5,8 @@ export interface Address {
   }
   
  export interface IDoctor {
-    name: string;
+    firstName: string;
+    lastName: string;
     phone: number;
     email: string;
     password: string;
@@ -30,7 +31,7 @@ interface IAddress {
   country: string;
 }
 
-interface IPatient {
+ export interface IPatient {
   _id: string;
   name: string;
   age: number;

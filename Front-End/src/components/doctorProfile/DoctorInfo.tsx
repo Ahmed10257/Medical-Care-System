@@ -7,7 +7,8 @@ import { Avatar } from "@mui/material";
 import Rating from '@mui/material/Rating';
 
 interface IProps {
-    doctorName: string
+    firstName: string
+    lastName: string
     view: number
     genaralSpecialization: string
     specializes: string[]
@@ -17,11 +18,13 @@ interface IProps {
     firstTopReview?: IReview | null 
 }
 
-const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, specializes, imageProfile, numberOfReviews, overallReview, firstTopReview }) => {
+const DoctorInfo: FC<IProps> = ({ firstName,lastName, view, genaralSpecialization, specializes, imageProfile, numberOfReviews, overallReview, firstTopReview }) => {
     const executeOnClick = (isExpanded: boolean) => {
         console.log(isExpanded);
     };
 
+    console.log("firstTopReview",firstTopReview);
+    
   
     return (
         <div className="bg-white grid grid-cols-4 rounded-lg p-3 mb-4 gap-4">
@@ -32,7 +35,7 @@ const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, speci
 
                 <div className="hidden md:block lg:block ">
                     
-            <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg"    sx={{ width: 120, height: 120 }} />
+            <Avatar alt="Remy Sharp" src="https://snibbs.co/cdn/shop/articles/What_are_the_Challenges_of_Being_a_Doctor_1001x665.jpg?v=1684314843"    sx={{ width: 120, height: 120 }} />
                 </div>
 
             </div>
@@ -41,7 +44,7 @@ const DoctorInfo: FC<IProps> = ({ doctorName, view, genaralSpecialization, speci
                 <div className="flex justify-between">
                     <div className=" flex flex-col gap-1  ">
                         <p className="text-gray-500 font-semibold  text-start  text-balance md:lg:text-2xl pt-5">
-                        Doctor {doctorName}
+                        Doctor {firstName} {lastName}
                         </p>
                         <div className="md:hidden lg:hidden text-start">
                         <Rating name="half-rating-read" value={overallReview} precision={0.5} readOnly />

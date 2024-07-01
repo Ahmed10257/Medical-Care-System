@@ -29,7 +29,7 @@ const Book: React.FC = () => {
         const appointmentResponse = await axios.get<Appointment>(`http://localhost:3000/available-appointments/${appointment_id}`);
         setAppointment(appointmentResponse.data);
 
-        const patientId = "668047b3239d2ea30ac90b44";
+        const patientId = "66811c7bd4843126eeabbfa4";
         const patientResponse = await axios.get<Patient>(`http://localhost:3000/patient/${patientId}`);
         setPatient(patientResponse.data);
       } catch (err) {
