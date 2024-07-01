@@ -150,7 +150,7 @@ const Register = () => {
           />
         )}
       </div>
-      <div className="w-7/12 text-start p-1 md:">
+      <div className="w-7/12 text-start p-1">
         <ErrorMessage message={errors[input.name as keyof typeof errors]} />
       </div>
     </div>
@@ -161,7 +161,7 @@ const Register = () => {
       <FormTemplate
         title="Register"
         lgWidth="4/12"
-        mdWidth="11/12"
+        mdWidth="6/12"
         smWidth="11/12"
       >
         <FaceBookBtn />

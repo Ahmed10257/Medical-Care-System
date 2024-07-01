@@ -66,7 +66,8 @@ const Login = () => {
       return;
     }
 
-    configAxios.post("/auth/login", user)
+    configAxios
+      .post("/auth/login", user)
       .then((response) => {
         if (response.data.access_token) {
           localStorage.setItem("token", response.data.access_token);
@@ -75,7 +76,7 @@ const Login = () => {
             icon: "success",
             title: "Success",
             text: "Logged in successfully!",
-          }).then(() => window.location.href = "/");
+          }).then(() => (window.location.href = "/"));
         } else {
           Swal.fire({
             icon: "error",
@@ -88,14 +89,14 @@ const Login = () => {
         console.log("Login error", error);
         const errorMessage = error.response.data.message;
         const displayMessage = "Something went wrong!";
-        
+
         if (errorMessage.includes("Invalid credentials")) {
           if (errorMessage.includes("User not found")) {
             Swal.fire({
               icon: "error",
               title: "User not found",
               text: "The email you entered is not registered.",
-              footer: '<a href="/signup">Click here to register</a>'
+              footer: '<a href="/signup">Click here to register</a>',
             });
           } else if (errorMessage.includes("Password mismatch")) {
             Swal.fire({
@@ -109,7 +110,7 @@ const Login = () => {
             icon: "error",
             title: "Oops...",
             text: displayMessage,
-            footer: '<a href="#">Why do I have this issue?</a>'
+            footer: '<a href="#">Why do I have this issue?</a>',
           });
         }
       });
@@ -186,7 +187,6 @@ const Login = () => {
               </Link>
             </div>
           </div>
-          
         </form>
 
         <OrWithLine />
