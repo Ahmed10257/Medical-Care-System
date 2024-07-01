@@ -9,6 +9,7 @@ import OrWithLine from "../components/login-signup/OrWithLine";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { configAxios } from "../config/api";
+import { getRole } from "../utils/functions";
 
 interface IUser {
   email: string;
@@ -69,8 +70,10 @@ const Login = () => {
     configAxios.post("/auth/login", user)
       .then((response) => {
         if (response.data.access_token) {
-          localStorage.setItem("token", response.data.access_token);
-
+          console.log("Login response", response.data);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          console.log(getRole());
+          
           Swal.fire({
             icon: "success",
             title: "Success",

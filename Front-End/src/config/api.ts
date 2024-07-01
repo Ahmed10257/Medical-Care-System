@@ -27,6 +27,12 @@ configAxios.interceptors.response.use(
     return response;
   },
   function (error) {
+    if( error.response.status === 401){
+      localStorage.removeItem('token');
+      localStorage.removeItem('isPatient');
+      localStorage.removeItem('email');
+      window.location.href = '/login';
+    }
     return Promise.reject(error);
   },
 );

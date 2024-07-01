@@ -48,7 +48,7 @@ const DoctorRegister = () => {
     firstName: "",
     lastName: "",
     phone: "",
-    specialization: "",
+    genaralSpecialization: "",
     address: {
       region: 0,
       city: "",
@@ -67,7 +67,7 @@ const DoctorRegister = () => {
     firstName: "",
     lastName: "",
     phone: "",
-    specialization: "",
+    genaralSpecialization: "",
     address: {
       region: "" as unknown as number,
       city: "",
@@ -182,7 +182,7 @@ const DoctorRegister = () => {
       firstName: "",
       lastName: "",
       phone: "",
-      specialization: "",
+      genaralSpecialization: "",
       address: {
         region: "" as unknown as number,
         city: "",
@@ -240,7 +240,7 @@ const DoctorRegister = () => {
   const validateCurrentStep = () => {
     const currentStepFields: { [key: number]: string[] } = {
       0: ["firstName", "lastName", "phone", "birthdate"],
-      1: ["email", "password", "specialization", "region", "city", "state"],
+      1: ["email", "password", "genaralSpecialization", "region", "city", "state"],
       2: [],
     };
 
@@ -283,7 +283,7 @@ const DoctorRegister = () => {
     { label: "Confirmation", icon: <UserIcon className="w-5 h-5" /> },
   ];
 
-  const specializations = [
+  const genaralSpecializations = [
     { id: 1, name: "Cardiology" },
     { id: 2, name: "Dermatology" },
     { id: 3, name: "Neurology" },
@@ -292,13 +292,13 @@ const DoctorRegister = () => {
   ];
 
   const [query, setQuery] = useState("");
-  const [selected, setSelected] = useState(specializations[0]);
+  const [selected, setSelected] = useState(genaralSpecializations[0]);
 
-  const filteredSpecializations =
+  const filteredgenaralSpecializations =
     query === ""
-      ? specializations
-      : specializations.filter((specialization) => {
-          return specialization.name
+      ? genaralSpecializations
+      : genaralSpecializations.filter((genaralSpecialization) => {
+          return genaralSpecialization.name
             .toLowerCase()
             .includes(query.toLowerCase());
         });
@@ -447,7 +447,7 @@ const DoctorRegister = () => {
                 setSelected(value);
                 setUser((prevUser) => ({
                   ...prevUser,
-                  specialization: value.name,
+                  genaralSpecialization: value.name,
                 }));
               }}
               onClose={() => setQuery("")}
@@ -460,11 +460,11 @@ const DoctorRegister = () => {
                 <Stethoscope className="absolute w-5 h-5 text-gray-400 mt-3" />
                 <ComboboxInput
                   className="w-full border border-t-0 border-e-0 border-l-0 bg-transparent text-gray-400 focus:outline-none border-b-gray-600 mb-3 px-7 py-3"
-                  displayValue={(specialization: { name: string }) =>
-                    specialization.name
+                  displayValue={(genaralSpecialization: { name: string }) =>
+                    genaralSpecialization.name
                   }
                   onChange={(event) => setQuery(event.target.value)}
-                  placeholder="Select a specialization"
+                  placeholder="Select a genaralSpecialization"
                   disabled
                 />
                 <ComboboxButton className="absolute inset-y-0 right-0 flex items-center px-2">
@@ -473,15 +473,15 @@ const DoctorRegister = () => {
               </div>
 
               <ComboboxOptions className="absolute mt-1 w-1/2 bg-white shadow-lg max-h-60 rounded-md py-1 text-base ring-1 ring-black ring-opacity-5 overflow-auto focus:outline-none sm:text-sm">
-                {filteredSpecializations.length === 0 && query !== "" ? (
+                {filteredgenaralSpecializations.length === 0 && query !== "" ? (
                   <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                     Nothing found.
                   </div>
                 ) : (
-                  filteredSpecializations.map((specialization) => (
+                  filteredgenaralSpecializations.map((genaralSpecialization) => (
                     <ComboboxOption
-                      key={specialization.id}
-                      value={specialization}
+                      key={genaralSpecialization.id}
+                      value={genaralSpecialization}
                       className={({ active }) =>
                         `relative cursor-default select-none py-2 pl-10 pr-4 ${
                           active ? "text-white bg-indigo-600" : "text-gray-900"
@@ -495,7 +495,7 @@ const DoctorRegister = () => {
                               selected ? "font-medium" : "font-normal"
                             }`}
                           >
-                            {specialization.name}
+                            {genaralSpecialization.name}
                           </span>
                           {selected ? (
                             <span

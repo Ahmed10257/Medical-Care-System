@@ -8,13 +8,16 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { DoctorService } from './doctor.service';
 import { SignUpDoctorDto } from '../auth/auth/dto/sign-up-doctor-dto';
 import { UpdateDoctorDto } from './dto/update-doctor.dto';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { DoctorGuard } from './doctor_role.guard';
 
 @Controller('doctor')
+@UseGuards(DoctorGuard)
 export class DoctorController {
   constructor(private readonly doctorService: DoctorService) { }
 
