@@ -53,7 +53,7 @@ export class DoctorService {
       throw new Error(`Doctor with ID ${id} not found`);
     }
 
-    const isPasswordCorrect = await bcrypt.compare(oldPassword, doctor.password);
+    const isPasswordCorrect = await bcrypt.compare(doctor.password,oldPassword);
     if (isPasswordCorrect) {
       throw new Error('Incorrect old password');
     }

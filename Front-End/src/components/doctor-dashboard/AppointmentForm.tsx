@@ -3,6 +3,7 @@ import './AppointmentForm.css';
 import { Calendar } from "lucide-react";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { getAuthDoctor } from '../../utils/functions';
 
 interface AppointmentFormProps {
   onSubmit: () => void;
@@ -35,8 +36,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onCancel })
       console.log(dateTimeString);
 
       try {
+        const id = await getAuthDoctor();
         await axios.post('http://localhost:3000/available-appointments', {
-          doctor_id: '667ff9815e77f767fdfdad82',
+          doctor_id: id,
           date: dateTimeString
         });
 
@@ -91,7 +93,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ onSubmit, onCancel })
             </div>
           </div>
           <div className="form-buttons">
-            <button type="submit" className="submit-button">Add Appointment</button>
+            <button type="submit" className="submit-button" style={{background:"red"}}>Add Appointment</button>
             <button type="button" className="cancel-button" onClick={handleCancel}>Cancel</button>
           </div>
         </form>

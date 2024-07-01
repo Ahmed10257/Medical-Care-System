@@ -44,40 +44,40 @@ export class Clinic {
 @Schema()
 export class Doctor extends Document {
   @Prop({ required: true })
-  @IsString()
+  // @IsString()
   firstName: string;
 
   @Prop({ required: true })
-  @IsString()
+  // @IsString()
   lastName: string;
 
   @Prop({ required: true })
-  @IsString()
+  // @IsString()
   phone: string;
 
   @Prop({ required: true, unique: true })
-  @IsEmail()
+  // @IsEmail()
   email: string;
 
   @Prop({ required: true })
   @IsString()
   password: string;
 
-  @Prop({ required: true })
-  @ValidateNested()
-  @Type(() => Address)
+  // @Prop({ required: true })
+  // @ValidateNested()
+  // @Type(() => Address)
   address: Address;
 
   @Prop({ required: true })
-  @IsString()
+  // @IsString()
   image: string;
 
-  @Prop({
-    type: String,
-    enum: Object.values(Gender),
-    required: true,
-  })
-  @IsEnum(Gender)
+  // @Prop({
+  //   type: String,
+  //   enum: Object.values(Gender),
+  //   required: true,
+  // })
+  // @IsEnum(Gender)
   gender: Gender;
 
   @Prop({ type: Date, required: true })
@@ -88,16 +88,16 @@ export class Doctor extends Document {
   @IsBoolean()
   isDoctor: boolean;
 
-  @Prop({ required: false })
-  @IsString()
+  @Prop({ required: false, default: ''})
+  // @IsString()
   genaralSpecialization: string;
 
-  @Prop({ required: false })
-  @IsNumber()
+  @Prop({ required: false, default: 0 })
+  // @IsNumber()
   fees: number;
 
-  @Prop({ required: false })
-  @IsNumber()
+  @Prop({ required: false, default: 0})
+  // @IsNumber()
   waitingTime: number;
 
   @Prop({ required: true })
@@ -107,8 +107,8 @@ export class Doctor extends Document {
   @IsNumber()
   views: number;
 
-  @Prop({ required: false })
-  @IsString()
+  @Prop({ required: false, default: '' })
+  // @IsString()
   about: string;
 }
 

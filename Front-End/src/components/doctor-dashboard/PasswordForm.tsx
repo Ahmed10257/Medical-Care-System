@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { LockKeyhole, KeyRound, ShieldCheck } from "lucide-react";
 import { validatePassword } from "../../utils/patient-profile-func";
 import './PasswordForm.css';
+import { getAuthDoctor } from '../../utils/functions';
 
 interface FormPasswordData {
   oldPassword: string;
@@ -49,8 +50,9 @@ const PasswordForm: React.FC<PasswordFormProps> = ({ onClose }) => {
     }
 
     try {
+      const id = await getAuthDoctor();
       const responseUpdate = await axios.patch(
-        `http://localhost:3000/doctor/667ff9815e77f767fdfdad82/update-password`, // Replace STATIC_DOCTOR_ID with your actual doctor's ID
+        `http://localhost:3000/doctor/` + id +`/update-password`, // Replace STATIC_DOCTOR_ID with your actual doctor's ID
         {
           oldPassword,
           newPassword,
